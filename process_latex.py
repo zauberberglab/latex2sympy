@@ -408,10 +408,18 @@ def convert_func(func):
     elif func.FUNC_LIM():
         return handle_limit(func)
     elif func.func_symbol():
-        # print('HERE!')
         name = func.func_symbol().start.text[1:]
         base = func.base.getText()
-        return sympy.Symbol(base+name)
+        s = base+name
+        if func.subexpr():
+            subscript = None
+            if func.subexpr().expr():           # subscript is expr
+                subscript = convert_expr(func.subexpr().expr())
+            else:                               # subscript is atom
+                subscript = convert_atom(func.subexpr().atom())
+            subscriptName = StrPrinter().doprint(subscript)
+            s += '_{' + subscriptName + '}'
+        return sympy.Symbol(s)
 
 def convert_func_arg(arg):
     if hasattr(arg, 'expr'):

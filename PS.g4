@@ -201,6 +201,7 @@ func:
 
     | func_symbol
     L_BRACE base=expr R_BRACE
+    subexpr?
 
     | (FUNC_SUM | FUNC_PROD)
     (subeq supexpr | supexpr subeq)

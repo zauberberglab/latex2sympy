@@ -2,9 +2,9 @@ import sympy
 import antlr4
 from antlr4.error.ErrorListener import ErrorListener
 
-from .gen.PSParser import PSParser
-from .gen.PSLexer import PSLexer
-from .gen.PSListener import PSListener
+from gen.PSParser import PSParser
+from gen.PSLexer import PSLexer
+from gen.PSListener import PSListener
 
 from sympy.printing.str import StrPrinter
 
@@ -237,6 +237,7 @@ def convert_comp(comp):
 
 def convert_atom(atom):
     if atom.LETTER():
+        print('atom.LETTER: %s' %(atom.LETTER().getText()))
         subscriptName = ''
         if atom.subexpr():
             subscript = None
@@ -248,6 +249,7 @@ def convert_atom(atom):
         return sympy.Symbol(atom.LETTER().getText() + subscriptName)
     elif atom.SYMBOL():
         s = atom.SYMBOL().getText()[1:]
+        print('atom.Symbol: %s' %(s))
         if s == "infty":
             return sympy.oo
         else:
@@ -322,6 +324,7 @@ def convert_frac(frac):
     return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
 
 def convert_func(func):
+    print('convert_func: %s' %(func))
     if func.func_normal():
         if func.L_PAREN(): # function called with parenthesis
             arg = convert_func_arg(func.func_arg())
@@ -329,6 +332,7 @@ def convert_func(func):
             arg = convert_func_arg(func.func_arg_noparens())
 
         name = func.func_normal().start.text[1:]
+        print('convert_funct: %s' %(name))
 
         # change arc<trig> -> a<trig>
         if name in ["arcsin", "arccos", "arctan", "arccsc", "arcsec",
@@ -403,6 +407,11 @@ def convert_func(func):
         return handle_sum_or_prod(func, "product")
     elif func.FUNC_LIM():
         return handle_limit(func)
+    elif func.func_symbol():
+        # print('HERE!')
+        name = func.func_symbol().start.text[1:]
+        base = func.base.getText()
+        return sympy.Symbol(base+name)
 
 def convert_func_arg(arg):
     if hasattr(arg, 'expr'):

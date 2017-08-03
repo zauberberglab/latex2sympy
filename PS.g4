@@ -26,6 +26,7 @@ FUNC_INT:  '\\int';
 FUNC_SUM:  '\\sum';
 FUNC_PROD: '\\prod';
 
+FUNC_BAR:  '\\overline';
 FUNC_LOG:  '\\log';
 FUNC_LN:   '\\ln';
 FUNC_SIN:  '\\sin';
@@ -152,7 +153,7 @@ comp_nofunc:
     | frac;
 
 group:
-    L_PAREN expr R_PAREN 
+    L_PAREN expr R_PAREN
     | L_BRACKET expr R_BRACKET
     | L_BRACE expr R_BRACE;
 
@@ -169,6 +170,9 @@ frac:
     R_BRACE L_BRACE
     lower=expr
     R_BRACE;
+
+func_symbol:
+    FUNC_BAR;
 
 func_normal:
     FUNC_LOG | FUNC_LN
@@ -193,6 +197,9 @@ func:
 
     | FUNC_SQRT
     (L_BRACKET root=expr R_BRACKET)?
+    L_BRACE base=expr R_BRACE
+
+    | func_symbol
     L_BRACE base=expr R_BRACE
 
     | (FUNC_SUM | FUNC_PROD)

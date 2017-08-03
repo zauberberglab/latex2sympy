@@ -139,7 +139,11 @@ GOOD_PAIRS = [
     ("\\log_{a^2} x", _log(x, _Pow(a, 2))),
     ("[x]", x),
     ("[a + b]", _Add(a, b)),
-    ("\\frac{d}{dx} [ \\tan x ]", Derivative(tan(x), x))
+    ("\\frac{d}{dx} [ \\tan x ]", Derivative(tan(x), x)),
+    ("2\\overline{x}", 2*Symbol('xoverline')),
+    ("2\\overline{x}_n", 2*Symbol('xoverline_{n}')),
+    ("\\frac{x}{\\overline{x}_n}", x/Symbol('xoverline_{n}')),
+    ("\\frac{\\sin(x)}{\\overline{x}_n}", sin(Symbol('x'))/Symbol('xoverline_{n}'))
 ]
 
 # These bad latex strings should raise an exception when parsed
@@ -187,15 +191,22 @@ BAD_STRINGS = [
     "\\frac{(2 + x}{1 - x)}"
 ]
 
+total_good = 0
+passed_good = 0
 total = 0
 passed = 0
 for s, eq in GOOD_PAIRS:
     total += 1
+    total_good += 1
     try:
-        if process_sympy(s) != eq:
-            print("ERROR: \"%s\" did not parse to %s" % (s, eq))
+        parsed = process_sympy(s)
+        value = eq - parsed
+        if parsed != eq and value != 0:
+            print("ERROR: \"%s\" did not parse to %s but parsed to %s" % (s, eq, parsed))
+            print("diff: %s and simplified: %s" % (value, value_simp))
         else:
             passed += 1
+            passed_good += 1
     except Exception as e:
         print("ERROR: Exception when parsing \"%s\"" % s)
 for s in BAD_STRINGS:
@@ -204,6 +215,7 @@ for s in BAD_STRINGS:
         process_sympy(s)
         print("ERROR: Exception should have been raised for \"%s\"" % s)
     except Exception:
-        passed += 1 
+        passed += 1
 
+print("%d/%d GOOD STRINGS PASSED" % (passed_good, total_good))
 print("%d/%d STRINGS PASSED" % (passed, total))

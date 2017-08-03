@@ -2,9 +2,9 @@ import sympy
 import antlr4
 from antlr4.error.ErrorListener import ErrorListener
 
-from .gen.PSParser import PSParser
-from .gen.PSLexer import PSLexer
-from .gen.PSListener import PSListener
+from gen.PSParser import PSParser
+from gen.PSLexer import PSLexer
+from gen.PSListener import PSListener
 
 from sympy.printing.str import StrPrinter
 
@@ -260,6 +260,19 @@ def convert_atom(atom):
                 subscriptName = StrPrinter().doprint(subscript)
                 s += '_{' + subscriptName + '}'
             return sympy.Symbol(s)
+    elif atom.accent():
+        name = atom.accent().start.text[1:]
+        base = atom.accent().base.getText()
+        s = base+name
+        if atom.subexpr():
+            subscript = None
+            if atom.subexpr().expr():           # subscript is expr
+                subscript = convert_expr(atom.subexpr().expr())
+            else:                               # subscript is atom
+                subscript = convert_atom(atom.subexpr().atom())
+            subscriptName = StrPrinter().doprint(subscript)
+            s += '_{' + subscriptName + '}'
+        return sympy.Symbol(s)
     elif atom.NUMBER():
         s = atom.NUMBER().getText().replace(",", "")
         return sympy.Number(s)

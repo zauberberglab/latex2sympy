@@ -237,7 +237,6 @@ def convert_comp(comp):
 
 def convert_atom(atom):
     if atom.LETTER():
-        print('atom.LETTER: %s' %(atom.LETTER().getText()))
         subscriptName = ''
         if atom.subexpr():
             subscript = None
@@ -249,7 +248,6 @@ def convert_atom(atom):
         return sympy.Symbol(atom.LETTER().getText() + subscriptName)
     elif atom.SYMBOL():
         s = atom.SYMBOL().getText()[1:]
-        print('atom.Symbol: %s' %(s))
         if s == "infty":
             return sympy.oo
         else:
@@ -262,6 +260,19 @@ def convert_atom(atom):
                 subscriptName = StrPrinter().doprint(subscript)
                 s += '_{' + subscriptName + '}'
             return sympy.Symbol(s)
+    elif atom.accent():
+        name = atom.accent().start.text[1:]
+        base = atom.accent().base.getText()
+        s = base+name
+        if atom.subexpr():
+            subscript = None
+            if atom.subexpr().expr():           # subscript is expr
+                subscript = convert_expr(atom.subexpr().expr())
+            else:                               # subscript is atom
+                subscript = convert_atom(atom.subexpr().atom())
+            subscriptName = StrPrinter().doprint(subscript)
+            s += '_{' + subscriptName + '}'
+        return sympy.Symbol(s)
     elif atom.NUMBER():
         s = atom.NUMBER().getText().replace(",", "")
         return sympy.Number(s)
@@ -324,7 +335,6 @@ def convert_frac(frac):
     return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
 
 def convert_func(func):
-    print('convert_func: %s' %(func))
     if func.func_normal():
         if func.L_PAREN(): # function called with parenthesis
             arg = convert_func_arg(func.func_arg())
@@ -332,7 +342,6 @@ def convert_func(func):
             arg = convert_func_arg(func.func_arg_noparens())
 
         name = func.func_normal().start.text[1:]
-        print('convert_funct: %s' %(name))
 
         # change arc<trig> -> a<trig>
         if name in ["arcsin", "arccos", "arctan", "arccsc", "arcsec",
@@ -407,19 +416,6 @@ def convert_func(func):
         return handle_sum_or_prod(func, "product")
     elif func.FUNC_LIM():
         return handle_limit(func)
-    elif func.func_symbol():
-        name = func.func_symbol().start.text[1:]
-        base = func.base.getText()
-        s = base+name
-        if func.subexpr():
-            subscript = None
-            if func.subexpr().expr():           # subscript is expr
-                subscript = convert_expr(func.subexpr().expr())
-            else:                               # subscript is atom
-                subscript = convert_atom(func.subexpr().atom())
-            subscriptName = StrPrinter().doprint(subscript)
-            s += '_{' + subscriptName + '}'
-        return sympy.Symbol(s)
 
 def convert_func_arg(arg):
     if hasattr(arg, 'expr'):

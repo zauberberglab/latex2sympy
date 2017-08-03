@@ -20,13 +20,13 @@ R_BRACKET: ']';
 
 BAR: '|';
 
+//functions
 FUNC_LIM:  '\\lim';
 LIM_APPROACH_SYM: '\\to' | '\\rightarrow' | '\\Rightarrow' | '\\longrightarrow' | '\\Longrightarrow';
 FUNC_INT:  '\\int';
 FUNC_SUM:  '\\sum';
 FUNC_PROD: '\\prod';
 
-FUNC_BAR:  '\\overline';
 FUNC_LOG:  '\\log';
 FUNC_LN:   '\\ln';
 FUNC_SIN:  '\\sin';
@@ -52,12 +52,16 @@ FUNC_ARTANH: '\\artanh';
 
 FUNC_SQRT: '\\sqrt';
 
+//commands
 CMD_TIMES: '\\times';
 CMD_CDOT:  '\\cdot';
 CMD_DIV:   '\\div';
 CMD_FRAC:  '\\frac';
 
 CMD_MATHIT: '\\mathit';
+
+//accents such as overline and hat
+ACCENT_BAR:  '\\overline';
 
 UNDERSCORE: '_';
 CARET: '^';
@@ -81,6 +85,10 @@ GTE: '\\geq';
 BANG: '!';
 
 SYMBOL: '\\' [a-zA-Z]+;
+
+//collection of accents
+accent_symbol:
+    ACCENT_BAR;
 
 math: relation;
 
@@ -159,7 +167,12 @@ group:
 
 abs_group: BAR expr BAR;
 
-atom: (LETTER | SYMBOL) subexpr? | NUMBER | DIFFERENTIAL | mathit;
+//indicate an accent
+accent:
+    accent_symbol
+    L_BRACE base=expr R_BRACE;
+
+atom: (LETTER | SYMBOL | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: LETTER*;
@@ -170,9 +183,6 @@ frac:
     R_BRACE L_BRACE
     lower=expr
     R_BRACE;
-
-func_symbol:
-    FUNC_BAR;
 
 func_normal:
     FUNC_LOG | FUNC_LN
@@ -198,10 +208,6 @@ func:
     | FUNC_SQRT
     (L_BRACKET root=expr R_BRACKET)?
     L_BRACE base=expr R_BRACE
-
-    | func_symbol
-    L_BRACE base=expr R_BRACE
-    subexpr?
 
     | (FUNC_SUM | FUNC_PROD)
     (subeq supexpr | supexpr subeq)

@@ -261,8 +261,14 @@ def convert_atom(atom):
                 s += '_{' + subscriptName + '}'
             return sympy.Symbol(s)
     elif atom.accent():
+        # get name for accent
         name = atom.accent().start.text[1:]
+        # exception: check if bar or overline which are treated both as bar
+        if name in ["bar", "overline"]:
+            name = "bar"
+        # get the base (variable)
         base = atom.accent().base.getText()
+        # set string to base+name
         s = base+name
         if atom.subexpr():
             subscript = None

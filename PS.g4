@@ -61,7 +61,8 @@ CMD_FRAC:  '\\frac';
 CMD_MATHIT: '\\mathit';
 
 //accents such as overline and hat
-ACCENT_BAR:  '\\overline';
+ACCENT_OVERLINE:  '\\overline';
+ACCENT_BAR:  '\\bar';
 
 UNDERSCORE: '_';
 CARET: '^';
@@ -88,7 +89,7 @@ SYMBOL: '\\' [a-zA-Z]+;
 
 //collection of accents
 accent_symbol:
-    ACCENT_BAR;
+    ACCENT_BAR | ACCENT_OVERLINE;
 
 math: relation;
 

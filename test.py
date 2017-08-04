@@ -140,10 +140,12 @@ GOOD_PAIRS = [
     ("[x]", x),
     ("[a + b]", _Add(a, b)),
     ("\\frac{d}{dx} [ \\tan x ]", Derivative(tan(x), x)),
-    ("2\\overline{x}", 2*Symbol('xoverline')),
-    ("2\\overline{x}_n", 2*Symbol('xoverline_{n}')),
-    ("\\frac{x}{\\overline{x}_n}", x/Symbol('xoverline_{n}')),
-    ("\\frac{\\sin(x)}{\\overline{x}_n}", sin(Symbol('x'))/Symbol('xoverline_{n}'))
+    ("2\\overline{x}", 2*Symbol('xbar')),
+    ("2\\overline{x}_n", 2*Symbol('xbar_{n}')),
+    ("\\frac{x}{\\overline{x}_n}", x/Symbol('xbar_{n}')),
+    ("\\frac{\\sin(x)}{\\overline{x}_n}", sin(Symbol('x'))/Symbol('xbar_{n}')),
+    ("2\\bar{x}", 2*Symbol('xbar')),
+    ("2\\bar{x}_n", 2*Symbol('xbar_{n}'))
 ]
 
 # These bad latex strings should raise an exception when parsed

@@ -145,7 +145,9 @@ GOOD_PAIRS = [
     ("\\frac{x}{\\overline{x}_n}", x/Symbol('xbar_{n}')),
     ("\\frac{\\sin(x)}{\\overline{x}_n}", sin(Symbol('x'))/Symbol('xbar_{n}')),
     ("2\\bar{x}", 2*Symbol('xbar')),
-    ("2\\bar{x}_n", 2*Symbol('xbar_{n}'))
+    ("2\\bar{x}_n", 2*Symbol('xbar_{n}')),
+    ("\\sin\\left(\\theta\\right)", sin(theta)),
+    ("f\\left(x\\right)", f(x))
 ]
 
 # These bad latex strings should raise an exception when parsed

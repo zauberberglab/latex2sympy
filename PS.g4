@@ -17,6 +17,8 @@ L_BRACE: '{';
 R_BRACE: '}';
 L_BRACKET: '[';
 R_BRACKET: ']';
+L_LEFT: '\\left';
+R_RIGHT: '\\right';
 
 BAR: '|';
 
@@ -164,7 +166,11 @@ comp_nofunc:
 group:
     L_PAREN expr R_PAREN
     | L_BRACKET expr R_BRACKET
-    | L_BRACE expr R_BRACE;
+    | L_BRACE expr R_BRACE
+    | L_LEFT L_PAREN expr R_RIGHT R_PAREN
+    | L_LEFT L_BRACKET expr R_RIGHT R_BRACKET
+    | L_LEFT L_BRACE expr R_RIGHT R_BRACE;
+
 
 abs_group: BAR expr BAR;
 
@@ -201,6 +207,9 @@ func:
 
     | (LETTER | SYMBOL) subexpr? // e.g. f(x)
     L_PAREN args R_PAREN
+
+    | (LETTER | SYMBOL) subexpr? // e.g. f(x)
+    L_LEFT L_PAREN args R_RIGHT R_PAREN
 
     | FUNC_INT
     (subexpr supexpr | supexpr subexpr)?

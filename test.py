@@ -147,6 +147,9 @@ GOOD_PAIRS = [
     ("2\\bar{x}", 2*Symbol('xbar')),
     ("2\\bar{x}_n", 2*Symbol('xbar_{n}')),
     ("\\sin\\left(\\theta\\right)", sin(theta)),
+    ("\\frac{1}{2}xy(x+y)", x*y*(x+y)/2 ),
+    ("\\frac{1}{2}\\theta(x+y)", theta*(x+y)/2 ),
+    ("1-f(x)", 1-f*x )
 ]
 
 # These bad latex strings should raise an exception when parsed

@@ -205,11 +205,12 @@ func:
     (subexpr? supexpr? | supexpr? subexpr?)
     (L_PAREN func_arg R_PAREN | func_arg_noparens)
 
-    | (LETTER | SYMBOL) subexpr? // e.g. f(x)
+    //Do not do arbitraty functions but see as multiplications
+    /*| (LETTER | SYMBOL) subexpr? // e.g. f(x)
     L_PAREN args R_PAREN
 
     | (LETTER | SYMBOL) subexpr? // e.g. f(x)
-    L_LEFT L_PAREN args R_RIGHT R_PAREN
+    L_LEFT L_PAREN args R_RIGHT R_PAREN*/
 
     | FUNC_INT
     (subexpr supexpr | supexpr subexpr)?

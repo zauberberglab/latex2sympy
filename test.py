@@ -59,11 +59,11 @@ GOOD_PAIRS = [
     ("\\lim_{x \\to \\infty} \\frac{1}{x}", Limit(_Mul(1, _Pow(x,-1)), x, oo)),
     ("\\frac{d}{dx} x", Derivative(x, x)),
     ("\\frac{d}{dt} x", Derivative(x, t)),
-    ("f(x)", f(x)),
-    ("f(x, y)", f(x, y)),
-    ("f(x, y, z)", f(x, y, z)),
-    ("\\frac{d f(x)}{dx}", Derivative(f(x), x)),
-    ("\\frac{d\\theta(x)}{dx}", Derivative(theta(x), x)),
+    # ("f(x)", f(x)),
+    # ("f(x, y)", f(x, y)),
+    # ("f(x, y, z)", f(x, y, z)),
+    # ("\\frac{d f(x)}{dx}", Derivative(f(x), x)),
+    # ("\\frac{d\\theta(x)}{dx}", Derivative(theta(x), x)),
     ("|x|", _Abs(x)),
     ("||x||", _Abs(Abs(x))),
     ("|x||y|", _Abs(x)*_Abs(y)),
@@ -81,7 +81,7 @@ GOOD_PAIRS = [
     ("\\int^{b}_a x dx", Integral(x, (x, a, b))),
     ("\\int_{a}^{b} x dx", Integral(x, (x, a, b))),
     ("\\int^{b}_{a} x dx", Integral(x, (x, a, b))),
-    ("\\int_{f(a)}^{f(b)} f(z) dz", Integral(f(z), (z, f(a), f(b)))),
+    # ("\\int_{f(a)}^{f(b)} f(z) dz", Integral(f(z), (z, f(a), f(b)))),
     ("\\int (x+a)", Integral(_Add(x,a), x)),
     ("\\int a + b + c dx", Integral(_Add(_Add(a,b),c), x)),
     ("\\int \\frac{dz}{z}", Integral(Pow(z,-1), z)),
@@ -96,7 +96,7 @@ GOOD_PAIRS = [
     ("x_{b}", Symbol('x_{b}')),
     ("h_\\theta", Symbol('h_{theta}')),
     ("h_{\\theta}", Symbol('h_{theta}')),
-    ("h_{\\theta}(x_0, x_1)", Symbol('h_{theta}')(Symbol('x_{0}'), Symbol('x_{1}'))),
+    # ("h_{\\theta}(x_0, x_1)", Symbol('h_{theta}')(Symbol('x_{0}'), Symbol('x_{1}'))),
     ("x!", _factorial(x)),
     ("100!", _factorial(100)),
     ("\\theta!", _factorial(theta)),
@@ -147,7 +147,6 @@ GOOD_PAIRS = [
     ("2\\bar{x}", 2*Symbol('xbar')),
     ("2\\bar{x}_n", 2*Symbol('xbar_{n}')),
     ("\\sin\\left(\\theta\\right)", sin(theta)),
-    ("f\\left(x\\right)", f(x))
 ]
 
 # These bad latex strings should raise an exception when parsed

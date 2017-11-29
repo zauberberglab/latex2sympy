@@ -60,6 +60,7 @@ CMD_CDOT:  '\\cdot';
 CMD_DIV:   '\\div';
 CMD_FRAC:  '\\frac';
 CMD_BINOM: '\\binom';
+CMD_CHOOSE: '\\choose';
 
 CMD_MATHIT: '\\mathit';
 
@@ -196,7 +197,7 @@ frac:
 
 //a binomial experssion
 binom:
-    CMD_BINOM L_BRACE
+    (CMD_BINOM | CMD_CHOOSE) L_BRACE
     upper=atom
     R_BRACE L_BRACE
     lower=atom

@@ -152,7 +152,10 @@ GOOD_PAIRS = [
     ("1-f(x)", 1-f*x ),
     ("\\binom{16}{2}", binomial(16,2) ),
     ("\\binom{x}{y}", binomial(x,y) ),
-    ("\\binom{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) )
+    ("\\binom{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) ),
+    ("\\choose{16}{2}", binomial(16,2) ),
+    ("\\choose{x}{y}", binomial(x,y) ),
+    ("\\choose{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) )
 ]
 
 # These bad latex strings should raise an exception when parsed

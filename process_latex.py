@@ -237,6 +237,8 @@ def convert_comp(comp):
         return convert_atom(comp.atom())
     elif comp.frac():
         return convert_frac(comp.frac())
+    elif comp.binom():
+        return convert_binom(comp.binom())
     elif comp.func():
         return convert_func(comp.func())
 
@@ -344,6 +346,11 @@ def convert_frac(frac):
     expr_top = convert_expr(frac.upper)
     expr_bot = convert_expr(frac.lower)
     return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
+
+def convert_binom(binom):
+    atom_top = convert_atom(binom.upper)
+    atom_bot = convert_atom(binom.lower)
+    return sympy.binomial(atom_top, atom_bot)
 
 def convert_func(func):
     if func.func_normal():

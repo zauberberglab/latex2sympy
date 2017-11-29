@@ -149,7 +149,10 @@ GOOD_PAIRS = [
     ("\\sin\\left(\\theta\\right)", sin(theta)),
     ("\\frac{1}{2}xy(x+y)", x*y*(x+y)/2 ),
     ("\\frac{1}{2}\\theta(x+y)", theta*(x+y)/2 ),
-    ("1-f(x)", 1-f*x )
+    ("1-f(x)", 1-f*x ),
+    ("\\binom{16}{2}", binomial(16,2) ),
+    ("\\binom{x}{y}", binomial(x,y) ),
+    ("\\binom{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) )
 ]
 
 # These bad latex strings should raise an exception when parsed

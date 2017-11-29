@@ -59,6 +59,7 @@ CMD_TIMES: '\\times';
 CMD_CDOT:  '\\cdot';
 CMD_DIV:   '\\div';
 CMD_FRAC:  '\\frac';
+CMD_BINOM: '\\binom';
 
 CMD_MATHIT: '\\mathit';
 
@@ -155,13 +156,15 @@ comp:
     | abs_group
     | func
     | atom
-    | frac;
+    | frac
+    | binom;
 
 comp_nofunc:
     group
     | abs_group
     | atom
-    | frac;
+    | frac
+    | binom;
 
 group:
     L_PAREN expr R_PAREN
@@ -189,6 +192,14 @@ frac:
     upper=expr
     R_BRACE L_BRACE
     lower=expr
+    R_BRACE;
+
+//a binomial experssion
+binom:
+    CMD_BINOM L_BRACE
+    upper=atom
+    R_BRACE L_BRACE
+    lower=atom
     R_BRACE;
 
 func_normal:

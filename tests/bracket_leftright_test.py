@@ -1,5 +1,6 @@
 from sympy import *
-
+import sys
+sys.path.append("..")
 from process_latex import process_sympy
 
 latex = "\\int x dx"

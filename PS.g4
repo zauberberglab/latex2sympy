@@ -109,7 +109,7 @@ math: relation;
 
 matrix:
     CMD_MATRIX_START
-    (matrix_row MATRIX_DEL_ROW)* matrix_row
+    matrix_row (MATRIX_DEL_ROW matrix_row)*
     CMD_MATRIX_END;
 
 matrix_row:

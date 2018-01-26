@@ -101,7 +101,7 @@ SYMBOL: '\\' [a-zA-Z]+;
 accent_symbol:
     ACCENT_BAR | ACCENT_OVERLINE;
 
-math: relation | matrix;
+math: relation;
 
 matrix:
     CMD_MATRIX_START
@@ -109,7 +109,7 @@ matrix:
     CMD_MATRIX_END;
 
 matrix_row:
-    (atom MATRIX_DEL_COL)* atom;
+    (expr MATRIX_DEL_COL)* expr;
 
 relation:
     relation (EQUAL | LT | LTE | GT | GTE) relation
@@ -118,7 +118,7 @@ relation:
 equality:
     expr EQUAL expr;
 
-expr: additive;
+expr: additive | matrix;
 
 additive:
     additive (ADD | SUB) additive

@@ -32,12 +32,12 @@ def process_sympy(sympy):
 
     math = parser.math()
     relation = math.relation()
-    if(relation):
-        expr = convert_relation(relation)
+    # if(relation):
+    expr = convert_relation(relation)
 
-    matrix = math.matrix()
-    if(matrix):
-        expr = convert_matrix(matrix)
+    # matrix = math.matrix()
+    # if(matrix):
+    #     expr = convert_matrix(matrix)
 
     return expr
 
@@ -73,8 +73,8 @@ def convert_matrix(matrix):
     rows = 0;
     for r in row:
         tmp.append([]);
-        for a in r.atom():
-            tmp[rows].append(convert_atom(a))
+        for expr in r.expr():
+            tmp[rows].append(convert_expr(expr))
         rows = rows + 1
 
     #return the matrix
@@ -99,7 +99,10 @@ def convert_relation(rel):
         return sympy.Eq(lh, rh)
 
 def convert_expr(expr):
-    return convert_add(expr.additive())
+    if expr.additive():
+        return convert_add(expr.additive())
+    elif expr.matrix():
+        return convert_matrix(expr.matrix())
 
 def convert_add(add):
     if add.ADD():

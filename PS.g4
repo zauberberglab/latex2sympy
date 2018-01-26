@@ -64,6 +64,12 @@ CMD_CHOOSE: '\\choose';
 
 CMD_MATHIT: '\\mathit';
 
+//matrix test
+CMD_MATRIX_START: '\\begin{matrix}';
+CMD_MATRIX_END: '\\end{matrix}';
+MATRIX_DEL_COL: '&';
+MATRIX_DEL_ROW: '\\\\';
+
 //accents such as overline and hat
 ACCENT_OVERLINE:  '\\overline';
 ACCENT_BAR:  '\\bar';
@@ -95,7 +101,15 @@ SYMBOL: '\\' [a-zA-Z]+;
 accent_symbol:
     ACCENT_BAR | ACCENT_OVERLINE;
 
-math: relation;
+math: relation | matrix;
+
+matrix:
+    CMD_MATRIX_START
+    (matrix_row MATRIX_DEL_ROW)* matrix_row
+    CMD_MATRIX_END;
+
+matrix_row:
+    (atom MATRIX_DEL_COL)* atom;
 
 relation:
     relation (EQUAL | LT | LTE | GT | GTE) relation

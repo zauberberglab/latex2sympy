@@ -30,9 +30,14 @@ def process_sympy(sympy):
     parser.removeErrorListeners()
     parser.addErrorListener(matherror)
 
+    math = parser.math()
+    relation = math.relation()
+    if(relation):
+        expr = convert_relation(relation)
 
-    relation = parser.math().relation()
-    expr = convert_relation(relation)
+    matrix = math.matrix()
+    if(matrix):
+        expr = convert_matrix(matrix)
 
     return expr
 
@@ -61,6 +66,20 @@ class MathErrorListener(ErrorListener):
         else:
             err = fmt % ("I don't understand this", self.src, marker)
         raise Exception(err)
+
+def convert_matrix(matrix):
+    row = matrix.matrix_row()
+    tmp = []
+    rows = 0;
+    for r in row:
+        tmp.append([]);
+        for a in r.atom():
+            tmp[rows].append(convert_atom(a))
+        rows = rows + 1
+
+    #return the matrix
+    return sympy.Matrix(tmp)
+
 
 def convert_relation(rel):
     if rel.expr():

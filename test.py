@@ -155,7 +155,8 @@ GOOD_PAIRS = [
     ("\\binom{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) ),
     ("\\choose{16}{2}", binomial(16,2) ),
     ("\\choose{x}{y}", binomial(x,y) ),
-    ("\\choose{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) )
+    ("\\choose{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) ),
+    ("\\begin{matrix}1&2\\\\3&4\\end{matrix}", Matrix([[1,2],[3,4]]))
 ]
 
 # These bad latex strings should raise an exception when parsed

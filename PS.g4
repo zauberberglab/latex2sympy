@@ -65,8 +65,12 @@ CMD_CHOOSE: '\\choose';
 CMD_MATHIT: '\\mathit';
 
 //matrix test
-CMD_MATRIX_START: '\\begin{matrix}';
-CMD_MATRIX_END: '\\end{matrix}';
+MATRIX_TYPE_MATRIX: 'matrix';
+MATRIX_TYPE_PMATRIX: 'pmatrix';
+MATRIX_TYPE_BMATRIX: 'bmatrix';
+MATRIX_TYPES: MATRIX_TYPE_MATRIX | MATRIX_TYPE_PMATRIX | MATRIX_TYPE_BMATRIX;
+CMD_MATRIX_START: '\\begin' L_BRACE MATRIX_TYPES R_BRACE;
+CMD_MATRIX_END: '\\end' L_BRACE MATRIX_TYPES R_BRACE;
 MATRIX_DEL_COL: '&';
 MATRIX_DEL_ROW: '\\\\';
 
@@ -109,7 +113,7 @@ matrix:
     CMD_MATRIX_END;
 
 matrix_row:
-    (expr MATRIX_DEL_COL)* expr;
+    expr (MATRIX_DEL_COL expr)*;
 
 relation:
     relation (EQUAL | LT | LTE | GT | GTE) relation

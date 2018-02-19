@@ -194,7 +194,10 @@ group:
     | L_LEFT L_BRACE expr R_RIGHT R_BRACE;
 
 
-abs_group: BAR expr BAR;
+abs_group:
+    BAR expr BAR
+    | L_LEFT BAR expr R_RIGHT BAR;
+
 
 //indicate an accent
 accent:

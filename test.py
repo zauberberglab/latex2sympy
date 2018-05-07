@@ -166,6 +166,10 @@ GOOD_PAIRS = [
     ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([sqrt(x),sin(theta)])),
     ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1,2],[3,4]])),
     ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1,2],[3,4]])),
+    ("[!value_1!]", Symbol('value_1')),
+    ("4\\cdot[!value_1!]", 4*Symbol('value_1')),
+    ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha')*Symbol('alpha')),
+    ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1')*Symbol('value_2')/Symbol('a')*x**2)
 ]
 
 # These bad latex strings should raise an exception when parsed

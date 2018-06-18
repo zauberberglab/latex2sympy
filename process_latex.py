@@ -454,6 +454,8 @@ def convert_func(func):
         return handle_sum_or_prod(func, "product")
     elif func.FUNC_LIM():
         return handle_limit(func)
+    elif func.FUNC_EXP():
+        return handle_exp(func)
 
 def convert_func_arg(arg):
     if hasattr(arg, 'expr'):
@@ -531,6 +533,16 @@ def handle_limit(func):
     content     = convert_mp(func.mp())
 
     return sympy.Limit(content, var, approaching, direction)
+
+def handle_exp(func):
+    if func.supexpr():
+        if func.supexpr().expr(): # ^{expr}
+            exp_arg = convert_expr(func.supexpr().expr())
+        else: # ^atom
+            exp_arg = convert_atom(func.supexpr().atom())
+    else:
+        exp_arg = 1
+    return sympy.exp(exp_arg)
 
 def get_differential_var(d):
     text = get_differential_var_str(d.getText())

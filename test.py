@@ -169,7 +169,12 @@ GOOD_PAIRS = [
     ("[!value_1!]", Symbol('value_1')),
     ("4\\cdot[!value_1!]", 4*Symbol('value_1')),
     ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha')*Symbol('alpha')),
-    ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1')*Symbol('value_2')/Symbol('a')*x**2)
+    ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1')*Symbol('value_2')/Symbol('a')*x**2),
+    ("e^3", exp(3)),
+    ("e^x", exp(x)),
+    ("e^{x+y}", exp(x+y)),
+    ("\\sin(x)*e^x", sin(x)*exp(x)),
+    ("e",exp(1))
 ]
 
 # These bad latex strings should raise an exception when parsed

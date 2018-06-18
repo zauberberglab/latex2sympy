@@ -85,7 +85,8 @@ COLON: ':';
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
 
-LETTER: [a-zA-Z];
+FUNC_EXP: 'e';
+LETTER: [a-df-zA-Z];//exclude e for exp
 fragment DIGIT: [0-9];
 NUMBER:
     DIGIT+ (',' DIGIT DIGIT DIGIT)*
@@ -210,7 +211,7 @@ accent:
 atom: (LETTER | SYMBOL | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit | PLACEHOLDER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
-mathit_text: LETTER*;
+mathit_text: (LETTER | FUNC_EXP)+;
 
 frac:
     CMD_FRAC L_BRACE
@@ -259,7 +260,8 @@ func:
     | (FUNC_SUM | FUNC_PROD)
     (subeq supexpr | supexpr subeq)
     mp
-    | FUNC_LIM limit_sub mp;
+    | FUNC_LIM limit_sub mp
+    | FUNC_EXP supexpr?;
 
 args: (expr ',' args) | expr;
 

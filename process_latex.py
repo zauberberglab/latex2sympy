@@ -310,6 +310,10 @@ def convert_atom(atom):
     elif atom.mathit():
         text = rule2text(atom.mathit().mathit_text())
         return sympy.Symbol(text)
+    elif atom.PLACEHOLDER():
+        name = atom.PLACEHOLDER().getText()[2:]
+        name = name[0:len(name)-2]
+        return sympy.Symbol(name)
 
 def rule2text(ctx):
     stream = ctx.start.getInputStream()

@@ -101,6 +101,9 @@ BANG: '!';
 
 SYMBOL: '\\' [a-zA-Z]+;
 
+//PLACEHOLDER in one go
+PLACEHOLDER: '[!'[a-zA-Z][a-zA-Z0-9_]*'!]';
+
 //collection of accents
 accent_symbol:
     ACCENT_BAR | ACCENT_OVERLINE;
@@ -204,7 +207,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER | SYMBOL | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit;
+atom: (LETTER | SYMBOL | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit | PLACEHOLDER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: LETTER*;

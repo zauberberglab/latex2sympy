@@ -147,7 +147,7 @@ GOOD_PAIRS = [
     ("\\frac{\\sin(x)}{\\overline{x}_n}", sin(Symbol('x'))/Symbol('xbar_{n}')),
     ("2\\bar{x}", 2*Symbol('xbar')),
     ("2\\bar{x}_n", 2*Symbol('xbar_{n}')),
-    ("\\sin\\left(\\theta\\right)", sin(theta)),
+    ("\\sin\\left(\\theta\\right) \cdot4", sin(theta)*4),
     ("\\ln\\left(\\theta\\right)", _log(theta, E)),
     ("\\ln\\left(x-\\theta\\right)", _log(x-theta, E)),
     ("\\ln\\left(\\left(x-\\theta\\right)\\right)", _log(x-theta, E)),

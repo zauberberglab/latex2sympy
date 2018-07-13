@@ -240,7 +240,7 @@ func_normal:
 func:
     func_normal
     (subexpr? supexpr? | supexpr? subexpr?)
-    (L_PAREN func_arg R_PAREN | func_arg_noparens)
+    (L_LEFT? L_PAREN func_arg R_RIGHT? R_PAREN | func_arg_noparens)
 
     //Do not do arbitraty functions but see as multiplications
     /*| (LETTER | SYMBOL) subexpr? // e.g. f(x)

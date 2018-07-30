@@ -272,6 +272,8 @@ def convert_atom(atom):
         s = atom.SYMBOL().getText()[1:]
         if s == "infty":
             return sympy.oo
+        elif s == 'pi':
+            return sympy.pi
         else:
             if atom.subexpr():
                 subscript = None

@@ -69,7 +69,9 @@ GOOD_PAIRS = [
     ("||x||", _Abs(Abs(x))),
     ("|x||y|", _Abs(x)*_Abs(y)),
     ("||x||y||", _Abs(_Abs(x)*_Abs(y))),
-    ("\pi^{|xy|}", Symbol('pi')**_Abs(x*y)),
+    ("\\pi^{|xy|}", pi**_Abs(x*y)),
+    ("\\frac{\\pi}{3}", pi/3),
+    ("\\sin{\\frac{\\pi}{2}}", sin(pi/2) ),
     ("\\int x dx", Integral(x, x)),
     ("\\int x d\\theta", Integral(x, theta)),
     ("\\int (x^2 - y)dx", Integral(x**2 - y, x)),
@@ -232,7 +234,8 @@ for s, eq in GOOD_PAIRS:
     try:
         parsed = process_sympy(s)
         value = eq - parsed
-        if parsed != eq and value != 0:
+        value_simp = simplify(value)
+        if parsed != eq and value != 0 and value_simp != 0:
             print("ERROR: \"%s\" did not parse to %s but parsed to %s" % (s, eq, parsed))
             print("diff: %s and simplified: %s" % (value, value_simp))
         else:

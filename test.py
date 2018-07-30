@@ -72,6 +72,8 @@ GOOD_PAIRS = [
     ("\\pi^{|xy|}", pi**_Abs(x*y)),
     ("\\frac{\\pi}{3}", pi/3),
     ("\\sin{\\frac{\\pi}{2}}", sin(pi/2) ),
+    ("a+bI", a+I*b ),
+    ("e^{I\\pi}", -1 ),
     ("\\int x dx", Integral(x, x)),
     ("\\int x d\\theta", Integral(x, theta)),
     ("\\int (x^2 - y)dx", Integral(x**2 - y, x)),

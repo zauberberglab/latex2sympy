@@ -260,6 +260,9 @@ def convert_comp(comp):
 def convert_atom(atom):
     if atom.LETTER():
         subscriptName = ''
+        s = atom.LETTER().getText()
+        if s == "I":
+            return sympy.I
         if atom.subexpr():
             subscript = None
             if atom.subexpr().expr():           # subscript is expr

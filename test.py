@@ -44,6 +44,8 @@ GOOD_PAIRS = [
     ("\\sin a \\cos b", _Mul(sin(a), cos(b))),
     ("\\sin \\cos \\theta", sin(cos(theta))),
     ("\\sin(\\cos \\theta)", sin(cos(theta))),
+    ("\\cos^2(x)", cos(x)**2),
+    ("\\cos(x)^2", cos(x)**2),
     ("\\frac{a}{b}", a / b),
     ("\\frac{a + b}{c}", _Mul(a + b, _Pow(c,-1))),
     ("\\frac{7}{3}", _Mul(7, _Pow(3,-1))),

@@ -270,7 +270,7 @@ def convert_atom(atom):
             else:                               # subscript is atom
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = '_{' + StrPrinter().doprint(subscript) + '}'
-        return sympy.Symbol(atom.LETTER().getText() + subscriptName)
+        return sympy.Symbol(atom.LETTER().getText() + subscriptName, real=True)
     elif atom.SYMBOL():
         s = atom.SYMBOL().getText()[1:]
         if s == "infty":
@@ -286,7 +286,7 @@ def convert_atom(atom):
                     subscript = convert_atom(atom.subexpr().atom())
                 subscriptName = StrPrinter().doprint(subscript)
                 s += '_{' + subscriptName + '}'
-            return sympy.Symbol(s)
+            return sympy.Symbol(s, real=True)
     elif atom.accent():
         # get name for accent
         name = atom.accent().start.text[1:]
@@ -305,20 +305,20 @@ def convert_atom(atom):
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = StrPrinter().doprint(subscript)
             s += '_{' + subscriptName + '}'
-        return sympy.Symbol(s)
+        return sympy.Symbol(s, real=True)
     elif atom.NUMBER():
         s = atom.NUMBER().getText().replace(",", "")
         return sympy.Number(s)
     elif atom.DIFFERENTIAL():
         var = get_differential_var(atom.DIFFERENTIAL())
-        return sympy.Symbol('d' + var.name)
+        return sympy.Symbol('d' + var.name, real=True)
     elif atom.mathit():
         text = rule2text(atom.mathit().mathit_text())
-        return sympy.Symbol(text)
+        return sympy.Symbol(text, real=True)
     elif atom.PLACEHOLDER():
         name = atom.PLACEHOLDER().getText()[2:]
         name = name[0:len(name)-2]
-        return sympy.Symbol(name)
+        return sympy.Symbol(name, real=True)
 
 def rule2text(ctx):
     stream = ctx.start.getInputStream()
@@ -348,7 +348,7 @@ def convert_frac(frac):
             wrt = wrt[1:]
 
     if diff_op or partial_op:
-        wrt = sympy.Symbol(wrt)
+        wrt = sympy.Symbol(wrt, real=True)
         if (diff_op and frac.upper.start == frac.upper.stop and
             frac.upper.start.type == PSLexer.LETTER and
             frac.upper.start.text == 'd'):
@@ -484,15 +484,15 @@ def handle_integral(func):
             s = str(sym)
             if len(s) > 1 and s[0] == 'd':
                 if s[1] == '\\':
-                    int_var = sympy.Symbol(s[2:])
+                    int_var = sympy.Symbol(s[2:], real=True)
                 else:
-                    int_var = sympy.Symbol(s[1:])
+                    int_var = sympy.Symbol(s[1:], real=True)
                 int_sym = sym
         if int_var:
             integrand = integrand.subs(int_sym, 1)
         else:
             # Assume dx by default
-            int_var = sympy.Symbol('x')
+            int_var = sympy.Symbol('x', real=True)
 
     if func.subexpr():
         if func.subexpr().atom():
@@ -525,11 +525,11 @@ def handle_sum_or_prod(func, name):
 def handle_limit(func):
     sub = func.limit_sub()
     if sub.LETTER():
-        var = sympy.Symbol(sub.LETTER().getText())
+        var = sympy.Symbol(sub.LETTER().getText(), real=True)
     elif sub.SYMBOL():
-        var = sympy.Symbol(sub.SYMBOL().getText()[1:])
+        var = sympy.Symbol(sub.SYMBOL().getText()[1:], real=True)
     else:
-        var = sympy.Symbol('x')
+        var = sympy.Symbol('x', real=True)
     if sub.SUB():
         direction = "-"
     else:
@@ -551,7 +551,7 @@ def handle_exp(func):
 
 def get_differential_var(d):
     text = get_differential_var_str(d.getText())
-    return sympy.Symbol(text)
+    return sympy.Symbol(text, real=True)
 
 def get_differential_var_str(text):
     for i in range(1, len(text)):

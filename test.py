@@ -1,9 +1,19 @@
 from sympy import *
-from sympy.abc import x,y,z,a,b,c,f,t,k,n
+# from sympy.abc import x,y,z,a,b,c,f,t,k,n
+x = Symbol('x', real=True)
+y = Symbol('y', real=True)
+z = Symbol('z', real=True)
+a = Symbol('a', real=True)
+b = Symbol('b', real=True)
+c = Symbol('c', real=True)
+f = Symbol('f', real=True)
+t = Symbol('t', real=True)
+k = Symbol('k', real=True)
+n = Symbol('n', real=True)
 
 from process_latex import process_sympy
 
-theta = Symbol('theta')
+theta = Symbol('theta', real=True)
 
 # shorthand definitions
 def _Add(a, b):
@@ -97,13 +107,13 @@ GOOD_PAIRS = [
     ("\\int \\frac{1}{a} + \\frac{1}{b} dx", Integral(_Add(_Pow(a,-1), Pow(b,-1)),x)),
     ("\\int \\frac{3 \cdot d\\theta}{\\theta}", Integral(3*_Pow(theta,-1), theta)),
     ("\\int \\frac{1}{x} + 1 dx", Integral(_Add(_Pow(x, -1), 1), x)),
-    ("x_0", Symbol('x_{0}')),
-    ("x_{1}", Symbol('x_{1}')),
-    ("x_a", Symbol('x_{a}')),
-    ("x_{b}", Symbol('x_{b}')),
-    ("h_\\theta", Symbol('h_{theta}')),
-    ("h_{\\theta}", Symbol('h_{theta}')),
-    # ("h_{\\theta}(x_0, x_1)", Symbol('h_{theta}')(Symbol('x_{0}'), Symbol('x_{1}'))),
+    ("x_0", Symbol('x_{0}', real=True)),
+    ("x_{1}", Symbol('x_{1}', real=True)),
+    ("x_a", Symbol('x_{a}', real=True)),
+    ("x_{b}", Symbol('x_{b}', real=True)),
+    ("h_\\theta", Symbol('h_{theta}', real=True)),
+    ("h_{\\theta}", Symbol('h_{theta}', real=True)),
+    # ("h_{\\theta}(x_0, x_1)", Symbol('h_{theta}', real=True)(Symbol('x_{0}', real=True), Symbol('x_{1}', real=True))),
     ("x!", _factorial(x)),
     ("100!", _factorial(100)),
     ("\\theta!", _factorial(theta)),
@@ -120,10 +130,10 @@ GOOD_PAIRS = [
     ("x \\leq y", LessThan(x, y)),
     ("x > y", StrictGreaterThan(x, y)),
     ("x \\geq y", GreaterThan(x, y)),
-    ("\\mathit{x}", Symbol('x')),
-    ("\\mathit{test}", Symbol('test')),
-    ("\\mathit{TEST}", Symbol('TEST')),
-    ("\\mathit{HELLO world}", Symbol('HELLO world')),
+    ("\\mathit{x}", Symbol('x', real=True)),
+    ("\\mathit{test}", Symbol('test', real=True)),
+    ("\\mathit{TEST}", Symbol('TEST', real=True)),
+    ("\\mathit{HELLO world}", Symbol('HELLO world', real=True)),
     ("\\sum_{k = 1}^{3} c", Sum(c, (k, 1, 3))),
     ("\\sum_{k = 1}^3 c", Sum(c, (k, 1, 3))),
     ("\\sum^{3}_{k = 1} c", Sum(c, (k, 1, 3))),
@@ -147,12 +157,12 @@ GOOD_PAIRS = [
     ("[x]", x),
     ("[a + b]", _Add(a, b)),
     ("\\frac{d}{dx} [ \\tan x ]", Derivative(tan(x), x)),
-    ("2\\overline{x}", 2*Symbol('xbar')),
-    ("2\\overline{x}_n", 2*Symbol('xbar_{n}')),
-    ("\\frac{x}{\\overline{x}_n}", x/Symbol('xbar_{n}')),
-    ("\\frac{\\sin(x)}{\\overline{x}_n}", sin(Symbol('x'))/Symbol('xbar_{n}')),
-    ("2\\bar{x}", 2*Symbol('xbar')),
-    ("2\\bar{x}_n", 2*Symbol('xbar_{n}')),
+    ("2\\overline{x}", 2*Symbol('xbar', real=True)),
+    ("2\\overline{x}_n", 2*Symbol('xbar_{n}', real=True)),
+    ("\\frac{x}{\\overline{x}_n}", x/Symbol('xbar_{n}', real=True)),
+    ("\\frac{\\sin(x)}{\\overline{x}_n}", sin(Symbol('x', real=True))/Symbol('xbar_{n}', real=True)),
+    ("2\\bar{x}", 2*Symbol('xbar', real=True)),
+    ("2\\bar{x}_n", 2*Symbol('xbar_{n}', real=True)),
     ("\\sin\\left(\\theta\\right) \cdot4", sin(theta)*4),
     ("\\ln\\left(\\theta\\right)", _log(theta, E)),
     ("\\ln\\left(x-\\theta\\right)", _log(x-theta, E)),
@@ -163,19 +173,19 @@ GOOD_PAIRS = [
     ("1-f(x)", 1-f*x ),
     ("\\binom{16}{2}", binomial(16,2) ),
     ("\\binom{x}{y}", binomial(x,y) ),
-    ("\\binom{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) ),
+    ("\\binom{\\theta}{\\gamma}", binomial(theta,Symbol('gamma', real=True)) ),
     ("\\choose{16}{2}", binomial(16,2) ),
     ("\\choose{x}{y}", binomial(x,y) ),
-    ("\\choose{\\theta}{\\gamma}", binomial(theta,Symbol('gamma')) ),
+    ("\\choose{\\theta}{\\gamma}", binomial(theta,Symbol('gamma', real=True)) ),
     ("\\begin{matrix}1&2\\\\3&4\\end{matrix}", Matrix([[1,2],[3,4]])),
     ("\\begin{matrix}x&x^2\\\\\sqrt{x}&x\\end{matrix}", Matrix([[x,x**2],[sqrt(x),x]])),
     ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([sqrt(x),sin(theta)])),
     ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1,2],[3,4]])),
     ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1,2],[3,4]])),
-    ("[!value_1!]", Symbol('value_1')),
-    ("4\\cdot[!value_1!]", 4*Symbol('value_1')),
-    ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha')*Symbol('alpha')),
-    ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1')*Symbol('value_2')/Symbol('a')*x**2),
+    ("[!value_1!]", Symbol('value_1', real=True)),
+    ("4\\cdot[!value_1!]", 4*Symbol('value_1', real=True)),
+    ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha', real=True)*Symbol('alpha', real=True)),
+    ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1', real=True)*Symbol('value_2', real=True)/Symbol('a', real=True)*x**2),
     ("e^3", exp(3)),
     ("e^x", exp(x)),
     ("e^{x+y}", exp(x+y)),

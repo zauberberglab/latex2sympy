@@ -126,7 +126,7 @@ relation:
 equality:
     expr EQUAL expr;
 
-expr: additive | matrix;
+expr: additive;
 
 additive:
     additive (ADD | SUB) additive
@@ -180,14 +180,16 @@ comp:
     | func
     | atom
     | frac
-    | binom;
+    | binom
+    | matrix;
 
 comp_nofunc:
     group
     | abs_group
     | atom
     | frac
-    | binom;
+    | binom
+    | matrix;
 
 group:
     L_PAREN expr R_PAREN

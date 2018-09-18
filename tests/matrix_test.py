@@ -22,3 +22,11 @@ print("latex: %s to math: %s" %(latex,math))
 latex = "\\begin{matrix}x\\\\y\\end{matrix}"
 math = process_sympy(latex)
 print("latex: %s to math: %s" %(latex,math))
+
+latex = "2\\cdot\\begin{matrix}x\\\\y\\end{matrix}"
+math = process_sympy(latex)
+print("latex: %s to math: %s" %(latex,math))
+
+latex = "2\\cdot\\begin{matrix}x\\\\y\\end{matrix} + \\begin{matrix}2\\\\3\\end{matrix}"
+math = process_sympy(latex)
+print("latex: %s to math: %s" %(latex,math))

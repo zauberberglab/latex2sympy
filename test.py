@@ -190,7 +190,10 @@ GOOD_PAIRS = [
     ("e^x", exp(x)),
     ("e^{x+y}", exp(x+y)),
     ("\\sin(x)*e^x", sin(x)*exp(x)),
-    ("e",exp(1))
+    ("e",exp(1)),
+    ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", theta*Matrix([[1,2],[3,4]])),
+    ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", theta*Matrix([[1],[3]]) + Matrix([[1],[-2]])),
+    ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", theta*Matrix([[3],[-2]])),
 ]
 
 # These bad latex strings should raise an exception when parsed

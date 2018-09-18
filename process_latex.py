@@ -13,6 +13,8 @@ except:
 
 from sympy.printing.str import StrPrinter
 
+# default process normal algebra
+LINALG_PROCESSING = False
 
 def process_sympy(sympy):
 
@@ -81,10 +83,13 @@ def convert_relation(rel):
 def convert_expr(expr):
     if expr.additive():
         return convert_add(expr.additive())
-    elif expr.matrix():
-        return convert_matrix(expr.matrix())
 
 def convert_matrix(matrix):
+    # set to linag processing
+    global LINALG_PROCESSING
+    LINALG_PROCESSING = True
+
+    # build matrix
     row = matrix.matrix_row()
     tmp = []
     rows = 0;
@@ -101,11 +106,21 @@ def convert_add(add):
     if add.ADD():
        lh = convert_add(add.additive(0))
        rh = convert_add(add.additive(1))
-       return sympy.Add(lh, rh, evaluate=False)
+
+       # if linalg processing keep matrix mutable
+       if LINALG_PROCESSING:
+           return lh+rh
+       else:
+           return sympy.Add(lh, rh, evaluate=False)
     elif add.SUB():
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
-        return sympy.Add(lh, -1 * rh, evaluate=False)
+
+        # if linalg processing keep matrix mutable
+        if LINALG_PROCESSING:
+            return lh-rh
+        else:
+            return sympy.Add(lh, -1 * rh, evaluate=False)
     else:
         return convert_mp(add.mp())
 
@@ -120,7 +135,12 @@ def convert_mp(mp):
     if mp.MUL() or mp.CMD_TIMES() or mp.CMD_CDOT():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
-        return sympy.Mul(lh, rh, evaluate=False)
+
+        # if linalg processing keep matrix mutable
+        if LINALG_PROCESSING:
+            return lh*rh
+        else:
+            return sympy.Mul(lh, rh, evaluate=False)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
@@ -155,7 +175,7 @@ def convert_postfix_list(arr, i=0):
         raise Exception("Index out of bounds")
 
     res = convert_postfix(arr[i])
-    if isinstance(res, sympy.Expr):
+    if isinstance(res, sympy.Expr) or isinstance(res, sympy.Matrix):
         if i == len(arr) - 1:
             return res # nothing to multiply by
         else:
@@ -169,8 +189,12 @@ def convert_postfix_list(arr, i=0):
                     # symbol in between is 'x', treat as multiplication.
                     if len(left_syms) == 0 and len(right_syms) == 0 and str(res) == "x":
                         return convert_postfix_list(arr, i + 1)
+
             # multiply by next
-            return sympy.Mul(res, convert_postfix_list(arr, i + 1), evaluate=False)
+            if LINALG_PROCESSING:
+                return res*convert_postfix_list(arr, i + 1)
+            else:
+                return sympy.Mul(res, convert_postfix_list(arr, i + 1), evaluate=False)
     else: # must be derivative
         wrt = res[0]
         if i == len(arr) - 1:
@@ -254,6 +278,8 @@ def convert_comp(comp):
         return convert_frac(comp.frac())
     elif comp.binom():
         return convert_binom(comp.binom())
+    elif comp.matrix():
+        return convert_matrix(comp.matrix())
     elif comp.func():
         return convert_func(comp.func())
 

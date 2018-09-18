@@ -35,6 +35,10 @@ def process_sympy(sympy):
     relation = parser.math().relation()
     expr = convert_relation(relation)
 
+    # reset the setting
+    global LINALG_PROCESSING
+    LINALG_PROCESSING = False
+
     return expr
 
 class MathErrorListener(ErrorListener):
@@ -144,7 +148,10 @@ def convert_mp(mp):
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
-        return sympy.Mul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
+        if LINALG_PROCESSING:
+            return lh/rh
+        else:
+            return sympy.Mul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
     else:
         if hasattr(mp, 'unary'):
             return convert_unary(mp.unary())
@@ -166,7 +173,10 @@ def convert_unary(unary):
     if unary.ADD():
         return convert_unary(nested_unary)
     elif unary.SUB():
-        return sympy.Mul(-1, convert_unary(nested_unary), evaluate=False)
+        if LINALG_PROCESSING:
+            return -1 * convert_unary(nested_unary)
+        else:
+            return sympy.Mul(-1, convert_unary(nested_unary), evaluate=False)
     elif postfix:
         return convert_postfix_list(postfix)
 
@@ -191,10 +201,11 @@ def convert_postfix_list(arr, i=0):
                         return convert_postfix_list(arr, i + 1)
 
             # multiply by next
+            rh = convert_postfix_list(arr, i + 1)
             if LINALG_PROCESSING:
-                return res*convert_postfix_list(arr, i + 1)
+                return res*rh
             else:
-                return sympy.Mul(res, convert_postfix_list(arr, i + 1), evaluate=False)
+                return sympy.Mul(res, rh, evaluate=False)
     else: # must be derivative
         wrt = res[0]
         if i == len(arr) - 1:
@@ -395,7 +406,10 @@ def convert_frac(frac):
 
     expr_top = convert_expr(frac.upper)
     expr_bot = convert_expr(frac.lower)
-    return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
+    if LINALG_PROCESSING:
+        return expr_top/expr_bot
+    else:
+        return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
 
 def convert_binom(binom):
     atom_top = convert_atom(binom.upper)

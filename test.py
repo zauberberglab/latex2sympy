@@ -195,6 +195,8 @@ GOOD_PAIRS = [
     ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", theta*Matrix([[1],[3]]) + Matrix([[1],[-2]])),
     ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", theta*Matrix([[3],[-2]])),
     ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", theta*Matrix([[_Mul(1, _Pow(9,-1)),_Mul(2, _Pow(9,-1))],[_Mul(3, _Pow(9,-1)),_Mul(4, _Pow(9,-1))]])),
+    ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
+    ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])])
 ]
 
 # These bad latex strings should raise an exception when parsed
@@ -251,8 +253,16 @@ for s, eq in GOOD_PAIRS:
     total_good += 1
     try:
         parsed = process_sympy(s)
-        value = eq - parsed
-        value_simp = simplify(value)
+        if isinstance(eq,(list,)):
+            check = eq == parsed
+            if check:
+                value = 0
+            else:
+                value = 1
+        else:
+            value = eq - parsed
+            value_simp = simplify(value)
+
         if parsed != eq and value != 0 and value_simp != 0:
             print("ERROR: \"%s\" did not parse to %s but parsed to %s" % (s, eq, parsed))
             print("diff: %s and simplified: %s" % (value, value_simp))

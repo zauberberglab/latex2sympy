@@ -81,6 +81,8 @@ ACCENT_BAR:  '\\bar';
 UNDERSCORE: '_';
 CARET: '^';
 COLON: ':';
+SEMICOLON: ';';
+COMMA: ',';
 
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
@@ -109,7 +111,7 @@ PLACEHOLDER: '[!'[a-zA-Z][a-zA-Z0-9_]*'!]';
 accent_symbol:
     ACCENT_BAR | ACCENT_OVERLINE;
 
-math: relation;
+math: relation_list;
 
 matrix:
     CMD_MATRIX_START
@@ -122,6 +124,10 @@ matrix_row:
 relation:
     relation (EQUAL | LT | LTE | GT | GTE) relation
     | expr;
+
+relation_list:
+    relation (SEMICOLON relation)*
+    | relation (COMMA relation)*;
 
 equality:
     expr EQUAL expr;

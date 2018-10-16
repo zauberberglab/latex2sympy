@@ -32,14 +32,34 @@ def process_sympy(sympy):
     parser.removeErrorListeners()
     parser.addErrorListener(matherror)
 
-    relation = parser.math().relation()
-    expr = convert_relation(relation)
+    # get the relation_list
+    relation_list = None
+    relation_list = parser.math().relation_list()
+
+    # process the 'list'
+    return_data = None
+    if relation_list:
+        return_data = []
+        # go over list items
+        for list_item in relation_list.relation():
+            expr = convert_relation(list_item)
+            return_data.append(expr)
+
+    # if only one item -> just return item without list
+    if return_data and len(return_data) == 1:
+        return_data = return_data[0]
+
+    # else:
+    #     relation = parser.math().relation()
+    #     print('relation',relation)
+    #     return_data = convert_relation(relation)
+    #     print('else',return_data)
 
     # reset the setting
     global LINALG_PROCESSING
     LINALG_PROCESSING = False
 
-    return expr
+    return return_data
 
 class MathErrorListener(ErrorListener):
     def __init__(self, src):

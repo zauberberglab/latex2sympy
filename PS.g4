@@ -15,6 +15,8 @@ L_PAREN: '(';
 R_PAREN: ')';
 L_BRACE: '{';
 R_BRACE: '}';
+L_BRACE_VISUAL: '\\{';
+R_BRACE_VISUAL: '\\}';
 L_BRACKET: '[';
 R_BRACKET: ']';
 L_LEFT: '\\left';
@@ -111,7 +113,7 @@ PLACEHOLDER: '[!'[a-zA-Z][a-zA-Z0-9_]*'!]';
 accent_symbol:
     ACCENT_BAR | ACCENT_OVERLINE;
 
-math: relation_list;
+math: relation | relation_list;
 
 matrix:
     CMD_MATRIX_START
@@ -126,8 +128,15 @@ relation:
     | expr;
 
 relation_list:
-    relation (SEMICOLON relation)*
-    | relation (COMMA relation)*;
+    relation_list_content
+    | L_BRACKET relation_list_content R_BRACKET
+    | L_BRACE_VISUAL relation_list_content R_BRACE_VISUAL
+    | L_LEFT L_BRACKET relation_list_content R_RIGHT R_BRACKET
+    | L_LEFT L_BRACE_VISUAL relation_list_content R_RIGHT R_BRACE_VISUAL;
+
+relation_list_content:
+    relation COMMA relation (COMMA relation)*
+    | relation SEMICOLON relation (SEMICOLON relation)*;
 
 equality:
     expr EQUAL expr;

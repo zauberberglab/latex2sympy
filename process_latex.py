@@ -32,28 +32,24 @@ def process_sympy(sympy):
     parser.removeErrorListeners()
     parser.addErrorListener(matherror)
 
-    # get the relation_list
-    relation_list = None
-    relation_list = parser.math().relation_list()
-
-    # process the 'list'
+    # process the input
     return_data = None
-    if relation_list:
+    math = parser.math()
+
+    # if a list
+    if math.relation_list():
         return_data = []
+
         # go over list items
+        relation_list = math.relation_list().relation_list_content()
         for list_item in relation_list.relation():
             expr = convert_relation(list_item)
             return_data.append(expr)
 
-    # if only one item -> just return item without list
-    if return_data and len(return_data) == 1:
-        return_data = return_data[0]
-
-    # else:
-    #     relation = parser.math().relation()
-    #     print('relation',relation)
-    #     return_data = convert_relation(relation)
-    #     print('else',return_data)
+    # if not, do default
+    else:
+        relation = math.relation()
+        return_data = convert_relation(relation)
 
     # reset the setting
     global LINALG_PROCESSING

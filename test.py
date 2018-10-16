@@ -196,7 +196,9 @@ GOOD_PAIRS = [
     ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", theta*Matrix([[3],[-2]])),
     ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", theta*Matrix([[_Mul(1, _Pow(9,-1)),_Mul(2, _Pow(9,-1))],[_Mul(3, _Pow(9,-1)),_Mul(4, _Pow(9,-1))]])),
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
-    ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])])
+    ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
+    ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1])]),
+    ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix},\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1]), Matrix([1,1,1])]),
 ]
 
 # These bad latex strings should raise an exception when parsed
@@ -241,7 +243,9 @@ BAD_STRINGS = [
     "@","#","$","%","&","*",
     "\\",
     "~",
-    "\\frac{(2 + x}{1 - x)}"
+    "\\frac{(2 + x}{1 - x)}",
+    # because mix of COMMA and SEMICOLON
+    "\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix};\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\right\\}"
 ]
 
 total_good = 0

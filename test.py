@@ -167,6 +167,8 @@ GOOD_PAIRS = [
     ("\\ln\\left(\\theta\\right)", _log(theta, E)),
     ("\\ln\\left(x-\\theta\\right)", _log(x-theta, E)),
     ("\\ln\\left(\\left(x-\\theta\\right)\\right)", _log(x-theta, E)),
+    ("\\ln\\left(\\left[x-\\theta\\right]\\right)", _log(x-theta, E)),
+    ("\\ln\\left(\\left\\{x-\\theta\\right\\}\\right)", _log(x-theta, E)),
     ("\\ln\\left(\\left|x-\\theta\\right|\\right)", _log(_Abs(x-theta), E)),
     ("\\frac{1}{2}xy(x+y)", x*y*(x+y)/2 ),
     ("\\frac{1}{2}\\theta(x+y)", theta*(x+y)/2 ),
@@ -199,6 +201,9 @@ GOOD_PAIRS = [
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix},\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1]), Matrix([1,1,1])]),
+    ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right\\}", Matrix([1,2,3])),
+    ("\\left{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right}", Matrix([1,2,3])),
+    ("{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}}", Matrix([1,2,3])),
 ]
 
 # These bad latex strings should raise an exception when parsed

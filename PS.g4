@@ -213,7 +213,8 @@ group:
     | L_BRACE expr R_BRACE
     | L_LEFT L_PAREN expr R_RIGHT R_PAREN
     | L_LEFT L_BRACKET expr R_RIGHT R_BRACKET
-    | L_LEFT L_BRACE expr R_RIGHT R_BRACE;
+    | L_LEFT L_BRACE expr R_RIGHT R_BRACE
+    | L_LEFT L_BRACE_VISUAL expr R_RIGHT R_BRACE_VISUAL;
 
 
 abs_group:

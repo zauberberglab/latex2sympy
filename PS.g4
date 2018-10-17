@@ -130,6 +130,7 @@ relation:
 relation_list:
     relation_list_content
     | L_BRACKET relation_list_content R_BRACKET
+    | L_BRACE relation_list_content R_BRACE
     | L_BRACE_VISUAL relation_list_content R_BRACE_VISUAL
     | L_LEFT L_BRACKET relation_list_content R_RIGHT R_BRACKET
     | L_LEFT L_BRACE_VISUAL relation_list_content R_RIGHT R_BRACE_VISUAL;

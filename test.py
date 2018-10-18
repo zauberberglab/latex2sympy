@@ -167,6 +167,8 @@ GOOD_PAIRS = [
     ("\\ln\\left(\\theta\\right)", _log(theta, E)),
     ("\\ln\\left(x-\\theta\\right)", _log(x-theta, E)),
     ("\\ln\\left(\\left(x-\\theta\\right)\\right)", _log(x-theta, E)),
+    ("\\ln\\left(\\left[x-\\theta\\right]\\right)", _log(x-theta, E)),
+    ("\\ln\\left(\\left\\{x-\\theta\\right\\}\\right)", _log(x-theta, E)),
     ("\\ln\\left(\\left|x-\\theta\\right|\\right)", _log(_Abs(x-theta), E)),
     ("\\frac{1}{2}xy(x+y)", x*y*(x+y)/2 ),
     ("\\frac{1}{2}\\theta(x+y)", theta*(x+y)/2 ),
@@ -195,6 +197,13 @@ GOOD_PAIRS = [
     ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", theta*Matrix([[1],[3]]) + Matrix([[1],[-2]])),
     ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", theta*Matrix([[3],[-2]])),
     ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", theta*Matrix([[_Mul(1, _Pow(9,-1)),_Mul(2, _Pow(9,-1))],[_Mul(3, _Pow(9,-1)),_Mul(4, _Pow(9,-1))]])),
+    ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
+    ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
+    ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1])]),
+    ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix},\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1]), Matrix([1,1,1])]),
+    ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right\\}", Matrix([1,2,3])),
+    ("\\left{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right}", Matrix([1,2,3])),
+    ("{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}}", Matrix([1,2,3])),
 ]
 
 # These bad latex strings should raise an exception when parsed
@@ -239,7 +248,9 @@ BAD_STRINGS = [
     "@","#","$","%","&","*",
     "\\",
     "~",
-    "\\frac{(2 + x}{1 - x)}"
+    "\\frac{(2 + x}{1 - x)}",
+    # because mix of COMMA and SEMICOLON
+    "\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix};\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\right\\}"
 ]
 
 total_good = 0
@@ -251,8 +262,16 @@ for s, eq in GOOD_PAIRS:
     total_good += 1
     try:
         parsed = process_sympy(s)
-        value = eq - parsed
-        value_simp = simplify(value)
+        if isinstance(eq,(list,)):
+            check = eq == parsed
+            if check:
+                value = 0
+            else:
+                value = 1
+        else:
+            value = eq - parsed
+            value_simp = simplify(value)
+
         if parsed != eq and value != 0 and value_simp != 0:
             print("ERROR: \"%s\" did not parse to %s but parsed to %s" % (s, eq, parsed))
             print("diff: %s and simplified: %s" % (value, value_simp))

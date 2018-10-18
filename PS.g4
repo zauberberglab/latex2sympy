@@ -15,6 +15,8 @@ L_PAREN: '(';
 R_PAREN: ')';
 L_BRACE: '{';
 R_BRACE: '}';
+L_BRACE_VISUAL: '\\{';
+R_BRACE_VISUAL: '\\}';
 L_BRACKET: '[';
 R_BRACKET: ']';
 L_LEFT: '\\left';
@@ -81,6 +83,8 @@ ACCENT_BAR:  '\\bar';
 UNDERSCORE: '_';
 CARET: '^';
 COLON: ':';
+SEMICOLON: ';';
+COMMA: ',';
 
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
@@ -109,7 +113,7 @@ PLACEHOLDER: '[!'[a-zA-Z][a-zA-Z0-9_]*'!]';
 accent_symbol:
     ACCENT_BAR | ACCENT_OVERLINE;
 
-math: relation;
+math: relation | relation_list;
 
 matrix:
     CMD_MATRIX_START
@@ -122,6 +126,18 @@ matrix_row:
 relation:
     relation (EQUAL | LT | LTE | GT | GTE) relation
     | expr;
+
+relation_list:
+    relation_list_content
+    | L_BRACKET relation_list_content R_BRACKET
+    | L_BRACE relation_list_content R_BRACE
+    | L_BRACE_VISUAL relation_list_content R_BRACE_VISUAL
+    | L_LEFT L_BRACKET relation_list_content R_RIGHT R_BRACKET
+    | L_LEFT L_BRACE_VISUAL relation_list_content R_RIGHT R_BRACE_VISUAL;
+
+relation_list_content:
+    relation COMMA relation (COMMA relation)*
+    | relation SEMICOLON relation (SEMICOLON relation)*;
 
 equality:
     expr EQUAL expr;
@@ -197,7 +213,8 @@ group:
     | L_BRACE expr R_BRACE
     | L_LEFT L_PAREN expr R_RIGHT R_PAREN
     | L_LEFT L_BRACKET expr R_RIGHT R_BRACKET
-    | L_LEFT L_BRACE expr R_RIGHT R_BRACE;
+    | L_LEFT L_BRACE expr R_RIGHT R_BRACE
+    | L_LEFT L_BRACE_VISUAL expr R_RIGHT R_BRACE_VISUAL;
 
 
 abs_group:

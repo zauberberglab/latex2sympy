@@ -189,10 +189,13 @@ def convert_unary(unary):
     if unary.ADD():
         return convert_unary(nested_unary)
     elif unary.SUB():
+        # do this first to determine whether LINALG is needed
+        tmp_convert_nested_unary = convert_unary(nested_unary)
+        # if linalg do simple multiplication
         if LINALG_PROCESSING:
-            return -1 * convert_unary(nested_unary)
+            return -1 * tmp_convert_nested_unary
         else:
-            return sympy.Mul(-1, convert_unary(nested_unary), evaluate=False)
+            return sympy.Mul(-1, tmp_convert_nested_unary, evaluate=False)
     elif postfix:
         return convert_postfix_list(postfix)
 

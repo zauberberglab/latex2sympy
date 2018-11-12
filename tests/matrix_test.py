@@ -30,3 +30,7 @@ print("latex: %s to math: %s" %(latex,math))
 latex = "2\\cdot\\begin{matrix}x\\\\y\\end{matrix} + \\begin{matrix}2\\\\3\\end{matrix}"
 math = process_sympy(latex)
 print("latex: %s to math: %s" %(latex,math))
+
+latex = "-2\\begin{matrix}1&2\\\\3&4\\end{matrix}"
+math = process_sympy(latex)
+print("latex: %s to math: %s" %(latex,math))

@@ -269,7 +269,7 @@ func:
     L_LEFT L_PAREN args R_RIGHT R_PAREN*/
 
     | FUNC_INT
-    (subexpr supexpr | supexpr subexpr)?
+    (subexpr supexpr | supexpr subexpr | (UNDERSCORE L_BRACE R_BRACE) (CARET L_BRACE R_BRACE) | (CARET L_BRACE R_BRACE) (UNDERSCORE L_BRACE R_BRACE) )?
     (additive? DIFFERENTIAL | frac | additive)
 
     | FUNC_SQRT

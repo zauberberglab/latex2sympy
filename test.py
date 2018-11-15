@@ -100,6 +100,8 @@ GOOD_PAIRS = [
     ("\\int_{a}^b x dx", Integral(x, (x, a, b))),
     ("\\int^{b}_a x dx", Integral(x, (x, a, b))),
     ("\\int_{a}^{b} x dx", Integral(x, (x, a, b))),
+    ("\\int_{  }^{}x dx", Integral(x, x)),
+    ("\\int^{  }_{ }x dx", Integral(x, x)),
     ("\\int^{b}_{a} x dx", Integral(x, (x, a, b))),
     # ("\\int_{f(a)}^{f(b)} f(z) dz", Integral(f(z), (z, f(a), f(b)))),
     ("\\int (x+a)", Integral(_Add(x,a), x)),

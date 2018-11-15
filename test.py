@@ -182,6 +182,7 @@ GOOD_PAIRS = [
     ("\\binom{16}{2}", binomial(16,2) ),
     ("\\binom{x}{y}", binomial(x,y) ),
     ("\\binom{\\theta}{\\gamma}", binomial(theta,Symbol('gamma', real=True)) ),
+    ("\\binom{16+2}{\\frac{4}{2}}", binomial(16+2,4/2) ),
     ("\\choose{16}{2}", binomial(16,2) ),
     ("\\choose{x}{y}", binomial(x,y) ),
     ("\\choose{\\theta}{\\gamma}", binomial(theta,Symbol('gamma', real=True)) ),

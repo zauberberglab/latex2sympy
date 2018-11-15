@@ -431,9 +431,10 @@ def convert_frac(frac):
         return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
 
 def convert_binom(binom):
-    atom_top = convert_atom(binom.upper)
-    atom_bot = convert_atom(binom.lower)
-    return sympy.binomial(atom_top, atom_bot)
+    expr_top = convert_expr(binom.upper)
+    expr_bot = convert_expr(binom.lower)
+    return sympy.binomial(expr_top, expr_bot)
+
 
 def convert_func(func):
     if func.func_normal():

@@ -242,9 +242,9 @@ frac:
 //a binomial experssion
 binom:
     (CMD_BINOM | CMD_CHOOSE) L_BRACE
-    upper=atom
+    upper=expr
     R_BRACE L_BRACE
-    lower=atom
+    lower=expr
     R_BRACE;
 
 func_normal:

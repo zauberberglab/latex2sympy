@@ -13,6 +13,8 @@ except:
 
 from sympy.printing.str import StrPrinter
 
+import hashlib
+
 # default process normal algebra
 LINALG_PROCESSING = False
 
@@ -374,7 +376,13 @@ def convert_atom(atom):
     elif atom.PLACEHOLDER():
         name = atom.PLACEHOLDER().getText()[2:]
         name = name[0:len(name)-2]
-        return sympy.Symbol(name, real=True)
+
+        # add hash to distinguish from regular symbols
+        hash = hashlib.md5(name.encode()).hexdigest()
+        symbol_name = name+hash
+
+        # return the symbol
+        return sympy.Symbol(symbol_name, real=True)
 
 def rule2text(ctx):
     stream = ctx.start.getInputStream()

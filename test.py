@@ -12,6 +12,7 @@ k = Symbol('k', real=True)
 n = Symbol('n', real=True)
 
 from process_latex import process_sympy
+import hashlib
 
 theta = Symbol('theta', real=True)
 
@@ -191,10 +192,10 @@ GOOD_PAIRS = [
     ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([sqrt(x),sin(theta)])),
     ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1,2],[3,4]])),
     ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1,2],[3,4]])),
-    ("[!value_1!]", Symbol('value_1', real=True)),
-    ("4\\cdot[!value_1!]", 4*Symbol('value_1', real=True)),
-    ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha', real=True)*Symbol('alpha', real=True)),
-    ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1', real=True)*Symbol('value_2', real=True)/Symbol('a', real=True)*x**2),
+    ("[!value_1!]", Symbol('value_1' + hashlib.md5('value_1'.encode()).hexdigest(), real=True)),
+    ("4\\cdot[!value_1!]", 4*Symbol('value_1' + hashlib.md5('value_1'.encode()).hexdigest(), real=True)),
+    ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha' + hashlib.md5('alpha'.encode()).hexdigest(), real=True)*Symbol('alpha', real=True)),
+    ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1' + hashlib.md5('value1'.encode()).hexdigest(), real=True)*Symbol('value_2' + hashlib.md5('value_2'.encode()).hexdigest(), real=True)/Symbol('a' + hashlib.md5('a'.encode()).hexdigest(), real=True)*x**2),
     ("e^3", exp(3)),
     ("e^x", exp(x)),
     ("e^{x+y}", exp(x+y)),

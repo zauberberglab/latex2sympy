@@ -192,19 +192,25 @@ GOOD_PAIRS = [
     ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([sqrt(x),sin(theta)])),
     ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1,2],[3,4]])),
     ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1,2],[3,4]])),
+
+    # placeholder parsing
     ("[!value_1!]", Symbol('value_1' + hashlib.md5('value_1'.encode()).hexdigest(), real=True)),
     ("4\\cdot[!value_1!]", 4*Symbol('value_1' + hashlib.md5('value_1'.encode()).hexdigest(), real=True)),
     ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha' + hashlib.md5('alpha'.encode()).hexdigest(), real=True)*Symbol('alpha', real=True)),
     ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1' + hashlib.md5('value1'.encode()).hexdigest(), real=True)*Symbol('value_2' + hashlib.md5('value_2'.encode()).hexdigest(), real=True)/Symbol('a' + hashlib.md5('a'.encode()).hexdigest(), real=True)*x**2),
+
+    # e parsing
     ("e^3", exp(3)),
     ("e^x", exp(x)),
     ("e^{x+y}", exp(x+y)),
     ("\\sin(x)*e^x", sin(x)*exp(x)),
     ("e",exp(1)),
-    ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", theta*Matrix([[1,2],[3,4]])),
-    ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", theta*Matrix([[1],[3]]) + Matrix([[1],[-2]])),
-    ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", theta*Matrix([[3],[-2]])),
-    ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", theta*Matrix([[_Mul(1, _Pow(9,-1)),_Mul(2, _Pow(9,-1))],[_Mul(3, _Pow(9,-1)),_Mul(4, _Pow(9,-1))]])),
+
+    # lin alg processing
+    ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta,Matrix([[1,2],[3,4]])) ),
+    ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", MatAdd(MatMul(theta, Matrix([[1],[3]])), -1*Matrix([[-1],[2]]) ) ),
+    ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", MatMul(MatMul(theta, Matrix([[1,0],[0,1]])), Matrix([3,-2])) ),
+    ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(MatMul(1,Pow(9,-1, evaluate=False), evaluate=False), MatMul(theta, Matrix([[1,2],[3,4]]) ) ) ),
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1])]),
@@ -212,6 +218,11 @@ GOOD_PAIRS = [
     ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right\\}", Matrix([1,2,3])),
     ("\\left{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right}", Matrix([1,2,3])),
     ("{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}}", Matrix([1,2,3])),
+
+    # placeholder replacement during latex2sympy with linalg forced
+    ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}\\cdot[!v!]", MatMul(Matrix([[1,2],[3,4]]), Matrix([1,2])), {'v': Matrix([1,2])}, True ),
+    ("[!M!]\\cdot[!v!]", MatMul(Matrix([[1,2],[3,4]]), Matrix([1,2])), {'M': Matrix([[1,2],[3,4]]), 'v': Matrix([1,2])}, True ),
+    ("\\begin{pmatrix}3&-1\\end{pmatrix}\\cdot[!M!]\\cdot[!v!]", MatMul(MatMul(Matrix([[3,-1]]), Matrix([[1,2],[3,4]])), Matrix([1,2])), {'M': Matrix([[1,2],[3,4]]), 'v': Matrix([1,2])}, True ),
 ]
 
 # These bad latex strings should raise an exception when parsed
@@ -265,11 +276,19 @@ total_good = 0
 passed_good = 0
 total = 0
 passed = 0
-for s, eq in GOOD_PAIRS:
+for s, eq, *args in GOOD_PAIRS:
+    # extra settings
+    force_linalg = False
+    placeholder_values = {}
+    if args:
+        placeholder_values = args[0] if len(args) > 0 else placeholder_values
+        force_linalg = args[1] if len(args) > 1 else force_linalg
+
+    # counters
     total += 1
     total_good += 1
     try:
-        parsed = process_sympy(s)
+        parsed = process_sympy(s, placeholder_values, force_linalg)
         if isinstance(eq,(list,)):
             check = eq == parsed
             if check:

@@ -17,11 +17,24 @@ import hashlib
 
 # default process normal algebra
 LINALG_PROCESSING = False
+PLACEHOLDER_VALUES = {}
 
-def process_sympy(sympy):
+def process_sympy(sympy, placeholder_values = {}, linalg = False):
 
+    # linalg settings
+    global LINALG_PROCESSING
+    if linalg:
+        LINALG_PROCESSING = True
+
+    # placeholder values
+    global PLACEHOLDER_VALUES
+    if len(placeholder_values) > 0:
+        PLACEHOLDER_VALUES = placeholder_values
+
+    # setup listner
     matherror = MathErrorListener(sympy)
 
+    # stream input
     stream = antlr4.InputStream(sympy)
     lex    = PSLexer(stream)
     lex.removeErrorListeners()
@@ -53,8 +66,9 @@ def process_sympy(sympy):
         relation = math.relation()
         return_data = convert_relation(relation)
 
+    # make sure setting can be returned before resetting
+    linalg = LINALG_PROCESSING
     # reset the setting
-    global LINALG_PROCESSING
     LINALG_PROCESSING = False
 
     return return_data
@@ -131,7 +145,7 @@ def convert_add(add):
 
        # if linalg processing keep matrix mutable
        if LINALG_PROCESSING:
-           return lh+rh
+           return sympy.MatAdd(lh,rh, evaluate=False)
        else:
            return sympy.Add(lh, rh, evaluate=False)
     elif add.SUB():
@@ -140,7 +154,7 @@ def convert_add(add):
 
         # if linalg processing keep matrix mutable
         if LINALG_PROCESSING:
-            return lh-rh
+            return sympy.MatAdd(lh,-1*rh, evaluate=False)
         else:
             return sympy.Add(lh, -1 * rh, evaluate=False)
     else:
@@ -160,14 +174,14 @@ def convert_mp(mp):
 
         # if linalg processing keep matrix mutable
         if LINALG_PROCESSING:
-            return lh*rh
+            return sympy.MatMul(lh,rh, evaluate=False)
         else:
             return sympy.Mul(lh, rh, evaluate=False)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
         if LINALG_PROCESSING:
-            return lh/rh
+            return sympy.MatMul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
         else:
             return sympy.Mul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
     else:
@@ -195,7 +209,7 @@ def convert_unary(unary):
         tmp_convert_nested_unary = convert_unary(nested_unary)
         # if linalg do simple multiplication
         if LINALG_PROCESSING:
-            return -1 * tmp_convert_nested_unary
+            return sympy.MatMul(-1, tmp_convert_nested_unary, evaluate=False)
         else:
             return sympy.Mul(-1, tmp_convert_nested_unary, evaluate=False)
     elif postfix:
@@ -224,7 +238,7 @@ def convert_postfix_list(arr, i=0):
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
             if LINALG_PROCESSING:
-                return res*rh
+                return sympy.MatMul(res,rh, evaluate=False)
             else:
                 return sympy.Mul(res, rh, evaluate=False)
     else: # must be derivative
@@ -381,8 +395,14 @@ def convert_atom(atom):
         hash = hashlib.md5(name.encode()).hexdigest()
         symbol_name = name+hash
 
+        # replace the placeholder for already known placeholder values
+        if name in PLACEHOLDER_VALUES:
+            symbol = PLACEHOLDER_VALUES[name]
+        else:
+            symbol = sympy.Symbol(symbol_name, real=True)
+
         # return the symbol
-        return sympy.Symbol(symbol_name, real=True)
+        return symbol
 
 def rule2text(ctx):
     stream = ctx.start.getInputStream()
@@ -434,7 +454,7 @@ def convert_frac(frac):
     expr_top = convert_expr(frac.upper)
     expr_bot = convert_expr(frac.lower)
     if LINALG_PROCESSING:
-        return expr_top/expr_bot
+        return sympy.MatMul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
     else:
         return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
 

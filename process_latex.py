@@ -13,6 +13,8 @@ except:
 
 from sympy.printing.str import StrPrinter
 
+from sympy.parsing.sympy_parser import parse_expr
+
 import hashlib
 
 # default process normal algebra
@@ -397,7 +399,13 @@ def convert_atom(atom):
 
         # replace the placeholder for already known placeholder values
         if name in PLACEHOLDER_VALUES:
-            symbol = PLACEHOLDER_VALUES[name]
+            # if a sympy class
+            if isinstance(PLACEHOLDER_VALUES[name], tuple(sympy.core.all_classes)):
+                symbol = PLACEHOLDER_VALUES[name]
+
+            # if NOT a sympy class
+            else:
+                symbol = parse_expr(str(PLACEHOLDER_VALUES[name]))
         else:
             symbol = sympy.Symbol(symbol_name, real=True)
 

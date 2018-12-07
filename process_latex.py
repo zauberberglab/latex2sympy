@@ -145,8 +145,8 @@ def convert_add(add):
        lh = convert_add(add.additive(0))
        rh = convert_add(add.additive(1))
 
-       # if linalg processing keep matrix mutable
-       if LINALG_PROCESSING:
+       # if linalg processing use matadd unless lh or rh are  a number
+       if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
            return sympy.MatAdd(lh,rh, evaluate=False)
        else:
            return sympy.Add(lh, rh, evaluate=False)
@@ -155,7 +155,7 @@ def convert_add(add):
         rh = convert_add(add.additive(1))
 
         # if linalg processing keep matrix mutable
-        if LINALG_PROCESSING:
+        if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
             return sympy.MatAdd(lh,-1*rh, evaluate=False)
         else:
             return sympy.Add(lh, -1 * rh, evaluate=False)

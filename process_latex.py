@@ -492,7 +492,10 @@ def convert_func(func):
 
         if (name=="log" or name=="ln"):
             if func.subexpr():
-                base = convert_expr(func.subexpr().expr())
+                if func.subexpr().atom():
+                    base = convert_atom(func.subexpr().atom())
+                else:
+                    base = convert_expr(func.subexpr().expr())
             elif name == "log":
                 base = 10
             elif name == "ln":

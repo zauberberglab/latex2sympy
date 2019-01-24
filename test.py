@@ -51,6 +51,7 @@ GOOD_PAIRS = [
     ("a + b", a + b),
     ("a + b - a", _Add(a+b, -a)),
     ("a^2 + b^2 = c^2", Eq(a**2 + b**2, c**2)),
+    ("a^2 + b^2 != 2c^2", Ne(a**2 + b**2, 2*c**2)),
     ("\\sin \\theta", sin(theta)),
     ("\\sin(\\theta)", sin(theta)),
     ("\\sin\\left(\\theta\\right)", sin(theta)),

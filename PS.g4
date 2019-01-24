@@ -101,6 +101,7 @@ LT: '<';
 LTE: '\\leq';
 GT: '>';
 GTE: '\\geq';
+UNEQUAL: '!=';
 
 BANG: '!';
 
@@ -124,7 +125,7 @@ matrix_row:
     expr (MATRIX_DEL_COL expr)*;
 
 relation:
-    relation (EQUAL | LT | LTE | GT | GTE) relation
+    relation (EQUAL | LT | LTE | GT | GTE | UNEQUAL) relation
     | expr;
 
 relation_list:

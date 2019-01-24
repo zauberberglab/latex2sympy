@@ -117,6 +117,8 @@ def convert_relation(rel):
         return sympy.GreaterThan(lh, rh, evaluate=False)
     elif rel.EQUAL():
         return sympy.Eq(lh, rh, evaluate=False)
+    elif rel.UNEQUAL():
+        return sympy.Ne(lh, rh, evaluate=False)
 
 def convert_expr(expr):
     if expr.additive():

@@ -53,6 +53,17 @@ FUNC_TANH: '\\tanh';
 FUNC_ARSINH: '\\arsinh';
 FUNC_ARCOSH: '\\arcosh';
 FUNC_ARTANH: '\\artanh';
+FUNC_ARCSINH: '\\arcsinh';
+FUNC_ARCCOSH: '\\arccosh';
+FUNC_ARCTANH: '\\arctanh';
+
+FUNC_ARSINH_NAME: 'arsinh';
+FUNC_ARCSINH_NAME: 'arcsinh';
+FUNC_ARCOSH_NAME: 'arcosh';
+FUNC_ARCCOSH_NAME: 'arccosh';
+FUNC_ARTANH_NAME: 'artanh';
+FUNC_ARCTANH_NAME: 'arctanh';
+
 
 FUNC_SQRT: '\\sqrt';
 
@@ -65,6 +76,8 @@ CMD_BINOM: '\\binom';
 CMD_CHOOSE: '\\choose';
 
 CMD_MATHIT: '\\mathit';
+
+CMD_OPERATORNAME: '\\operatorname';
 
 //matrix test
 MATRIX_TYPE_MATRIX: 'matrix';
@@ -248,14 +261,24 @@ binom:
     lower=expr
     R_BRACE;
 
-func_normal:
+func_normal_functions:
     FUNC_LOG | FUNC_LN
     | FUNC_SIN | FUNC_COS | FUNC_TAN
     | FUNC_CSC | FUNC_SEC | FUNC_COT
     | FUNC_ARCSIN | FUNC_ARCCOS | FUNC_ARCTAN
     | FUNC_ARCCSC | FUNC_ARCSEC | FUNC_ARCCOT
     | FUNC_SINH | FUNC_COSH | FUNC_TANH
-    | FUNC_ARSINH | FUNC_ARCOSH | FUNC_ARTANH;
+    | FUNC_ARSINH | FUNC_ARCOSH | FUNC_ARTANH
+    | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH;
+
+func_operator_names:
+    FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME
+    | FUNC_ARCSINH_NAME | FUNC_ARCCOSH_NAME | FUNC_ARCTANH_NAME;
+
+func_normal:
+    (func_normal_functions)
+    |
+    (CMD_OPERATORNAME L_BRACE func_operator_name=func_operator_names R_BRACE);
 
 func:
     func_normal

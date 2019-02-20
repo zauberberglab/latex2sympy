@@ -491,6 +491,18 @@ def convert_func(func):
         if name in ["arsinh", "arcosh", "artanh"]:
             name = "a" + name[2:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
+        if name in ["arcsinh", "arccosh", "arctanh"]:
+            name = "a" + name[3:]
+            expr = getattr(sympy.functions, name)(arg, evaluate=False)
+
+        if name == "operatorname":
+            operatorname = func.func_normal().func_operator_name.getText()
+            if operatorname in ["arsinh", "arcosh", "artanh"]:
+                operatorname = "a" + operatorname[2:]
+                expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
+            if operatorname in ["arcsinh", "arccosh", "arctanh"]:
+                operatorname = "a" + operatorname[3:]
+                expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
 
         if (name=="log" or name=="ln"):
             if func.subexpr():

@@ -32,6 +32,8 @@ def process_sympy(sympy, placeholder_values = {}, linalg = False):
     global PLACEHOLDER_VALUES
     if len(placeholder_values) > 0:
         PLACEHOLDER_VALUES = placeholder_values
+    else:
+        PLACEHOLDER_VALUES = {}
 
     # setup listner
     matherror = MathErrorListener(sympy)

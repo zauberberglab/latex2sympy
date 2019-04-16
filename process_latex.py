@@ -386,7 +386,11 @@ def convert_atom(atom):
         return sympy.Symbol(s, real=True)
     elif atom.NUMBER():
         s = atom.NUMBER().getText().replace(",", "")
-        return sympy.Number(s)
+        try:
+            sr = sympy.Rational(s)
+            return sr
+        except e:
+            return sympy.Number(s)
     elif atom.DIFFERENTIAL():
         var = get_differential_var(atom.DIFFERENTIAL())
         return sympy.Symbol('d' + var.name, real=True)

@@ -1,8 +1,6 @@
 from sympy import *
-import numpy as np
 import sys
 sys.path.append("..")
-from process_latex import process_sympy
 
 #row column matrix = vector
 v = [1,2,3];

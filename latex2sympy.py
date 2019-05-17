@@ -389,7 +389,7 @@ def convert_atom(atom):
         try:
             sr = sympy.Rational(s)
             return sr
-        except e:
+        except (TypeError, ValueError):
             return sympy.Number(s)
     elif atom.DIFFERENTIAL():
         var = get_differential_var(atom.DIFFERENTIAL())

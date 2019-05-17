@@ -11,7 +11,7 @@ t = Symbol('t', real=True)
 k = Symbol('k', real=True)
 n = Symbol('n', real=True)
 
-from process_latex import process_sympy
+from latex2sympy import process_sympy
 import hashlib
 
 theta = Symbol('theta', real=True)

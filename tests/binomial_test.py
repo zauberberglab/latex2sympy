@@ -1,7 +1,6 @@
-from sympy import *
 import sys
 sys.path.append("..")
-from process_latex import process_sympy
+from latex2sympy import process_sympy
 
 latex = "\\binom{16}{2}"
 math = process_sympy(latex)

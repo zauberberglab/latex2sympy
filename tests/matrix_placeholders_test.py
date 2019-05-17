@@ -4,7 +4,7 @@ import hashlib
 import time
 
 sys.path.append("..")
-from process_latex import process_sympy
+from latex2sympy import process_sympy
 
 
 M = Matrix([[1,2],[3,4]])

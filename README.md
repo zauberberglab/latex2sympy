@@ -8,7 +8,7 @@ equivalent SymPy form.
 [ANTLR](http://www.antlr.org/) is used to generate the parser:
 
 ```
-$ antlr4 PS.g4 -o gen
+$ antlr-4.7.2-complete.jar PS.g4 -o gen
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ $ antlr4 PS.g4 -o gen
 In Python 2.7:
 
 ```python
-from process_latex import process_sympy
+from latex2sympy import process_sympy
 
 process_sympy("\\frac{d}{dx} x^{2}")
 # => "diff(x**(2), x)"

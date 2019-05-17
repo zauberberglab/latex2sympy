@@ -1,7 +1,7 @@
 from sympy import *
 import sys
 sys.path.append("..")
-from process_latex import process_sympy
+from latex2sympy import process_sympy
 print(acos(-1))
 print(acos(0))
 print(acos(1))

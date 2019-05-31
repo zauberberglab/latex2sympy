@@ -327,6 +327,8 @@ for s, eq, *args in GOOD_PAIRS:
         else:
             passed += 1
             passed_good += 1
+            subs={x: 1, y: 2, z: 3, a: 4, b: 5, c: 6, f: 7, t: 8, k: 9, n: 10, theta: 3.5}
+            print("%s => %s => %s" % (s, parsed, parsed.evalf(subs=subs)))
     except Exception as e:
         print("ERROR: Exception when parsing \"%s\"" % s)
 for s in BAD_STRINGS:

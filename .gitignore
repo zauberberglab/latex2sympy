@@ -1,4 +1,7 @@
 *.pyc
+.python-version
+.env
+__pycache__
 
 # vim stuff
 *.swp

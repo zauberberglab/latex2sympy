@@ -21,6 +21,8 @@ L_BRACKET: '[';
 R_BRACKET: ']';
 L_LEFT: '\\left';
 R_RIGHT: '\\right';
+ML_LEFT: '\\mleft';
+MR_RIGHT: '\\mright';
 
 BAR: '|';
 
@@ -147,7 +149,9 @@ relation_list:
     | L_BRACE relation_list_content R_BRACE
     | L_BRACE_VISUAL relation_list_content R_BRACE_VISUAL
     | L_LEFT L_BRACKET relation_list_content R_RIGHT R_BRACKET
-    | L_LEFT L_BRACE_VISUAL relation_list_content R_RIGHT R_BRACE_VISUAL;
+    | L_LEFT L_BRACE_VISUAL relation_list_content R_RIGHT R_BRACE_VISUAL
+    | ML_LEFT L_BRACKET relation_list_content MR_RIGHT R_BRACKET
+    | ML_LEFT L_BRACE_VISUAL relation_list_content MR_RIGHT R_BRACE_VISUAL;
 
 relation_list_content:
     relation COMMA relation (COMMA relation)*
@@ -228,12 +232,17 @@ group:
     | L_LEFT L_PAREN expr R_RIGHT R_PAREN
     | L_LEFT L_BRACKET expr R_RIGHT R_BRACKET
     | L_LEFT L_BRACE expr R_RIGHT R_BRACE
-    | L_LEFT L_BRACE_VISUAL expr R_RIGHT R_BRACE_VISUAL;
+    | L_LEFT L_BRACE_VISUAL expr R_RIGHT R_BRACE_VISUAL
+    | ML_LEFT L_PAREN expr MR_RIGHT R_PAREN
+    | ML_LEFT L_BRACKET expr MR_RIGHT R_BRACKET
+    | ML_LEFT L_BRACE expr MR_RIGHT R_BRACE
+    | ML_LEFT L_BRACE_VISUAL expr MR_RIGHT R_BRACE_VISUAL;
 
 
 abs_group:
     BAR expr BAR
-    | L_LEFT BAR expr R_RIGHT BAR;
+    | L_LEFT BAR expr R_RIGHT BAR
+    | ML_LEFT BAR expr MR_RIGHT BAR;
 
 
 //indicate an accent
@@ -283,7 +292,7 @@ func_normal:
 func:
     func_normal
     (subexpr? supexpr? | supexpr? subexpr?)
-    (L_LEFT? L_PAREN func_arg R_RIGHT? R_PAREN | func_arg_noparens)
+    (L_LEFT? L_PAREN func_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_arg MR_RIGHT? R_PAREN | func_arg_noparens)
 
     //Do not do arbitraty functions but see as multiplications
     /*| (LETTER | SYMBOL) subexpr? // e.g. f(x)

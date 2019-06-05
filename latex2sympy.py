@@ -356,15 +356,18 @@ def convert_atom(atom):
         elif s == 'pi':
             return sympy.pi
         else:
-            if atom.subexpr():
-                subscript = None
-                if atom.subexpr().expr():           # subscript is expr
-                    subscript = convert_expr(atom.subexpr().expr())
-                else:                               # subscript is atom
-                    subscript = convert_atom(atom.subexpr().atom())
-                subscriptName = StrPrinter().doprint(subscript)
-                s += '_{' + subscriptName + '}'
-            return sympy.Symbol(s, real=True)
+            raise Exception("Unrecognized symbol")
+    elif atom.GREEK_LETTER():
+        s = atom.GREEK_LETTER().getText()[1:]
+        if atom.subexpr():
+            subscript = None
+            if atom.subexpr().expr():           # subscript is expr
+                subscript = convert_expr(atom.subexpr().expr())
+            else:                               # subscript is atom
+                subscript = convert_atom(atom.subexpr().atom())
+            subscriptName = StrPrinter().doprint(subscript)
+            s += '_{' + subscriptName + '}'
+        return sympy.Symbol(s, real=True)
     elif atom.accent():
         # get name for accent
         name = atom.accent().start.text[1:]
@@ -645,8 +648,8 @@ def handle_limit(func):
     sub = func.limit_sub()
     if sub.LETTER():
         var = sympy.Symbol(sub.LETTER().getText(), real=True)
-    elif sub.SYMBOL():
-        var = sympy.Symbol(sub.SYMBOL().getText()[1:], real=True)
+    elif sub.GREEK_LETTER():
+        var = sympy.Symbol(sub.GREEK_LETTER().getText()[1:], real=True)
     else:
         var = sympy.Symbol('x', real=True)
     if sub.SUB():

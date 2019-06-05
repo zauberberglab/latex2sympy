@@ -120,7 +120,45 @@ UNEQUAL: '!=';
 
 BANG: '!';
 
-SYMBOL: '\\' [a-zA-Z]+;
+//Excludes some letters for use as e.g. constants in SYMBOL
+GREEK_LETTER:
+	'\\alpha' |
+	'\\beta' |
+	'\\gamma' |
+	'\\Gamma' |
+	'\\delta' |
+	'\\Delta' |
+	'\\epsilon' |
+	'\\varepsilon' |
+	'\\zeta' |
+	'\\eta' |
+	'\\theta' |
+	'\\vartheta' |
+	'\\Theta' |
+	'\\iota' |
+	'\\kappa' |
+	'\\lambda' |
+	'\\Lambda' |
+	'\\mu' |
+	'\\nu' |
+	'\\xi' |
+	'\\omicron' |
+	'\\Pi' |
+	'\\rho' |
+	'\\varrho' |
+	'\\sigma' |
+	'\\Sigma' |
+	'\\tau' |
+	'\\upsilon' |
+	'\\phi' |
+	'\\varphi' |
+	'\\chi' |
+	'\\psi' |
+	'\\omega';
+
+fragment PI: '\\pi';
+fragment INFTY: '\\infty';
+SYMBOL: PI | INFTY;
 
 //PLACEHOLDER in one go
 PLACEHOLDER: '[!'[a-zA-Z][a-zA-Z0-9_]*'!]';
@@ -250,7 +288,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER | SYMBOL | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit | PLACEHOLDER;
+atom: (LETTER | SYMBOL | GREEK_LETTER | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit | PLACEHOLDER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: (LETTER | FUNC_EXP)+;
@@ -319,7 +357,7 @@ args: (expr ',' args) | expr;
 
 limit_sub:
     UNDERSCORE L_BRACE
-    (LETTER | SYMBOL)
+    (LETTER | GREEK_LETTER)
     LIM_APPROACH_SYM
     expr (CARET L_BRACE (ADD | SUB) R_BRACE)?
     R_BRACE;

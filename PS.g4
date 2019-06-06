@@ -144,6 +144,7 @@ GREEK_LETTER:
 	'\\mu' |
 	'\\nu' |
 	'\\xi' |
+	'\\Xi' |
 	'\\omicron' |
 	'\\Pi' |
 	'\\rho' |
@@ -152,11 +153,15 @@ GREEK_LETTER:
 	'\\Sigma' |
 	'\\tau' |
 	'\\upsilon' |
+	'\\Upsilon' |
 	'\\phi' |
 	'\\varphi' |
+	'\\Phi' |
 	'\\chi' |
 	'\\psi' |
-	'\\omega';
+	'\\Psi' |
+	'\\omega' |
+	'\\Omega';
 
 fragment PI: '\\pi';
 fragment INFTY: '\\infty';

@@ -359,7 +359,7 @@ func:
     (subeq supexpr | supexpr subeq)
     mp
     | FUNC_LIM limit_sub mp
-    | E supexpr?;
+    | E supexpr?; //Exponential function e^x
 
 args: (expr ',' args) | expr;
 

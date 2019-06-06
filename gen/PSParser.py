@@ -9,7 +9,7 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3")
-        buf.write(u"^\u0281\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
+        buf.write(u"_\u0281\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
         buf.write(u"\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r")
         buf.write(u"\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4")
         buf.write(u"\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30")
@@ -69,13 +69,13 @@ def serializedATN():
         buf.write(u"\n*\3+\3+\3+\3+\3+\3+\5+\u0275\n+\3,\3,\3,\3,\3,\3-\3")
         buf.write(u"-\3-\3-\3-\3-\2\b\n\24\26\30*,.\2\4\6\b\n\f\16\20\22")
         buf.write(u"\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNP")
-        buf.write(u"RTVX\2\f\3\2IJ\3\2UZ\3\2\4\5\5\2\6\79;MM\3\2QR\3\2=>")
-        buf.write(u"\3\2\32\61\3\2\62\67\3\2\30\31\4\2RR\\\\\2\u02b7\2Z\3")
-        buf.write(u"\2\2\2\4^\3\2\2\2\6`\3\2\2\2\bk\3\2\2\2\ns\3\2\2\2\f")
-        buf.write(u"\u00a3\3\2\2\2\16\u00b9\3\2\2\2\20\u00bb\3\2\2\2\22\u00bf")
-        buf.write(u"\3\2\2\2\24\u00c1\3\2\2\2\26\u00cc\3\2\2\2\30\u00d7\3")
-        buf.write(u"\2\2\2\32\u00e9\3\2\2\2\34\u00f4\3\2\2\2\36\u00f6\3\2")
-        buf.write(u"\2\2 \u00fd\3\2\2\2\"\u0106\3\2\2\2$\u0108\3\2\2\2&\u0110")
+        buf.write(u"RTVX\2\f\3\2IJ\3\2V[\3\2\4\5\5\2\6\79;MM\3\2QS\3\2=>")
+        buf.write(u"\3\2\32\61\3\2\62\67\3\2\30\31\4\2SS]]\2\u02b7\2Z\3\2")
+        buf.write(u"\2\2\4^\3\2\2\2\6`\3\2\2\2\bk\3\2\2\2\ns\3\2\2\2\f\u00a3")
+        buf.write(u"\3\2\2\2\16\u00b9\3\2\2\2\20\u00bb\3\2\2\2\22\u00bf\3")
+        buf.write(u"\2\2\2\24\u00c1\3\2\2\2\26\u00cc\3\2\2\2\30\u00d7\3\2")
+        buf.write(u"\2\2\32\u00e9\3\2\2\2\34\u00f4\3\2\2\2\36\u00f6\3\2\2")
+        buf.write(u"\2 \u00fd\3\2\2\2\"\u0106\3\2\2\2$\u0108\3\2\2\2&\u0110")
         buf.write(u"\3\2\2\2(\u0118\3\2\2\2*\u0120\3\2\2\2,\u0134\3\2\2\2")
         buf.write(u".\u014f\3\2\2\2\60\u0157\3\2\2\2\62\u0195\3\2\2\2\64")
         buf.write(u"\u01a7\3\2\2\2\66\u01a9\3\2\2\28\u01bc\3\2\2\2:\u01be")
@@ -118,7 +118,7 @@ def serializedATN():
         buf.write(u"\u00b4\3\2\2\2\u00b6\u00b7\3\2\2\2\u00b7\u00ba\3\2\2")
         buf.write(u"\2\u00b8\u00b6\3\2\2\2\u00b9\u00a5\3\2\2\2\u00b9\u00af")
         buf.write(u"\3\2\2\2\u00ba\17\3\2\2\2\u00bb\u00bc\5\22\n\2\u00bc")
-        buf.write(u"\u00bd\7U\2\2\u00bd\u00be\5\22\n\2\u00be\21\3\2\2\2\u00bf")
+        buf.write(u"\u00bd\7V\2\2\u00bd\u00be\5\22\n\2\u00be\21\3\2\2\2\u00bf")
         buf.write(u"\u00c0\5\24\13\2\u00c0\23\3\2\2\2\u00c1\u00c2\b\13\1")
         buf.write(u"\2\u00c2\u00c3\5\26\f\2\u00c3\u00c9\3\2\2\2\u00c4\u00c5")
         buf.write(u"\f\4\2\2\u00c5\u00c6\t\4\2\2\u00c6\u00c8\5\24\13\5\u00c7")
@@ -147,7 +147,7 @@ def serializedATN():
         buf.write(u"\2\u00fb\37\3\2\2\2\u00fc\u00fa\3\2\2\2\u00fd\u0101\5")
         buf.write(u",\27\2\u00fe\u0100\5\"\22\2\u00ff\u00fe\3\2\2\2\u0100")
         buf.write(u"\u0103\3\2\2\2\u0101\u00ff\3\2\2\2\u0101\u0102\3\2\2")
-        buf.write(u"\2\u0102!\3\2\2\2\u0103\u0101\3\2\2\2\u0104\u0107\7[")
+        buf.write(u"\2\u0102!\3\2\2\2\u0103\u0101\3\2\2\2\u0104\u0107\7\\")
         buf.write(u"\2\2\u0105\u0107\5$\23\2\u0106\u0104\3\2\2\2\u0106\u0105")
         buf.write(u"\3\2\2\2\u0107#\3\2\2\2\u0108\u010e\7\24\2\2\u0109\u010f")
         buf.write(u"\5(\25\2\u010a\u010f\5&\24\2\u010b\u010c\5(\25\2\u010c")
@@ -223,13 +223,13 @@ def serializedATN():
         buf.write(u"\2\2\u01a7\u0197\3\2\2\2\u01a7\u019b\3\2\2\2\u01a7\u01a1")
         buf.write(u"\3\2\2\2\u01a8\65\3\2\2\2\u01a9\u01aa\5\2\2\2\u01aa\u01ab")
         buf.write(u"\7\n\2\2\u01ab\u01ac\5\22\n\2\u01ac\u01ad\7\13\2\2\u01ad")
-        buf.write(u"\67\3\2\2\2\u01ae\u01b2\7R\2\2\u01af\u01b2\7\\\2\2\u01b0")
+        buf.write(u"\67\3\2\2\2\u01ae\u01b2\7S\2\2\u01af\u01b2\7]\2\2\u01b0")
         buf.write(u"\u01b2\5\66\34\2\u01b1\u01ae\3\2\2\2\u01b1\u01af\3\2")
         buf.write(u"\2\2\u01b1\u01b0\3\2\2\2\u01b2\u01b4\3\2\2\2\u01b3\u01b5")
         buf.write(u"\5R*\2\u01b4\u01b3\3\2\2\2\u01b4\u01b5\3\2\2\2\u01b5")
-        buf.write(u"\u01bd\3\2\2\2\u01b6\u01bd\7]\2\2\u01b7\u01bd\7S\2\2")
-        buf.write(u"\u01b8\u01bd\7T\2\2\u01b9\u01bd\7P\2\2\u01ba\u01bd\5")
-        buf.write(u":\36\2\u01bb\u01bd\7^\2\2\u01bc\u01b1\3\2\2\2\u01bc\u01b6")
+        buf.write(u"\u01bd\3\2\2\2\u01b6\u01bd\7^\2\2\u01b7\u01bd\7T\2\2")
+        buf.write(u"\u01b8\u01bd\7U\2\2\u01b9\u01bd\7P\2\2\u01ba\u01bd\5")
+        buf.write(u":\36\2\u01bb\u01bd\7_\2\2\u01bc\u01b1\3\2\2\2\u01bc\u01b6")
         buf.write(u"\3\2\2\2\u01bc\u01b7\3\2\2\2\u01bc\u01b8\3\2\2\2\u01bc")
         buf.write(u"\u01b9\3\2\2\2\u01bc\u01ba\3\2\2\2\u01bc\u01bb\3\2\2")
         buf.write(u"\2\u01bd9\3\2\2\2\u01be\u01bf\7?\2\2\u01bf\u01c0\7\n")
@@ -352,9 +352,9 @@ class PSParser ( Parser ):
                      u"'matrix'", u"'pmatrix'", u"'bmatrix'", u"<INVALID>", 
                      u"<INVALID>", u"<INVALID>", u"'&'", u"'\\\\'", u"'\\overline'", 
                      u"'\\bar'", u"'_'", u"'^'", u"':'", u"';'", u"','", 
-                     u"<INVALID>", u"'e'", u"<INVALID>", u"<INVALID>", u"<INVALID>", 
-                     u"'='", u"'<'", u"'\\leq'", u"'>'", u"'\\geq'", u"'!='", 
-                     u"'!'" ]
+                     u"<INVALID>", u"'e'", u"'E'", u"<INVALID>", u"<INVALID>", 
+                     u"<INVALID>", u"'='", u"'<'", u"'\\leq'", u"'>'", u"'\\geq'", 
+                     u"'!='", u"'!'" ]
 
     symbolicNames = [ u"<INVALID>", u"WS", u"ADD", u"SUB", u"MUL", u"DIV", 
                       u"L_PAREN", u"R_PAREN", u"L_BRACE", u"R_BRACE", u"L_BRACE_VISUAL", 
@@ -376,10 +376,10 @@ class PSParser ( Parser ):
                       u"MATRIX_TYPES", u"CMD_MATRIX_START", u"CMD_MATRIX_END", 
                       u"MATRIX_DEL_COL", u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", 
                       u"ACCENT_BAR", u"UNDERSCORE", u"CARET", u"COLON", 
-                      u"SEMICOLON", u"COMMA", u"DIFFERENTIAL", u"E", u"LETTER", 
-                      u"NUMBER", u"E_NOTATION", u"EQUAL", u"LT", u"LTE", 
-                      u"GT", u"GTE", u"UNEQUAL", u"BANG", u"GREEK_LETTER", 
-                      u"SYMBOL", u"PLACEHOLDER" ]
+                      u"SEMICOLON", u"COMMA", u"DIFFERENTIAL", u"EXP_E", 
+                      u"E_NOTATION_E", u"LETTER", u"NUMBER", u"E_NOTATION", 
+                      u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", 
+                      u"BANG", u"GREEK_LETTER", u"SYMBOL", u"PLACEHOLDER" ]
 
     RULE_accent_symbol = 0
     RULE_math = 1
@@ -517,20 +517,21 @@ class PSParser ( Parser ):
     SEMICOLON=76
     COMMA=77
     DIFFERENTIAL=78
-    E=79
-    LETTER=80
-    NUMBER=81
-    E_NOTATION=82
-    EQUAL=83
-    LT=84
-    LTE=85
-    GT=86
-    GTE=87
-    UNEQUAL=88
-    BANG=89
-    GREEK_LETTER=90
-    SYMBOL=91
-    PLACEHOLDER=92
+    EXP_E=79
+    E_NOTATION_E=80
+    LETTER=81
+    NUMBER=82
+    E_NOTATION=83
+    EQUAL=84
+    LT=85
+    LTE=86
+    GT=87
+    GTE=88
+    UNEQUAL=89
+    BANG=90
+    GREEK_LETTER=91
+    SYMBOL=92
+    PLACEHOLDER=93
 
     def __init__(self, input, output=sys.stdout):
         super(PSParser, self).__init__(input, output=output)
@@ -861,7 +862,7 @@ class PSParser ( Parser ):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 117
                     _la = self._input.LA(1)
-                    if not(((((_la - 83)) & ~0x3f) == 0 and ((1 << (_la - 83)) & ((1 << (PSParser.EQUAL - 83)) | (1 << (PSParser.LT - 83)) | (1 << (PSParser.LTE - 83)) | (1 << (PSParser.GT - 83)) | (1 << (PSParser.GTE - 83)) | (1 << (PSParser.UNEQUAL - 83)))) != 0)):
+                    if not(((((_la - 84)) & ~0x3f) == 0 and ((1 << (_la - 84)) & ((1 << (PSParser.EQUAL - 84)) | (1 << (PSParser.LT - 84)) | (1 << (PSParser.LTE - 84)) | (1 << (PSParser.GT - 84)) | (1 << (PSParser.GTE - 84)) | (1 << (PSParser.UNEQUAL - 84)))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -1576,7 +1577,7 @@ class PSParser ( Parser ):
                 self.state = 225
                 self.unary()
                 pass
-            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.E, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.PLACEHOLDER]:
+            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.PLACEHOLDER]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 227 
                 self._errHandler.sync(self)
@@ -1667,7 +1668,7 @@ class PSParser ( Parser ):
                 self.state = 234
                 self.unary_nofunc()
                 pass
-            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.E, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.PLACEHOLDER]:
+            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.PLACEHOLDER]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 235
                 self.postfix()
@@ -3094,11 +3095,17 @@ class PSParser ( Parser ):
             else:
                 return self.getToken(PSParser.LETTER, i)
 
-        def E(self, i=None):
+        def E_NOTATION_E(self, i=None):
             if i is None:
-                return self.getTokens(PSParser.E)
+                return self.getTokens(PSParser.E_NOTATION_E)
             else:
-                return self.getToken(PSParser.E, i)
+                return self.getToken(PSParser.E_NOTATION_E, i)
+
+        def EXP_E(self, i=None):
+            if i is None:
+                return self.getTokens(PSParser.EXP_E)
+            else:
+                return self.getToken(PSParser.EXP_E, i)
 
         def getRuleIndex(self):
             return PSParser.RULE_mathit_text
@@ -3127,7 +3134,7 @@ class PSParser ( Parser ):
             while True:
                 self.state = 449
                 _la = self._input.LA(1)
-                if not(_la==PSParser.E or _la==PSParser.LETTER):
+                if not(((((_la - 79)) & ~0x3f) == 0 and ((1 << (_la - 79)) & ((1 << (PSParser.EXP_E - 79)) | (1 << (PSParser.E_NOTATION_E - 79)) | (1 << (PSParser.LETTER - 79)))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -3135,7 +3142,7 @@ class PSParser ( Parser ):
                 self.state = 452 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==PSParser.E or _la==PSParser.LETTER):
+                if not (((((_la - 79)) & ~0x3f) == 0 and ((1 << (_la - 79)) & ((1 << (PSParser.EXP_E - 79)) | (1 << (PSParser.E_NOTATION_E - 79)) | (1 << (PSParser.LETTER - 79)))) != 0)):
                     break
 
         except RecognitionException as re:
@@ -3667,8 +3674,8 @@ class PSParser ( Parser ):
             return self.getTypedRuleContext(PSParser.Limit_subContext,0)
 
 
-        def E(self):
-            return self.getToken(PSParser.E, 0)
+        def EXP_E(self):
+            return self.getToken(PSParser.EXP_E, 0)
 
         def getRuleIndex(self):
             return PSParser.RULE_func
@@ -3939,10 +3946,10 @@ class PSParser ( Parser ):
                 self.state = 575
                 self.mp(0)
                 pass
-            elif token in [PSParser.E]:
+            elif token in [PSParser.EXP_E]:
                 self.enterOuterAlt(localctx, 6)
                 self.state = 577
-                self.match(PSParser.E)
+                self.match(PSParser.EXP_E)
                 self.state = 579
                 self._errHandler.sync(self)
                 la_ = self._interp.adaptivePredict(self._input,51,self._ctx)

@@ -591,7 +591,7 @@ def convert_func(func):
         return handle_sum_or_prod(func, "product")
     elif func.FUNC_LIM():
         return handle_limit(func)
-    elif func.E():
+    elif func.EXP_E():
         return handle_exp(func)
 
 def convert_func_arg(arg):

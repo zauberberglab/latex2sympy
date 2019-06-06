@@ -233,8 +233,8 @@ GOOD_PAIRS = [
     ("e",exp(1)),
 
     # e in scientific e notation
-    ("2.5e2", 250),
-    ("1,500e-1", 150),
+    ("2.5E2", 250),
+    ("1,500E-1", 150),
 
     # lin alg processing
     ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta,Matrix([[1,2],[3,4]])) ),

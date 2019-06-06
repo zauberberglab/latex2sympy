@@ -105,14 +105,15 @@ COMMA: ',';
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
 
-E: 'e';
-LETTER: [a-df-zA-Z];//exclude e for exponential function and e notation
+EXP_E: 'e';
+E_NOTATION_E: 'E';
+LETTER: [a-df-zA-DF-Z];//exclude e for exponential function and e notation
 fragment DIGIT: [0-9];
 NUMBER:
     DIGIT+ (',' DIGIT DIGIT DIGIT)*
     | DIGIT* (',' DIGIT DIGIT DIGIT)* '.' DIGIT+;
 
-E_NOTATION: NUMBER E (SUB | ADD)? DIGIT+;
+E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
 EQUAL: '=';
 LT: '<';
@@ -299,7 +300,7 @@ accent:
 atom: (LETTER | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | PLACEHOLDER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
-mathit_text: (LETTER | E)+;
+mathit_text: (LETTER | E_NOTATION_E | EXP_E)+;
 
 frac:
     CMD_FRAC L_BRACE
@@ -359,7 +360,7 @@ func:
     (subeq supexpr | supexpr subeq)
     mp
     | FUNC_LIM limit_sub mp
-    | E supexpr?; //Exponential function e^x
+    | EXP_E supexpr?; //Exponential function e^x
 
 args: (expr ',' args) | expr;
 

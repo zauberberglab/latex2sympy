@@ -394,6 +394,13 @@ def convert_atom(atom):
             return sr
         except (TypeError, ValueError):
             return sympy.Number(s)
+    elif atom.E_NOTATION():
+        s = atom.E_NOTATION().getText().replace(",", "")
+        try:
+            sr = sympy.Rational(s)
+            return sr
+        except (TypeError, ValueError):
+            return sympy.Number(s)
     elif atom.DIFFERENTIAL():
         var = get_differential_var(atom.DIFFERENTIAL())
         return sympy.Symbol('d' + var.name, real=True)

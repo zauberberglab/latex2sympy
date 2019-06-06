@@ -111,6 +111,8 @@ NUMBER:
     DIGIT+ (',' DIGIT DIGIT DIGIT)*
     | DIGIT* (',' DIGIT DIGIT DIGIT)* '.' DIGIT+;
 
+E_NOTATION: NUMBER FUNC_EXP (SUB | ADD)? DIGIT+;
+
 EQUAL: '=';
 LT: '<';
 LTE: '\\leq';
@@ -288,7 +290,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER | SYMBOL | GREEK_LETTER | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit | PLACEHOLDER;
+atom: (LETTER | SYMBOL | GREEK_LETTER | accent) subexpr? | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | PLACEHOLDER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: (LETTER | FUNC_EXP)+;

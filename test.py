@@ -221,12 +221,16 @@ GOOD_PAIRS = [
     ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha' + hashlib.md5('alpha'.encode()).hexdigest(), real=True)*Symbol('alpha', real=True)),
     ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1' + hashlib.md5('value1'.encode()).hexdigest(), real=True)*Symbol('value_2' + hashlib.md5('value_2'.encode()).hexdigest(), real=True)/Symbol('a' + hashlib.md5('a'.encode()).hexdigest(), real=True)*x**2),
 
-    # e parsing
+    # e as exponential function
     ("e^3", exp(3)),
     ("e^x", exp(x)),
     ("e^{x+y}", exp(x+y)),
     ("\\sin(x)*e^x", sin(x)*exp(x)),
     ("e",exp(1)),
+
+    # e in scientific e notation
+    ("2.5e2", 250),
+    ("1,500e-1", 150),
 
     # lin alg processing
     ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta,Matrix([[1,2],[3,4]])) ),

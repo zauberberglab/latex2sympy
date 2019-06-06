@@ -294,7 +294,7 @@ BAD_STRINGS = [
     "\\",
     "~",
     "\\frac{(2 + x}{1 - x)}",
-    ("\\lim_{\\pi \\to 3} a"),
+    "\\lim_{\\pi \\to 3} a",
     # because mix of COMMA and SEMICOLON
     "\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix};\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\right\\}"
 ]

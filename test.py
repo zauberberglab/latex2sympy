@@ -221,6 +221,10 @@ GOOD_PAIRS = [
     ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha' + hashlib.md5('alpha'.encode()).hexdigest(), real=True)*Symbol('alpha', real=True)),
     ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1' + hashlib.md5('value1'.encode()).hexdigest(), real=True)*Symbol('value_2' + hashlib.md5('value_2'.encode()).hexdigest(), real=True)/Symbol('a' + hashlib.md5('a'.encode()).hexdigest(), real=True)*x**2),
 
+    ("\\exp(3)", exp(3)),
+    ("\\exp3", exp(3)),
+    ("\\exponentialE(3)", exp(3)),
+
     # e as exponential function
     ("e^3", exp(3)),
     ("e^x", exp(x)),

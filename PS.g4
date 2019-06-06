@@ -35,6 +35,7 @@ FUNC_PROD: '\\prod';
 
 FUNC_LOG:  '\\log';
 FUNC_LN:   '\\ln';
+FUNC_EXP: '\\exp' | '\\exponentialE';
 FUNC_SIN:  '\\sin';
 FUNC_COS:  '\\cos';
 FUNC_TAN:  '\\tan';
@@ -104,14 +105,14 @@ COMMA: ',';
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
 
-FUNC_EXP: 'e';
-LETTER: [a-df-zA-Z];//exclude e for exp
+E: 'e';
+LETTER: [a-df-zA-Z];//exclude e for exponential function and e notation
 fragment DIGIT: [0-9];
 NUMBER:
     DIGIT+ (',' DIGIT DIGIT DIGIT)*
     | DIGIT* (',' DIGIT DIGIT DIGIT)* '.' DIGIT+;
 
-E_NOTATION: NUMBER FUNC_EXP (SUB | ADD)? DIGIT+;
+E_NOTATION: NUMBER E (SUB | ADD)? DIGIT+;
 
 EQUAL: '=';
 LT: '<';
@@ -295,10 +296,10 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER | SYMBOL | GREEK_LETTER | accent) subexpr? | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | PLACEHOLDER;
+atom: (LETTER | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | PLACEHOLDER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
-mathit_text: (LETTER | FUNC_EXP)+;
+mathit_text: (LETTER | E)+;
 
 frac:
     CMD_FRAC L_BRACE
@@ -316,7 +317,7 @@ binom:
     R_BRACE;
 
 func_normal_functions:
-    FUNC_LOG | FUNC_LN
+    FUNC_LOG | FUNC_LN | FUNC_EXP
     | FUNC_SIN | FUNC_COS | FUNC_TAN
     | FUNC_CSC | FUNC_SEC | FUNC_COT
     | FUNC_ARCSIN | FUNC_ARCCOS | FUNC_ARCTAN
@@ -358,7 +359,7 @@ func:
     (subeq supexpr | supexpr subeq)
     mp
     | FUNC_LIM limit_sub mp
-    | FUNC_EXP supexpr?;
+    | E supexpr?;
 
 args: (expr ',' args) | expr;
 

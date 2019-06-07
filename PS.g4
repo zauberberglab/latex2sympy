@@ -35,6 +35,7 @@ FUNC_PROD: '\\prod';
 
 FUNC_LOG:  '\\log';
 FUNC_LN:   '\\ln';
+FUNC_EXP: '\\exp' | '\\exponentialE';
 FUNC_SIN:  '\\sin';
 FUNC_COS:  '\\cos';
 FUNC_TAN:  '\\tan';
@@ -104,12 +105,15 @@ COMMA: ',';
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
 
-FUNC_EXP: 'e';
-LETTER: [a-df-zA-Z];//exclude e for exp
+EXP_E: 'e';
+E_NOTATION_E: 'E';
+LETTER: [a-df-zA-DF-Z];//exclude e for exponential function and e notation
 fragment DIGIT: [0-9];
 NUMBER:
     DIGIT+ (',' DIGIT DIGIT DIGIT)*
     | DIGIT* (',' DIGIT DIGIT DIGIT)* '.' DIGIT+;
+
+E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
 EQUAL: '=';
 LT: '<';
@@ -120,7 +124,50 @@ UNEQUAL: '!=';
 
 BANG: '!';
 
-SYMBOL: '\\' [a-zA-Z]+;
+//Excludes some letters for use as e.g. constants in SYMBOL
+GREEK_LETTER:
+	'\\alpha' |
+	'\\beta' |
+	'\\gamma' |
+	'\\Gamma' |
+	'\\delta' |
+	'\\Delta' |
+	'\\epsilon' |
+	'\\varepsilon' |
+	'\\zeta' |
+	'\\eta' |
+	'\\theta' |
+	'\\vartheta' |
+	'\\Theta' |
+	'\\iota' |
+	'\\kappa' |
+	'\\lambda' |
+	'\\Lambda' |
+	'\\mu' |
+	'\\nu' |
+	'\\xi' |
+	'\\Xi' |
+	'\\omicron' |
+	'\\Pi' |
+	'\\rho' |
+	'\\varrho' |
+	'\\sigma' |
+	'\\Sigma' |
+	'\\tau' |
+	'\\upsilon' |
+	'\\Upsilon' |
+	'\\phi' |
+	'\\varphi' |
+	'\\Phi' |
+	'\\chi' |
+	'\\psi' |
+	'\\Psi' |
+	'\\omega' |
+	'\\Omega';
+
+fragment PI: '\\pi';
+fragment INFTY: '\\infty';
+SYMBOL: PI | INFTY;
 
 //PLACEHOLDER in one go
 PLACEHOLDER: '[!'[a-zA-Z][a-zA-Z0-9_]*'!]';
@@ -250,10 +297,10 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER | SYMBOL | accent) subexpr? | NUMBER | DIFFERENTIAL | mathit | PLACEHOLDER;
+atom: (LETTER | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | PLACEHOLDER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
-mathit_text: (LETTER | FUNC_EXP)+;
+mathit_text: (LETTER | E_NOTATION_E | EXP_E)+;
 
 frac:
     CMD_FRAC L_BRACE
@@ -271,7 +318,7 @@ binom:
     R_BRACE;
 
 func_normal_functions:
-    FUNC_LOG | FUNC_LN
+    FUNC_LOG | FUNC_LN | FUNC_EXP
     | FUNC_SIN | FUNC_COS | FUNC_TAN
     | FUNC_CSC | FUNC_SEC | FUNC_COT
     | FUNC_ARCSIN | FUNC_ARCCOS | FUNC_ARCTAN
@@ -313,13 +360,13 @@ func:
     (subeq supexpr | supexpr subeq)
     mp
     | FUNC_LIM limit_sub mp
-    | FUNC_EXP supexpr?;
+    | EXP_E supexpr?; //Exponential function e^x
 
 args: (expr ',' args) | expr;
 
 limit_sub:
     UNDERSCORE L_BRACE
-    (LETTER | SYMBOL)
+    (LETTER | GREEK_LETTER)
     LIM_APPROACH_SYM
     expr (CARET L_BRACE (ADD | SUB) R_BRACE)?
     R_BRACE;

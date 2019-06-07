@@ -221,12 +221,20 @@ GOOD_PAIRS = [
     ("4\\cdot[!alpha!]*\\alpha", 4*Symbol('alpha' + hashlib.md5('alpha'.encode()).hexdigest(), real=True)*Symbol('alpha', real=True)),
     ("4\\cdot[!value1!]\\frac{[!value_2!]}{[!a!]}\\cdot x^2", 4*Symbol('value1' + hashlib.md5('value1'.encode()).hexdigest(), real=True)*Symbol('value_2' + hashlib.md5('value_2'.encode()).hexdigest(), real=True)/Symbol('a' + hashlib.md5('a'.encode()).hexdigest(), real=True)*x**2),
 
-    # e parsing
+    ("\\exp(3)", exp(3)),
+    ("\\exp3", exp(3)),
+    ("\\exponentialE(3)", exp(3)),
+
+    # e as exponential function
     ("e^3", exp(3)),
     ("e^x", exp(x)),
     ("e^{x+y}", exp(x+y)),
     ("\\sin(x)*e^x", sin(x)*exp(x)),
     ("e",exp(1)),
+
+    # e in scientific e notation
+    ("2.5E2", 250),
+    ("1,500E-1", 150),
 
     # lin alg processing
     ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta,Matrix([[1,2],[3,4]])) ),
@@ -290,6 +298,7 @@ BAD_STRINGS = [
     "\\",
     "~",
     "\\frac{(2 + x}{1 - x)}",
+    "\\lim_{\\pi \\to 3} a",
     # because mix of COMMA and SEMICOLON
     "\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix};\\begin{pmatrix}1\\\\1\\\\1\\end{pmatrix}\\right\\}"
 ]
@@ -327,8 +336,11 @@ for s, eq, *args in GOOD_PAIRS:
         else:
             passed += 1
             passed_good += 1
-            subs={x: 1, y: 2, z: 3, a: 4, b: 5, c: 6, f: 7, t: 8, k: 9, n: 10, theta: 3.5}
-            print("%s => %s => %s" % (s, parsed, parsed.evalf(subs=subs)))
+            try:
+                subs={x: 1, y: 2, z: 3, a: 4, b: 5, c: 6, f: 7, t: 8, k: 9, n: 10, theta: 3.5}
+                print("%s => %s => %s" % (s, parsed, parsed.evalf(subs=subs)))
+            except:
+                print("INFO: Parsed successfully, but could not evaluate: \"%s\"" % s)
     except Exception as e:
         print("ERROR: Exception when parsing \"%s\"" % s)
 for s in BAD_STRINGS:

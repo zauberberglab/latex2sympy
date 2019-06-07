@@ -349,22 +349,17 @@ def convert_atom(atom):
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = '_{' + StrPrinter().doprint(subscript) + '}'
         return sympy.Symbol(atom.LETTER().getText() + subscriptName, real=True)
-    elif atom.SYMBOL():
-        s = atom.SYMBOL().getText()[1:]
-        if s == "infty":
-            return sympy.oo
-        elif s == 'pi':
-            return sympy.pi
-        else:
-            if atom.subexpr():
-                subscript = None
-                if atom.subexpr().expr():           # subscript is expr
-                    subscript = convert_expr(atom.subexpr().expr())
-                else:                               # subscript is atom
-                    subscript = convert_atom(atom.subexpr().atom())
-                subscriptName = StrPrinter().doprint(subscript)
-                s += '_{' + subscriptName + '}'
-            return sympy.Symbol(s, real=True)
+    elif atom.GREEK_LETTER():
+        s = atom.GREEK_LETTER().getText()[1:]
+        if atom.subexpr():
+            subscript = None
+            if atom.subexpr().expr():           # subscript is expr
+                subscript = convert_expr(atom.subexpr().expr())
+            else:                               # subscript is atom
+                subscript = convert_atom(atom.subexpr().atom())
+            subscriptName = StrPrinter().doprint(subscript)
+            s += '_{' + subscriptName + '}'
+        return sympy.Symbol(s, real=True)
     elif atom.accent():
         # get name for accent
         name = atom.accent().start.text[1:]
@@ -384,8 +379,23 @@ def convert_atom(atom):
             subscriptName = StrPrinter().doprint(subscript)
             s += '_{' + subscriptName + '}'
         return sympy.Symbol(s, real=True)
+    elif atom.SYMBOL():
+        s = atom.SYMBOL().getText()[1:]
+        if s == "infty":
+            return sympy.oo
+        elif s == 'pi':
+            return sympy.pi
+        else:
+            raise Exception("Unrecognized symbol")
     elif atom.NUMBER():
         s = atom.NUMBER().getText().replace(",", "")
+        try:
+            sr = sympy.Rational(s)
+            return sr
+        except (TypeError, ValueError):
+            return sympy.Number(s)
+    elif atom.E_NOTATION():
+        s = atom.E_NOTATION().getText().replace(",", "")
         try:
             sr = sympy.Rational(s)
             return sr
@@ -522,6 +532,9 @@ def convert_func(func):
                 base = sympy.E
             expr = sympy.log(arg, base, evaluate=False)
 
+        if name=="exp" or name=="exponentialE":
+            expr = sympy.exp(arg)
+
         func_pow = None
         should_pow = True
         if func.supexpr():
@@ -578,7 +591,7 @@ def convert_func(func):
         return handle_sum_or_prod(func, "product")
     elif func.FUNC_LIM():
         return handle_limit(func)
-    elif func.FUNC_EXP():
+    elif func.EXP_E():
         return handle_exp(func)
 
 def convert_func_arg(arg):
@@ -645,8 +658,8 @@ def handle_limit(func):
     sub = func.limit_sub()
     if sub.LETTER():
         var = sympy.Symbol(sub.LETTER().getText(), real=True)
-    elif sub.SYMBOL():
-        var = sympy.Symbol(sub.SYMBOL().getText()[1:], real=True)
+    elif sub.GREEK_LETTER():
+        var = sympy.Symbol(sub.GREEK_LETTER().getText()[1:], real=True)
     else:
         var = sympy.Symbol('x', real=True)
     if sub.SUB():

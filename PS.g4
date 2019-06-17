@@ -126,44 +126,59 @@ BANG: '!';
 
 //Excludes some letters for use as e.g. constants in SYMBOL
 GREEK_LETTER:
+    '\\char\"000391' | //Alpha
 	'\\alpha' |
+    '\\char\"000392' | //Beta
 	'\\beta' |
-	'\\gamma' |
 	'\\Gamma' |
-	'\\delta' |
+    '\\gamma' |
 	'\\Delta' |
+	'\\delta' |
+	'\\char\"000190' | //Epsilon
 	'\\epsilon' |
 	'\\varepsilon' |
+    '\\char\"000396' | //Zeta
 	'\\zeta' |
-	'\\eta' |
+	'\\char\"000397' | //Eta
+    '\\eta' |
+	'\\Theta' |
 	'\\theta' |
 	'\\vartheta' |
-	'\\Theta' |
+    '\\char\"000399' | //Iota
 	'\\iota' |
+    '\\char\"00039A' | //Kappa
 	'\\kappa' |
-	'\\lambda' |
 	'\\Lambda' |
+    '\\lambda' |
+	'\\char\"00039C' | //Mu
 	'\\mu' |
+    '\\char\"00039D' | //Nu
 	'\\nu' |
-	'\\xi' |
 	'\\Xi' |
+    '\\xi' |
+	'\\char\"00039F' | //Omicron
 	'\\omicron' |
 	'\\Pi' |
+    '\\varpi' |
+    '\\char\"0003A1' | //Rho
 	'\\rho' |
 	'\\varrho' |
-	'\\sigma' |
 	'\\Sigma' |
+    '\\sigma' |
+	'\\varsigma' |
+    '\\char\"0003A4' | //Tau
 	'\\tau' |
-	'\\upsilon' |
 	'\\Upsilon' |
+    '\\upsilon' |
+	'\\Phi' |
 	'\\phi' |
 	'\\varphi' |
-	'\\Phi' |
+	'\\char\"0003A7' | //Chi
 	'\\chi' |
-	'\\psi' |
 	'\\Psi' |
-	'\\omega' |
-	'\\Omega';
+    '\\psi' |
+	'\\Omega' |
+	'\\omega';
 
 fragment PI: '\\pi';
 fragment INFTY: '\\infty';

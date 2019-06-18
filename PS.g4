@@ -126,54 +126,54 @@ BANG: '!';
 
 //Excludes some letters for use as e.g. constants in SYMBOL
 GREEK_LETTER:
-    '\\char\"000391' | //Alpha
+    '\\char"000391' | //Alpha
 	'\\alpha' |
-    '\\char\"000392' | //Beta
+    '\\char"000392' | //Beta
 	'\\beta' |
 	'\\Gamma' |
     '\\gamma' |
 	'\\Delta' |
 	'\\delta' |
-	'\\char\"000190' | //Epsilon
+	'\\char"000190' | //Epsilon
 	'\\epsilon' |
 	'\\varepsilon' |
-    '\\char\"000396' | //Zeta
+    '\\char"000396' | //Zeta
 	'\\zeta' |
-	'\\char\"000397' | //Eta
+	'\\char"000397' | //Eta
     '\\eta' |
 	'\\Theta' |
 	'\\theta' |
 	'\\vartheta' |
-    '\\char\"000399' | //Iota
+    '\\char"000399' | //Iota
 	'\\iota' |
-    '\\char\"00039A' | //Kappa
+    '\\char"00039A' | //Kappa
 	'\\kappa' |
 	'\\Lambda' |
     '\\lambda' |
-	'\\char\"00039C' | //Mu
+	'\\char"00039C' | //Mu
 	'\\mu' |
-    '\\char\"00039D' | //Nu
+    '\\char"00039D' | //Nu
 	'\\nu' |
 	'\\Xi' |
     '\\xi' |
-	'\\char\"00039F' | //Omicron
+	'\\char"00039F' | //Omicron
 	'\\omicron' |
 	'\\Pi' |
     '\\varpi' |
-    '\\char\"0003A1' | //Rho
+    '\\char"0003A1' | //Rho
 	'\\rho' |
 	'\\varrho' |
 	'\\Sigma' |
     '\\sigma' |
 	'\\varsigma' |
-    '\\char\"0003A4' | //Tau
+    '\\char"0003A4' | //Tau
 	'\\tau' |
 	'\\Upsilon' |
     '\\upsilon' |
 	'\\Phi' |
 	'\\phi' |
 	'\\varphi' |
-	'\\char\"0003A7' | //Chi
+	'\\char"0003A7' | //Chi
 	'\\chi' |
 	'\\Psi' |
     '\\psi' |

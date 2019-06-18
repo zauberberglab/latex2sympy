@@ -127,58 +127,58 @@ BANG: '!';
 //Excludes some letters for use as e.g. constants in SYMBOL
 GREEK_LETTER:
     '\\char"000391' | //Alpha
-	'\\alpha' |
+    '\\alpha' |
     '\\char"000392' | //Beta
-	'\\beta' |
-	'\\Gamma' |
+    '\\beta' |
+    '\\Gamma' |
     '\\gamma' |
-	'\\Delta' |
-	'\\delta' |
-	'\\char"000190' | //Epsilon
-	'\\epsilon' |
-	'\\varepsilon' |
+    '\\Delta' |
+    '\\delta' |
+    '\\char"000190' | //Epsilon
+    '\\epsilon' |
+    '\\varepsilon' |
     '\\char"000396' | //Zeta
-	'\\zeta' |
-	'\\char"000397' | //Eta
+    '\\zeta' |
+    '\\char"000397' | //Eta
     '\\eta' |
-	'\\Theta' |
-	'\\theta' |
-	'\\vartheta' |
+    '\\Theta' |
+    '\\theta' |
+    '\\vartheta' |
     '\\char"000399' | //Iota
-	'\\iota' |
+    '\\iota' |
     '\\char"00039A' | //Kappa
-	'\\kappa' |
-	'\\Lambda' |
+    '\\kappa' |
+    '\\Lambda' |
     '\\lambda' |
-	'\\char"00039C' | //Mu
-	'\\mu' |
+    '\\char"00039C' | //Mu
+    '\\mu' |
     '\\char"00039D' | //Nu
-	'\\nu' |
-	'\\Xi' |
+    '\\nu' |
+    '\\Xi' |
     '\\xi' |
-	'\\char"00039F' | //Omicron
-	'\\omicron' |
-	'\\Pi' |
+    '\\char"00039F' | //Omicron
+    '\\omicron' |
+    '\\Pi' |
     '\\varpi' |
     '\\char"0003A1' | //Rho
-	'\\rho' |
-	'\\varrho' |
-	'\\Sigma' |
+    '\\rho' |
+    '\\varrho' |
+    '\\Sigma' |
     '\\sigma' |
-	'\\varsigma' |
+    '\\varsigma' |
     '\\char"0003A4' | //Tau
-	'\\tau' |
-	'\\Upsilon' |
+    '\\tau' |
+    '\\Upsilon' |
     '\\upsilon' |
-	'\\Phi' |
-	'\\phi' |
-	'\\varphi' |
-	'\\char"0003A7' | //Chi
-	'\\chi' |
-	'\\Psi' |
+    '\\Phi' |
+    '\\phi' |
+    '\\varphi' |
+    '\\char"0003A7' | //Chi
+    '\\chi' |
+    '\\Psi' |
     '\\psi' |
-	'\\Omega' |
-	'\\omega';
+    '\\Omega' |
+    '\\omega';
 
 fragment PI: '\\pi';
 fragment INFTY: '\\infty';

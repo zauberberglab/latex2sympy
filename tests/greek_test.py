@@ -1,16 +1,9 @@
 from .context import assert_equal
 import pytest
-from sympy import Symbol, abc
+from sympy import Symbol
 
-abc.alpha
-abc.theta
-abc.epsilon
-
-# '\\char\"000190' | //Epsilon
 epsilon_upper = Symbol('char"000190', real=True)
-# '\\epsilon' |
 epsilon_lower = Symbol('epsilon', real=True)
-# '\\varepsilon' |
 varepsilon = Symbol('varepsilon', real=True)
 
 def test_greek_epsilon():

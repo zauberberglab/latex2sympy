@@ -9,7 +9,7 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3")
-        buf.write(u"b\u0281\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
+        buf.write(u"a\u0281\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
         buf.write(u"\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r")
         buf.write(u"\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4")
         buf.write(u"\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30")
@@ -223,7 +223,7 @@ def serializedATN():
         buf.write(u"\2\2\u01a7\u0197\3\2\2\2\u01a7\u019b\3\2\2\2\u01a7\u01a1")
         buf.write(u"\3\2\2\2\u01a8\65\3\2\2\2\u01a9\u01aa\5\2\2\2\u01aa\u01ab")
         buf.write(u"\7\n\2\2\u01ab\u01ac\5\22\n\2\u01ac\u01ad\7\13\2\2\u01ad")
-        buf.write(u"\67\3\2\2\2\u01ae\u01bd\7b\2\2\u01af\u01b3\7S\2\2\u01b0")
+        buf.write(u"\67\3\2\2\2\u01ae\u01bd\7a\2\2\u01af\u01b3\7S\2\2\u01b0")
         buf.write(u"\u01b3\7]\2\2\u01b1\u01b3\5\66\34\2\u01b2\u01af\3\2\2")
         buf.write(u"\2\u01b2\u01b0\3\2\2\2\u01b2\u01b1\3\2\2\2\u01b3\u01b5")
         buf.write(u"\3\2\2\2\u01b4\u01b6\5R*\2\u01b5\u01b4\3\2\2\2\u01b5")
@@ -380,7 +380,7 @@ class PSParser ( Parser ):
                       u"E_NOTATION_E", u"LETTER_NO_E", u"NUMBER", u"E_NOTATION", 
                       u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", 
                       u"BANG", u"GREEK_LETTER", u"SYMBOL", u"VARIABLE_CMD", 
-                      u"VARIABLE_TEXT", u"VARIABLE_SYMBOL", u"VARIABLE" ]
+                      u"VARIABLE_SYMBOL", u"VARIABLE" ]
 
     RULE_accent_symbol = 0
     RULE_math = 1
@@ -533,9 +533,8 @@ class PSParser ( Parser ):
     GREEK_LETTER=91
     SYMBOL=92
     VARIABLE_CMD=93
-    VARIABLE_TEXT=94
-    VARIABLE_SYMBOL=95
-    VARIABLE=96
+    VARIABLE_SYMBOL=94
+    VARIABLE=95
 
     def __init__(self, input, output=sys.stdout):
         super(PSParser, self).__init__(input, output=output)

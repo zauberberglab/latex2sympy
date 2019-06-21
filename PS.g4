@@ -107,7 +107,8 @@ DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
 
 EXP_E: 'e';
 E_NOTATION_E: 'E';
-LETTER: [a-df-zA-DF-Z];//exclude e for exponential function and e notation
+LETTER_NO_E: [a-df-zA-DF-Z];//exclude e for exponential function and e notation
+fragment LETTER: [a-zA-Z];
 fragment DIGIT: [0-9];
 NUMBER:
     DIGIT+ (',' DIGIT DIGIT DIGIT)*
@@ -184,8 +185,10 @@ fragment PI: '\\pi';
 fragment INFTY: '\\infty';
 SYMBOL: PI | INFTY;
 
-//PLACEHOLDER in one go
-PLACEHOLDER: '[!'[a-zA-Z][a-zA-Z0-9_]*'!]';
+VARIABLE_CMD: '\\variable';
+VARIABLE_TEXT: LETTER (LETTER | DIGIT | UNDERSCORE)*;
+VARIABLE_SYMBOL: (GREEK_LETTER | VARIABLE_TEXT);
+VARIABLE: VARIABLE_CMD L_BRACE VARIABLE_SYMBOL R_BRACE;
 
 //collection of accents
 accent_symbol:
@@ -312,10 +315,10 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | PLACEHOLDER;
+atom: VARIABLE | (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
-mathit_text: (LETTER | E_NOTATION_E | EXP_E)+;
+mathit_text: (LETTER_NO_E | E_NOTATION_E | EXP_E)+;
 
 frac:
     CMD_FRAC L_BRACE
@@ -381,7 +384,7 @@ args: (expr ',' args) | expr;
 
 limit_sub:
     UNDERSCORE L_BRACE
-    (LETTER | GREEK_LETTER)
+    (LETTER_NO_E | GREEK_LETTER)
     LIM_APPROACH_SYM
     expr (CARET L_BRACE (ADD | SUB) R_BRACE)?
     R_BRACE;

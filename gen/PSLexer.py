@@ -648,7 +648,7 @@ class PSLexer(Lexer):
     DIFFERENTIAL = 78
     EXP_E = 79
     E_NOTATION_E = 80
-    LETTER = 81
+    LETTER_NO_E = 81
     NUMBER = 82
     E_NOTATION = 83
     EQUAL = 84
@@ -702,7 +702,7 @@ class PSLexer(Lexer):
             u"MATRIX_TYPES", u"CMD_MATRIX_START", u"CMD_MATRIX_END", u"MATRIX_DEL_COL", 
             u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR", u"UNDERSCORE", 
             u"CARET", u"COLON", u"SEMICOLON", u"COMMA", u"DIFFERENTIAL", 
-            u"EXP_E", u"E_NOTATION_E", u"LETTER", u"NUMBER", u"E_NOTATION", 
+            u"EXP_E", u"E_NOTATION_E", u"LETTER_NO_E", u"NUMBER", u"E_NOTATION", 
             u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", u"BANG", 
             u"GREEK_LETTER", u"SYMBOL", u"VARIABLE" ]
 
@@ -726,7 +726,7 @@ class PSLexer(Lexer):
                   u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR", 
                   u"UNDERSCORE", u"CARET", u"COLON", u"SEMICOLON", u"COMMA", 
                   u"WS_CHAR", u"DIFFERENTIAL", u"EXP_E", u"E_NOTATION_E", 
-                  u"LETTER", u"LETTER_ALL", u"DIGIT", u"NUMBER", u"E_NOTATION", 
+                  u"LETTER_NO_E", u"LETTER", u"DIGIT", u"NUMBER", u"E_NOTATION", 
                   u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", u"BANG", 
                   u"GREEK_LETTER", u"PI", u"INFTY", u"SYMBOL", u"VARIABLE_CMD", 
                   u"VARIABLE_SYMBOL", u"VARIABLE" ]

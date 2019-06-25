@@ -338,9 +338,9 @@ def convert_comp(comp):
         return convert_atom(comp.variable())
 
 def convert_atom(atom):
-    if atom.LETTER():
+    if atom.LETTER_NO_E():
         subscriptName = ''
-        s = atom.LETTER().getText()
+        s = atom.LETTER_NO_E().getText()
         if s == "I":
             return sympy.I
         if atom.subexpr():
@@ -350,7 +350,7 @@ def convert_atom(atom):
             else:                               # subscript is atom
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = '_{' + StrPrinter().doprint(subscript) + '}'
-        return sympy.Symbol(atom.LETTER().getText() + subscriptName, real=True)
+        return sympy.Symbol(atom.LETTER_NO_E().getText() + subscriptName, real=True)
     elif atom.GREEK_LETTER():
         s = atom.GREEK_LETTER().getText()[1:]
         if atom.subexpr():
@@ -453,7 +453,7 @@ def convert_frac(frac):
     elif (lower_itv_len == 2 and
         frac.lower.start.type == PSLexer.SYMBOL and
         frac.lower.start.text == '\\partial' and
-        (frac.lower.stop.type == PSLexer.LETTER or frac.lower.stop.type == PSLexer.SYMBOL)):
+        (frac.lower.stop.type == PSLexer.LETTER_NO_E or frac.lower.stop.type == PSLexer.SYMBOL)):
         partial_op = True
         wrt = frac.lower.stop.text
         if frac.lower.stop.type == PSLexer.SYMBOL:
@@ -462,7 +462,7 @@ def convert_frac(frac):
     if diff_op or partial_op:
         wrt = sympy.Symbol(wrt, real=True)
         if (diff_op and frac.upper.start == frac.upper.stop and
-            frac.upper.start.type == PSLexer.LETTER and
+            frac.upper.start.type == PSLexer.LETTER_NO_E and
             frac.upper.start.text == 'd'):
             return [wrt]
         elif (partial_op and frac.upper.start == frac.upper.stop and
@@ -556,10 +556,10 @@ def convert_func(func):
             expr = sympy.Pow(expr, func_pow, evaluate=False)
 
         return expr
-    # elif func.LETTER() or func.SYMBOL():
-    #     print('LETTER or symbol')
-    #     if func.LETTER():
-    #         fname = func.LETTER().getText()
+    # elif func.LETTER_NO_E() or func.SYMBOL():
+    #     print('LETTER_NO_E or symbol')
+    #     if func.LETTER_NO_E():
+    #         fname = func.LETTER_NO_E().getText()
     #     elif func.SYMBOL():
     #         fname = func.SYMBOL().getText()[1:]
     #     fname = str(fname) # can't be unicode
@@ -658,10 +658,10 @@ def handle_sum_or_prod(func, name):
 
 def handle_limit(func):
     sub = func.limit_sub()
-    if sub.LETTER():
-        var = sympy.Symbol(sub.LETTER().getText(), real=True)
-    elif sub.GREEK_LETTER():
-        var = sympy.Symbol(sub.GREEK_LETTER().getText()[1:], real=True)
+    if sub.LETTER_NO_E():
+        var = sympy.Symbol(sub.LETTER_NO_E().getText(), real=True)
+    elif sub.GREEK_LETTER_NO_E():
+        var = sympy.Symbol(sub.GREEK_LETTER_NO_E().getText()[1:], real=True)
     else:
         var = sympy.Symbol('x', real=True)
     if sub.SUB():

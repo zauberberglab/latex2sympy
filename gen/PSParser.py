@@ -377,7 +377,7 @@ class PSParser ( Parser ):
                       u"MATRIX_DEL_COL", u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", 
                       u"ACCENT_BAR", u"UNDERSCORE", u"CARET", u"COLON", 
                       u"SEMICOLON", u"COMMA", u"DIFFERENTIAL", u"EXP_E", 
-                      u"E_NOTATION_E", u"LETTER", u"NUMBER", u"E_NOTATION", 
+                      u"E_NOTATION_E", u"LETTER_NO_E", u"NUMBER", u"E_NOTATION", 
                       u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", 
                       u"BANG", u"GREEK_LETTER", u"SYMBOL", u"VARIABLE" ]
 
@@ -519,7 +519,7 @@ class PSParser ( Parser ):
     DIFFERENTIAL=78
     EXP_E=79
     E_NOTATION_E=80
-    LETTER=81
+    LETTER_NO_E=81
     NUMBER=82
     E_NOTATION=83
     EQUAL=84
@@ -1577,7 +1577,7 @@ class PSParser ( Parser ):
                 self.state = 225
                 self.unary()
                 pass
-            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
+            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 227 
                 self._errHandler.sync(self)
@@ -1668,7 +1668,7 @@ class PSParser ( Parser ):
                 self.state = 234
                 self.unary_nofunc()
                 pass
-            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
+            elif token in [PSParser.L_PAREN, PSParser.L_BRACE, PSParser.L_BRACKET, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.BAR, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_CHOOSE, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 235
                 self.postfix()
@@ -2163,7 +2163,7 @@ class PSParser ( Parser ):
                     self.state = 296
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
-                    if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
+                    if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
                         self.state = 291
                         self.atom()
                         pass
@@ -2278,7 +2278,7 @@ class PSParser ( Parser ):
                     self.state = 316
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
-                    if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
+                    if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
                         self.state = 311
                         self.atom()
                         pass
@@ -2901,8 +2901,8 @@ class PSParser ( Parser ):
             super(PSParser.AtomContext, self).__init__(parent, invokingState)
             self.parser = parser
 
-        def LETTER(self):
-            return self.getToken(PSParser.LETTER, 0)
+        def LETTER_NO_E(self):
+            return self.getToken(PSParser.LETTER_NO_E, 0)
 
         def GREEK_LETTER(self):
             return self.getToken(PSParser.GREEK_LETTER, 0)
@@ -2956,14 +2956,14 @@ class PSParser ( Parser ):
             self.state = 442
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.LETTER, PSParser.GREEK_LETTER]:
+            if token in [PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.LETTER_NO_E, PSParser.GREEK_LETTER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 431
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
-                if token in [PSParser.LETTER]:
+                if token in [PSParser.LETTER_NO_E]:
                     self.state = 428
-                    self.match(PSParser.LETTER)
+                    self.match(PSParser.LETTER_NO_E)
                     pass
                 elif token in [PSParser.GREEK_LETTER]:
                     self.state = 429
@@ -3089,11 +3089,11 @@ class PSParser ( Parser ):
             super(PSParser.Mathit_textContext, self).__init__(parent, invokingState)
             self.parser = parser
 
-        def LETTER(self, i=None):
+        def LETTER_NO_E(self, i=None):
             if i is None:
-                return self.getTokens(PSParser.LETTER)
+                return self.getTokens(PSParser.LETTER_NO_E)
             else:
-                return self.getToken(PSParser.LETTER, i)
+                return self.getToken(PSParser.LETTER_NO_E, i)
 
         def E_NOTATION_E(self, i=None):
             if i is None:
@@ -3134,7 +3134,7 @@ class PSParser ( Parser ):
             while True:
                 self.state = 449
                 _la = self._input.LA(1)
-                if not(((((_la - 79)) & ~0x3f) == 0 and ((1 << (_la - 79)) & ((1 << (PSParser.EXP_E - 79)) | (1 << (PSParser.E_NOTATION_E - 79)) | (1 << (PSParser.LETTER - 79)))) != 0)):
+                if not(((((_la - 79)) & ~0x3f) == 0 and ((1 << (_la - 79)) & ((1 << (PSParser.EXP_E - 79)) | (1 << (PSParser.E_NOTATION_E - 79)) | (1 << (PSParser.LETTER_NO_E - 79)))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -3142,7 +3142,7 @@ class PSParser ( Parser ):
                 self.state = 452 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (((((_la - 79)) & ~0x3f) == 0 and ((1 << (_la - 79)) & ((1 << (PSParser.EXP_E - 79)) | (1 << (PSParser.E_NOTATION_E - 79)) | (1 << (PSParser.LETTER - 79)))) != 0)):
+                if not (((((_la - 79)) & ~0x3f) == 0 and ((1 << (_la - 79)) & ((1 << (PSParser.EXP_E - 79)) | (1 << (PSParser.E_NOTATION_E - 79)) | (1 << (PSParser.LETTER_NO_E - 79)))) != 0)):
                     break
 
         except RecognitionException as re:
@@ -4064,8 +4064,8 @@ class PSParser ( Parser ):
             else:
                 return self.getToken(PSParser.R_BRACE, i)
 
-        def LETTER(self):
-            return self.getToken(PSParser.LETTER, 0)
+        def LETTER_NO_E(self):
+            return self.getToken(PSParser.LETTER_NO_E, 0)
 
         def GREEK_LETTER(self):
             return self.getToken(PSParser.GREEK_LETTER, 0)
@@ -4106,7 +4106,7 @@ class PSParser ( Parser ):
             self.match(PSParser.L_BRACE)
             self.state = 592
             _la = self._input.LA(1)
-            if not(_la==PSParser.LETTER or _la==PSParser.GREEK_LETTER):
+            if not(_la==PSParser.LETTER_NO_E or _la==PSParser.GREEK_LETTER):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -4299,7 +4299,7 @@ class PSParser ( Parser ):
             self.state = 618
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
+            if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
                 self.state = 613
                 self.atom()
                 pass
@@ -4371,7 +4371,7 @@ class PSParser ( Parser ):
             self.state = 626
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
+            if token in [PSParser.CMD_MATHIT, PSParser.ACCENT_OVERLINE, PSParser.ACCENT_BAR, PSParser.DIFFERENTIAL, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.GREEK_LETTER, PSParser.SYMBOL, PSParser.VARIABLE]:
                 self.state = 621
                 self.atom()
                 pass

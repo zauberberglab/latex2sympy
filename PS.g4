@@ -107,8 +107,8 @@ DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
 
 EXP_E: 'e';
 E_NOTATION_E: 'E';
-LETTER: [a-df-zA-DF-Z]; // exclude e for exponential function and e notation
-fragment LETTER_ALL: [a-zA-Z];
+LETTER_NO_E: [a-df-zA-DF-Z]; // exclude e for exponential function and e notation
+fragment LETTER: [a-zA-Z];
 fragment DIGIT: [0-9];
 NUMBER:
     DIGIT+ (',' DIGIT DIGIT DIGIT)*
@@ -186,7 +186,7 @@ fragment INFTY: '\\infty';
 SYMBOL: PI | INFTY;
 
 fragment VARIABLE_CMD: '\\variable';
-fragment VARIABLE_SYMBOL: (GREEK_LETTER | LETTER_ALL) (GREEK_LETTER | LETTER_ALL | DIGIT)* (UNDERSCORE (GREEK_LETTER | LETTER_ALL | DIGIT)*)?;
+fragment VARIABLE_SYMBOL: (GREEK_LETTER | LETTER) (GREEK_LETTER | LETTER | DIGIT)* (UNDERSCORE (GREEK_LETTER | LETTER | DIGIT)*)?;
 VARIABLE: VARIABLE_CMD L_BRACE VARIABLE_SYMBOL R_BRACE;
 
 //collection of accents
@@ -314,10 +314,10 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
+atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
-mathit_text: (LETTER | E_NOTATION_E | EXP_E)+;
+mathit_text: (LETTER_NO_E | E_NOTATION_E | EXP_E)+;
 
 frac:
     CMD_FRAC L_BRACE
@@ -359,10 +359,10 @@ func:
     (L_LEFT? L_PAREN func_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_arg MR_RIGHT? R_PAREN | func_arg_noparens)
 
     //Do not do arbitraty functions but see as multiplications
-    /*| (LETTER | SYMBOL) subexpr? // e.g. f(x)
+    /*| (LETTER_NO_E | SYMBOL) subexpr? // e.g. f(x)
     L_PAREN args R_PAREN
 
-    | (LETTER | SYMBOL) subexpr? // e.g. f(x)
+    | (LETTER_NO_E | SYMBOL) subexpr? // e.g. f(x)
     L_LEFT L_PAREN args R_RIGHT R_PAREN*/
 
     | FUNC_INT
@@ -383,7 +383,7 @@ args: (expr ',' args) | expr;
 
 limit_sub:
     UNDERSCORE L_BRACE
-    (LETTER | GREEK_LETTER)
+    (LETTER_NO_E | GREEK_LETTER)
     LIM_APPROACH_SYM
     expr (CARET L_BRACE (ADD | SUB) R_BRACE)?
     R_BRACE;

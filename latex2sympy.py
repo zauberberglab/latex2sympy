@@ -338,31 +338,9 @@ def convert_comp(comp):
         return convert_atom(comp.variable())
 
 def convert_atom(atom):
-    if atom.VARIABLE():
-        name = atom.VARIABLE().getText()[10:]
-        name = name[0:len(name)-1]
-
-        # add hash to distinguish from regular symbols
-        hash = hashlib.md5(name.encode()).hexdigest()
-        symbol_name = name+hash
-
-        # replace the variable for already known variable values
-        if name in VARIABLE_VALUES:
-            # if a sympy class
-            if isinstance(VARIABLE_VALUES[name], tuple(sympy.core.all_classes)):
-                symbol = VARIABLE_VALUES[name]
-
-            # if NOT a sympy class
-            else:
-                symbol = parse_expr(str(VARIABLE_VALUES[name]))
-        else:
-            symbol = sympy.Symbol(symbol_name, real=True)
-
-        # return the symbol
-        return symbol
-    if atom.LETTER_NO_E():
+    if atom.LETTER():
         subscriptName = ''
-        s = atom.LETTER_NO_E().getText()
+        s = atom.LETTER().getText()
         if s == "I":
             return sympy.I
         if atom.subexpr():
@@ -372,7 +350,7 @@ def convert_atom(atom):
             else:                               # subscript is atom
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = '_{' + StrPrinter().doprint(subscript) + '}'
-        return sympy.Symbol(atom.LETTER_NO_E().getText() + subscriptName, real=True)
+        return sympy.Symbol(atom.LETTER().getText() + subscriptName, real=True)
     elif atom.GREEK_LETTER():
         s = atom.GREEK_LETTER().getText()[1:]
         if atom.subexpr():
@@ -431,6 +409,28 @@ def convert_atom(atom):
     elif atom.mathit():
         text = rule2text(atom.mathit().mathit_text())
         return sympy.Symbol(text, real=True)
+    elif atom.VARIABLE():
+        name = atom.VARIABLE().getText()[10:]
+        name = name[0:len(name)-1]
+
+        # add hash to distinguish from regular symbols
+        hash = hashlib.md5(name.encode()).hexdigest()
+        symbol_name = name+hash
+
+        # replace the variable for already known variable values
+        if name in VARIABLE_VALUES:
+            # if a sympy class
+            if isinstance(VARIABLE_VALUES[name], tuple(sympy.core.all_classes)):
+                symbol = VARIABLE_VALUES[name]
+
+            # if NOT a sympy class
+            else:
+                symbol = parse_expr(str(VARIABLE_VALUES[name]))
+        else:
+            symbol = sympy.Symbol(symbol_name, real=True)
+
+        # return the symbol
+        return symbol
 
 def rule2text(ctx):
     stream = ctx.start.getInputStream()

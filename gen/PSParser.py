@@ -9,7 +9,7 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3")
-        buf.write(u"a\u0281\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
+        buf.write(u"_\u0281\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
         buf.write(u"\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r")
         buf.write(u"\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4")
         buf.write(u"\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30")
@@ -229,7 +229,7 @@ def serializedATN():
         buf.write(u"\5R*\2\u01b4\u01b3\3\2\2\2\u01b4\u01b5\3\2\2\2\u01b5")
         buf.write(u"\u01bd\3\2\2\2\u01b6\u01bd\7^\2\2\u01b7\u01bd\7T\2\2")
         buf.write(u"\u01b8\u01bd\7U\2\2\u01b9\u01bd\7P\2\2\u01ba\u01bd\5")
-        buf.write(u":\36\2\u01bb\u01bd\7a\2\2\u01bc\u01b1\3\2\2\2\u01bc\u01b6")
+        buf.write(u":\36\2\u01bb\u01bd\7_\2\2\u01bc\u01b1\3\2\2\2\u01bc\u01b6")
         buf.write(u"\3\2\2\2\u01bc\u01b7\3\2\2\2\u01bc\u01b8\3\2\2\2\u01bc")
         buf.write(u"\u01b9\3\2\2\2\u01bc\u01ba\3\2\2\2\u01bc\u01bb\3\2\2")
         buf.write(u"\2\u01bd9\3\2\2\2\u01be\u01bf\7?\2\2\u01bf\u01c0\7\n")
@@ -354,7 +354,7 @@ class PSParser ( Parser ):
                      u"'\\bar'", u"'_'", u"'^'", u"':'", u"';'", u"','", 
                      u"<INVALID>", u"'e'", u"'E'", u"<INVALID>", u"<INVALID>", 
                      u"<INVALID>", u"'='", u"'<'", u"'\\leq'", u"'>'", u"'\\geq'", 
-                     u"'!='", u"'!'", u"<INVALID>", u"<INVALID>", u"'\\variable'" ]
+                     u"'!='", u"'!'" ]
 
     symbolicNames = [ u"<INVALID>", u"WS", u"ADD", u"SUB", u"MUL", u"DIV", 
                       u"L_PAREN", u"R_PAREN", u"L_BRACE", u"R_BRACE", u"L_BRACE_VISUAL", 
@@ -379,8 +379,7 @@ class PSParser ( Parser ):
                       u"SEMICOLON", u"COMMA", u"DIFFERENTIAL", u"EXP_E", 
                       u"E_NOTATION_E", u"LETTER", u"NUMBER", u"E_NOTATION", 
                       u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", 
-                      u"BANG", u"GREEK_LETTER", u"SYMBOL", u"VARIABLE_CMD", 
-                      u"VARIABLE_SYMBOL", u"VARIABLE" ]
+                      u"BANG", u"GREEK_LETTER", u"SYMBOL", u"VARIABLE" ]
 
     RULE_accent_symbol = 0
     RULE_math = 1
@@ -532,9 +531,7 @@ class PSParser ( Parser ):
     BANG=90
     GREEK_LETTER=91
     SYMBOL=92
-    VARIABLE_CMD=93
-    VARIABLE_SYMBOL=94
-    VARIABLE=95
+    VARIABLE=93
 
     def __init__(self, input, output=sys.stdout):
         super(PSParser, self).__init__(input, output=output)

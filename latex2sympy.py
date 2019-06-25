@@ -334,8 +334,6 @@ def convert_comp(comp):
         return convert_matrix(comp.matrix())
     elif comp.func():
         return convert_func(comp.func())
-    elif comp.variable():
-        return convert_atom(comp.variable())
 
 def convert_atom(atom):
     if atom.LETTER_NO_E():
@@ -660,8 +658,8 @@ def handle_limit(func):
     sub = func.limit_sub()
     if sub.LETTER_NO_E():
         var = sympy.Symbol(sub.LETTER_NO_E().getText(), real=True)
-    elif sub.GREEK_LETTER_NO_E():
-        var = sympy.Symbol(sub.GREEK_LETTER_NO_E().getText()[1:], real=True)
+    elif sub.GREEK_LETTER():
+        var = sympy.Symbol(sub.GREEK_LETTER().getText()[1:], real=True)
     else:
         var = sympy.Symbol('x', real=True)
     if sub.SUB():

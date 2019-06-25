@@ -19,21 +19,21 @@ import hashlib
 
 # default process normal algebra
 LINALG_PROCESSING = False
-PLACEHOLDER_VALUES = {}
+VARIABLE_VALUES = {}
 
-def process_sympy(sympy, placeholder_values = {}, linalg = False):
+def process_sympy(sympy, variable_values = {}, linalg = False):
 
     # linalg settings
     global LINALG_PROCESSING
     if linalg:
         LINALG_PROCESSING = True
 
-    # placeholder values
-    global PLACEHOLDER_VALUES
-    if len(placeholder_values) > 0:
-        PLACEHOLDER_VALUES = placeholder_values
+    # variable values
+    global VARIABLE_VALUES
+    if len(variable_values) > 0:
+        VARIABLE_VALUES = variable_values
     else:
-        PLACEHOLDER_VALUES = {}
+        VARIABLE_VALUES = {}
 
     # setup listner
     matherror = MathErrorListener(sympy)
@@ -336,9 +336,9 @@ def convert_comp(comp):
         return convert_func(comp.func())
 
 def convert_atom(atom):
-    if atom.LETTER():
+    if atom.LETTER_NO_E():
         subscriptName = ''
-        s = atom.LETTER().getText()
+        s = atom.LETTER_NO_E().getText()
         if s == "I":
             return sympy.I
         if atom.subexpr():
@@ -348,7 +348,7 @@ def convert_atom(atom):
             else:                               # subscript is atom
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = '_{' + StrPrinter().doprint(subscript) + '}'
-        return sympy.Symbol(atom.LETTER().getText() + subscriptName, real=True)
+        return sympy.Symbol(atom.LETTER_NO_E().getText() + subscriptName, real=True)
     elif atom.GREEK_LETTER():
         s = atom.GREEK_LETTER().getText()[1:]
         if atom.subexpr():
@@ -407,23 +407,23 @@ def convert_atom(atom):
     elif atom.mathit():
         text = rule2text(atom.mathit().mathit_text())
         return sympy.Symbol(text, real=True)
-    elif atom.PLACEHOLDER():
-        name = atom.PLACEHOLDER().getText()[2:]
-        name = name[0:len(name)-2]
+    elif atom.VARIABLE():
+        name = atom.VARIABLE().getText()[10:]
+        name = name[0:len(name)-1]
 
         # add hash to distinguish from regular symbols
         hash = hashlib.md5(name.encode()).hexdigest()
         symbol_name = name+hash
 
-        # replace the placeholder for already known placeholder values
-        if name in PLACEHOLDER_VALUES:
+        # replace the variable for already known variable values
+        if name in VARIABLE_VALUES:
             # if a sympy class
-            if isinstance(PLACEHOLDER_VALUES[name], tuple(sympy.core.all_classes)):
-                symbol = PLACEHOLDER_VALUES[name]
+            if isinstance(VARIABLE_VALUES[name], tuple(sympy.core.all_classes)):
+                symbol = VARIABLE_VALUES[name]
 
             # if NOT a sympy class
             else:
-                symbol = parse_expr(str(PLACEHOLDER_VALUES[name]))
+                symbol = parse_expr(str(VARIABLE_VALUES[name]))
         else:
             symbol = sympy.Symbol(symbol_name, real=True)
 
@@ -451,7 +451,7 @@ def convert_frac(frac):
     elif (lower_itv_len == 2 and
         frac.lower.start.type == PSLexer.SYMBOL and
         frac.lower.start.text == '\\partial' and
-        (frac.lower.stop.type == PSLexer.LETTER or frac.lower.stop.type == PSLexer.SYMBOL)):
+        (frac.lower.stop.type == PSLexer.LETTER_NO_E or frac.lower.stop.type == PSLexer.SYMBOL)):
         partial_op = True
         wrt = frac.lower.stop.text
         if frac.lower.stop.type == PSLexer.SYMBOL:
@@ -460,7 +460,7 @@ def convert_frac(frac):
     if diff_op or partial_op:
         wrt = sympy.Symbol(wrt, real=True)
         if (diff_op and frac.upper.start == frac.upper.stop and
-            frac.upper.start.type == PSLexer.LETTER and
+            frac.upper.start.type == PSLexer.LETTER_NO_E and
             frac.upper.start.text == 'd'):
             return [wrt]
         elif (partial_op and frac.upper.start == frac.upper.stop and
@@ -554,10 +554,10 @@ def convert_func(func):
             expr = sympy.Pow(expr, func_pow, evaluate=False)
 
         return expr
-    # elif func.LETTER() or func.SYMBOL():
-    #     print('LETTER or symbol')
-    #     if func.LETTER():
-    #         fname = func.LETTER().getText()
+    # elif func.LETTER_NO_E() or func.SYMBOL():
+    #     print('LETTER_NO_E or symbol')
+    #     if func.LETTER_NO_E():
+    #         fname = func.LETTER_NO_E().getText()
     #     elif func.SYMBOL():
     #         fname = func.SYMBOL().getText()[1:]
     #     fname = str(fname) # can't be unicode
@@ -656,8 +656,8 @@ def handle_sum_or_prod(func, name):
 
 def handle_limit(func):
     sub = func.limit_sub()
-    if sub.LETTER():
-        var = sympy.Symbol(sub.LETTER().getText(), real=True)
+    if sub.LETTER_NO_E():
+        var = sympy.Symbol(sub.LETTER_NO_E().getText(), real=True)
     elif sub.GREEK_LETTER():
         var = sympy.Symbol(sub.GREEK_LETTER().getText()[1:], real=True)
     else:
@@ -695,24 +695,3 @@ def get_differential_var_str(text):
     if text[0] == "\\":
         text = text[1:]
     return text
-
-def test_sympy():
-    print(process_sympy("e^{(45 + 2)}"))
-    print(process_sympy("e + 5"))
-    print(process_sympy("5 + e"))
-    print(process_sympy("e"))
-    print(process_sympy("\\frac{dx}{dy} \\int y x^2 dy"))
-    print(process_sympy("\\frac{dx}{dy} 5"))
-    print(process_sympy("\\frac{d}{dx} \\int x^2 dx"))
-    print(process_sympy("\\frac{dx}{dy} \\int x^2 dx"))
-    print(process_sympy("\\frac{d}{dy} x^2 + x y = 0"))
-    print(process_sympy("\\frac{d}{dy} x^2 + x y = 2"))
-    print(process_sympy("\\frac{d x^3}{dy}"))
-    print(process_sympy("\\frac{d x^3}{dy} + x^3"))
-    print(process_sympy("\\int^{5x}_{2} x^2 dy"))
-    print(process_sympy("\\int_{5x}^{2} x^2 dx"))
-    print(process_sympy("\\int x^2 dx"))
-    print(process_sympy("2 4 5 - 2 3 1"))
-
-if __name__ == "__main__":
-    test_sympy()

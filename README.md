@@ -11,6 +11,12 @@ equivalent SymPy form.
 $ antlr-4.7.2-complete.jar PS.g4 -o gen
 ```
 
+or
+
+```
+$ java -jar antlr-4.7.2-complete.jar PS.g4 -o gen
+```
+
 ## Usage
 
 In Python 2.7:

@@ -17,6 +17,6 @@ def compare(actual, expected):
 		value_simp = simplify(value)
 	assert actual == expected or value == 0 or value_simp == 0
 
-def assert_equal(latex, expr, placeholder_values = {}, linalg = False):
-	parsed = process_sympy(latex, placeholder_values, linalg)
+def assert_equal(latex, expr, variable_values = {}, linalg = False):
+	parsed = process_sympy(latex, variable_values, linalg)
 	compare(parsed, expr)

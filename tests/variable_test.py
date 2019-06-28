@@ -15,7 +15,10 @@ def test_variable_digit_subscript():
 	assert_equal("\\variable{x_1}", Symbol('x_1' + hashlib.md5('x_1'.encode()).hexdigest(), real=True))
 def test_variable_after_subscript_required():
 	with pytest.raises(Exception):
-		assert_equal("\\variable{x_}", None)
+		assert_equal("\\variable{x_}", Symbol('x_' + hashlib.md5('x_'.encode()).hexdigest(), real=True))
+def test_variable_before_subscript_required():
+	with pytest.raises(Exception):
+		assert_equal("\\variable{_x}", Symbol('_x' + hashlib.md5('_x'.encode()).hexdigest(), real=True))
 def test_variable_bad_name():
 	with pytest.raises(Exception):
 		assert_equal("\\variable{\\sin xy}", None)

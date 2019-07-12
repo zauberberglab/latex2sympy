@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Get relative path of the root directory of the project
+rdir=`git rev-parse --git-dir`
+rel_path="$(dirname "$rdir")"
+
+# Change to that path and run the file
+cd $rel_path
+
+echo "pre-commit hook started..."
+
+# Activate virtual environment
+source .env/bin/activate || source .env/Scripts/activate
+
+# Run auto formatting on all staged python files, then add those changes
+autopep8 --in-place `git diff --name-only --cached | grep '.py'` && git add `git diff --name-only --cached` || exit 1
+
+exit 0

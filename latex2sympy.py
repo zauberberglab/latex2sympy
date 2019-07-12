@@ -21,7 +21,8 @@ import hashlib
 LINALG_PROCESSING = False
 VARIABLE_VALUES = {}
 
-def process_sympy(sympy, variable_values = {}, linalg = False):
+
+def process_sympy(sympy, variable_values={}, linalg=False):
 
     # linalg settings
     global LINALG_PROCESSING
@@ -40,7 +41,7 @@ def process_sympy(sympy, variable_values = {}, linalg = False):
 
     # stream input
     stream = antlr4.InputStream(sympy)
-    lex    = PSLexer(stream)
+    lex = PSLexer(stream)
     lex.removeErrorListeners()
     lex.addErrorListener(matherror)
 
@@ -77,6 +78,7 @@ def process_sympy(sympy, variable_values = {}, linalg = False):
 
     return return_data
 
+
 class MathErrorListener(ErrorListener):
     def __init__(self, src):
         super(ErrorListener, self).__init__()
@@ -96,12 +98,13 @@ class MathErrorListener(ErrorListener):
             if expected < 10:
                 expected = " ".join(expected)
                 err = (fmt % ("I expected one of these: " + expected,
-                    self.src, marker))
+                              self.src, marker))
             else:
                 err = (fmt % ("I expected something else here", self.src, marker))
         else:
             err = fmt % ("I don't understand this", self.src, marker)
         raise Exception(err)
+
 
 def convert_relation(rel):
     if rel.expr():
@@ -122,9 +125,11 @@ def convert_relation(rel):
     elif rel.UNEQUAL():
         return sympy.Ne(lh, rh, evaluate=False)
 
+
 def convert_expr(expr):
     if expr.additive():
         return convert_add(expr.additive())
+
 
 def convert_matrix(matrix):
     # set to linag processing
@@ -134,37 +139,39 @@ def convert_matrix(matrix):
     # build matrix
     row = matrix.matrix_row()
     tmp = []
-    rows = 0;
+    rows = 0
     for r in row:
-        tmp.append([]);
+        tmp.append([])
         for expr in r.expr():
             tmp[rows].append(convert_expr(expr))
         rows = rows + 1
 
-    #return the matrix
+    # return the matrix
     return sympy.Matrix(tmp)
+
 
 def convert_add(add):
     if add.ADD():
-       lh = convert_add(add.additive(0))
-       rh = convert_add(add.additive(1))
+        lh = convert_add(add.additive(0))
+        rh = convert_add(add.additive(1))
 
-       # if linalg processing use matadd unless lh or rh are  a number
-       if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
-           return sympy.MatAdd(lh,rh, evaluate=False)
-       else:
-           return sympy.Add(lh, rh, evaluate=False)
+        # if linalg processing use matadd unless lh or rh are  a number
+        if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
+            return sympy.MatAdd(lh, rh, evaluate=False)
+        else:
+            return sympy.Add(lh, rh, evaluate=False)
     elif add.SUB():
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
 
         # if linalg processing keep matrix mutable
         if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
-            return sympy.MatAdd(lh,-1*rh, evaluate=False)
+            return sympy.MatAdd(lh, -1 * rh, evaluate=False)
         else:
             return sympy.Add(lh, -1 * rh, evaluate=False)
     else:
         return convert_mp(add.mp())
+
 
 def convert_mp(mp):
     if hasattr(mp, 'mp'):
@@ -180,7 +187,7 @@ def convert_mp(mp):
 
         # if linalg processing keep matrix mutable
         if LINALG_PROCESSING:
-            return sympy.MatMul(lh,rh, evaluate=False)
+            return sympy.MatMul(lh, rh, evaluate=False)
         else:
             return sympy.Mul(lh, rh, evaluate=False)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
@@ -195,6 +202,7 @@ def convert_mp(mp):
             return convert_unary(mp.unary())
         else:
             return convert_unary(mp.unary_nofunc())
+
 
 def convert_unary(unary):
     if hasattr(unary, 'unary'):
@@ -221,6 +229,7 @@ def convert_unary(unary):
     elif postfix:
         return convert_postfix_list(postfix)
 
+
 def convert_postfix_list(arr, i=0):
     if i >= len(arr):
         raise Exception("Index out of bounds")
@@ -228,13 +237,13 @@ def convert_postfix_list(arr, i=0):
     res = convert_postfix(arr[i])
     if isinstance(res, sympy.Expr) or isinstance(res, sympy.Matrix):
         if i == len(arr) - 1:
-            return res # nothing to multiply by
+            return res  # nothing to multiply by
         else:
             if i > 0:
                 left = convert_postfix(arr[i - 1])
                 right = convert_postfix(arr[i + 1])
                 if isinstance(left, sympy.Expr) and isinstance(right, sympy.Expr):
-                    left_syms  = convert_postfix(arr[i - 1]).atoms(sympy.Symbol)
+                    left_syms = convert_postfix(arr[i - 1]).atoms(sympy.Symbol)
                     right_syms = convert_postfix(arr[i + 1]).atoms(sympy.Symbol)
                     # if the left and right sides contain no variables and the
                     # symbol in between is 'x', treat as multiplication.
@@ -244,16 +253,17 @@ def convert_postfix_list(arr, i=0):
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
             if LINALG_PROCESSING:
-                return sympy.MatMul(res,rh, evaluate=False)
+                return sympy.MatMul(res, rh, evaluate=False)
             else:
                 return sympy.Mul(res, rh, evaluate=False)
-    else: # must be derivative
+    else:  # must be derivative
         wrt = res[0]
         if i == len(arr) - 1:
             raise Exception("Expected expression for derivative")
         else:
             expr = convert_postfix_list(arr, i + 1)
             return sympy.Derivative(expr, wrt)
+
 
 def do_subs(expr, at):
     if at.expr():
@@ -268,6 +278,7 @@ def do_subs(expr, at):
         lh = convert_expr(at.equality().expr(0))
         rh = convert_expr(at.equality().expr(1))
         return expr.subs(lh, rh)
+
 
 def convert_postfix(postfix):
     if hasattr(postfix, 'exp'):
@@ -289,14 +300,15 @@ def convert_postfix(postfix):
                 at_b = do_subs(exp, ev.eval_at_sup())
             if ev.eval_at_sub():
                 at_a = do_subs(exp, ev.eval_at_sub())
-            if at_b != None and at_a != None:
+            if at_b is not None and at_a is not None:
                 exp = sympy.Add(at_b, -1 * at_a, evaluate=False)
-            elif at_b != None:
+            elif at_b is not None:
                 exp = at_b
-            elif at_a != None:
+            elif at_a is not None:
                 exp = at_a
 
     return exp
+
 
 def convert_exp(exp):
     if hasattr(exp, 'exp'):
@@ -319,6 +331,7 @@ def convert_exp(exp):
         else:
             return convert_comp(exp.comp_nofunc())
 
+
 def convert_comp(comp):
     if comp.group():
         return convert_expr(comp.group().expr())
@@ -334,6 +347,7 @@ def convert_comp(comp):
         return convert_matrix(comp.matrix())
     elif comp.func():
         return convert_func(comp.func())
+
 
 def convert_atom(atom):
     if atom.LETTER_NO_E():
@@ -369,7 +383,7 @@ def convert_atom(atom):
         # get the base (variable)
         base = atom.accent().base.getText()
         # set string to base+name
-        s = base+name
+        s = base + name
         if atom.subexpr():
             subscript = None
             if atom.subexpr().expr():           # subscript is expr
@@ -409,11 +423,11 @@ def convert_atom(atom):
         return sympy.Symbol(text, real=True)
     elif atom.VARIABLE():
         name = atom.VARIABLE().getText()[10:]
-        name = name[0:len(name)-1]
+        name = name[0:len(name) - 1]
 
         # add hash to distinguish from regular symbols
         hash = hashlib.md5(name.encode()).hexdigest()
-        symbol_name = name+hash
+        symbol_name = name + hash
 
         # replace the variable for already known variable values
         if name in VARIABLE_VALUES:
@@ -430,6 +444,7 @@ def convert_atom(atom):
         # return the symbol
         return symbol
 
+
 def rule2text(ctx):
     stream = ctx.start.getInputStream()
     # starting index of starting token
@@ -439,19 +454,20 @@ def rule2text(ctx):
 
     return stream.getText(startIdx, stopIdx)
 
+
 def convert_frac(frac):
     diff_op = False
     partial_op = False
     lower_itv = frac.lower.getSourceInterval()
     lower_itv_len = lower_itv[1] - lower_itv[0] + 1
     if (frac.lower.start == frac.lower.stop and
-        frac.lower.start.type == PSLexer.DIFFERENTIAL):
+            frac.lower.start.type == PSLexer.DIFFERENTIAL):
         wrt = get_differential_var_str(frac.lower.start.text)
         diff_op = True
     elif (lower_itv_len == 2 and
-        frac.lower.start.type == PSLexer.SYMBOL and
-        frac.lower.start.text == '\\partial' and
-        (frac.lower.stop.type == PSLexer.LETTER_NO_E or frac.lower.stop.type == PSLexer.SYMBOL)):
+          frac.lower.start.type == PSLexer.SYMBOL and
+          frac.lower.start.text == '\\partial' and
+          (frac.lower.stop.type == PSLexer.LETTER_NO_E or frac.lower.stop.type == PSLexer.SYMBOL)):
         partial_op = True
         wrt = frac.lower.stop.text
         if frac.lower.stop.type == PSLexer.SYMBOL:
@@ -461,11 +477,11 @@ def convert_frac(frac):
         wrt = sympy.Symbol(wrt, real=True)
         if (diff_op and frac.upper.start == frac.upper.stop and
             frac.upper.start.type == PSLexer.LETTER_NO_E and
-            frac.upper.start.text == 'd'):
+                frac.upper.start.text == 'd'):
             return [wrt]
         elif (partial_op and frac.upper.start == frac.upper.stop and
-            frac.upper.start.type == PSLexer.SYMBOL and
-            frac.upper.start.text == '\\partial'):
+              frac.upper.start.type == PSLexer.SYMBOL and
+              frac.upper.start.text == '\\partial'):
             return [wrt]
         upper_text = rule2text(frac.upper)
 
@@ -484,6 +500,7 @@ def convert_frac(frac):
     else:
         return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
 
+
 def convert_binom(binom):
     expr_top = convert_expr(binom.upper)
     expr_bot = convert_expr(binom.lower)
@@ -492,7 +509,7 @@ def convert_binom(binom):
 
 def convert_func(func):
     if func.func_normal():
-        if func.L_PAREN(): # function called with parenthesis
+        if func.L_PAREN():  # function called with parenthesis
             arg = convert_func_arg(func.func_arg())
         else:
             arg = convert_func_arg(func.func_arg_noparens())
@@ -501,7 +518,7 @@ def convert_func(func):
 
         # change arc<trig> -> a<trig>
         if name in ["arcsin", "arccos", "arctan", "arccsc", "arcsec",
-        "arccot"]:
+                    "arccot"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
         if name in ["arsinh", "arcosh", "artanh"]:
@@ -520,7 +537,7 @@ def convert_func(func):
                 operatorname = "a" + operatorname[3:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
 
-        if (name=="log" or name=="ln"):
+        if (name == "log" or name == "ln"):
             if func.subexpr():
                 if func.subexpr().atom():
                     base = convert_atom(func.subexpr().atom())
@@ -532,7 +549,7 @@ def convert_func(func):
                 base = sympy.E
             expr = sympy.log(arg, base, evaluate=False)
 
-        if name=="exp" or name=="exponentialE":
+        if name == "exp" or name == "exponentialE":
             expr = sympy.exp(arg)
 
         func_pow = None
@@ -544,11 +561,10 @@ def convert_func(func):
                 func_pow = convert_atom(func.supexpr().atom())
 
         if name in ["sin", "cos", "tan", "csc", "sec", "cot", "sinh", "cosh", "tanh"]:
-                if func_pow == -1:
-                    name = "a" + name
-                    should_pow = False
-                expr = getattr(sympy.functions, name)(arg, evaluate=False)
-
+            if func_pow == -1:
+                name = "a" + name
+                should_pow = False
+            expr = getattr(sympy.functions, name)(arg, evaluate=False)
 
         if func_pow and should_pow:
             expr = sympy.Pow(expr, func_pow, evaluate=False)
@@ -594,11 +610,13 @@ def convert_func(func):
     elif func.EXP_E():
         return handle_exp(func)
 
+
 def convert_func_arg(arg):
     if hasattr(arg, 'expr'):
         return convert_expr(arg.expr())
     else:
         return convert_mp(arg.mp_nofunc())
+
 
 def handle_integral(func):
     if func.additive():
@@ -639,20 +657,21 @@ def handle_integral(func):
     else:
         return sympy.Integral(integrand, int_var)
 
-def handle_sum_or_prod(func, name):
-    val      = convert_mp(func.mp())
-    iter_var = convert_expr(func.subeq().equality().expr(0))
-    start    = convert_expr(func.subeq().equality().expr(1))
-    if func.supexpr().expr(): # ^{expr}
-        end = convert_expr(func.supexpr().expr())
-    else: # ^atom
-        end = convert_atom(func.supexpr().atom())
 
+def handle_sum_or_prod(func, name):
+    val = convert_mp(func.mp())
+    iter_var = convert_expr(func.subeq().equality().expr(0))
+    start = convert_expr(func.subeq().equality().expr(1))
+    if func.supexpr().expr():  # ^{expr}
+        end = convert_expr(func.supexpr().expr())
+    else:  # ^atom
+        end = convert_atom(func.supexpr().atom())
 
     if name == "summation":
         return sympy.Sum(val, (iter_var, start, end))
     elif name == "product":
         return sympy.Product(val, (iter_var, start, end))
+
 
 def handle_limit(func):
     sub = func.limit_sub()
@@ -667,23 +686,26 @@ def handle_limit(func):
     else:
         direction = "+"
     approaching = convert_expr(sub.expr())
-    content     = convert_mp(func.mp())
+    content = convert_mp(func.mp())
 
     return sympy.Limit(content, var, approaching, direction)
 
+
 def handle_exp(func):
     if func.supexpr():
-        if func.supexpr().expr(): # ^{expr}
+        if func.supexpr().expr():  # ^{expr}
             exp_arg = convert_expr(func.supexpr().expr())
-        else: # ^atom
+        else:  # ^atom
             exp_arg = convert_atom(func.supexpr().atom())
     else:
         exp_arg = 1
     return sympy.exp(exp_arg)
 
+
 def get_differential_var(d):
     text = get_differential_var_str(d.getText())
     return sympy.Symbol(text, real=True)
+
 
 def get_differential_var_str(text):
     for i in range(1, len(text)):

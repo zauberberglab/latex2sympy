@@ -4,5 +4,6 @@ from sympy import sin, Symbol
 
 x = Symbol('x', real=True)
 
+
 def test_overline():
-	assert_equal("\\frac{\\sin(x)}{\\overline{x}_n}", sin(x)/Symbol('xbar_{n}', real=True))
+    assert_equal("\\frac{\\sin(x)}{\\overline{x}_n}", sin(x) / Symbol('xbar_{n}', real=True))

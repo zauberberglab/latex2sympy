@@ -33,8 +33,8 @@ x = Symbol('x', real=True)
 y = Symbol('y', real=True)
 
 # BUG: 1 + tan^2(x+1) should be == sec^2(x+1) but isnt
-lhs = (1 + (tan(x+1))**2)
-rhs = (sec(x+1))**2
+lhs = (1 + (tan(x + 1))**2)
+rhs = (sec(x + 1))**2
 eq = lhs - rhs
 print(simplify(lhs))
 print(simplify(rhs))

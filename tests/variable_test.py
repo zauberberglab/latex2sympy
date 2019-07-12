@@ -55,12 +55,12 @@ def test_variable_greek_letter_subscript():
 
 def test_variable_bad_unbraced_long_subscript():
     with pytest.raises(Exception):
-        assert_equal("\\variable{x\\beta10_y\\alpha20}", None)
+        assert_equal("\\variable{x_yz}", None)
 
 
 def test_variable_bad_unbraced_long_complex_subscript():
     with pytest.raises(Exception):
-        assert_equal("\\variable{x_yz}", None)
+        assert_equal("\\variable{x\\beta10_y\\alpha20}", None)
 
 
 def test_variable_braced_subscript():

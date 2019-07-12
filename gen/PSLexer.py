@@ -6,11 +6,10 @@ from io import StringIO
 import sys
 
 
-
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2")
-        buf.write(u"_\u04e6\b\1\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4")
+        buf.write(u"_\u04e5\b\1\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4")
         buf.write(u"\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r")
         buf.write(u"\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22")
         buf.write(u"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4")
@@ -96,10 +95,10 @@ def serializedATN():
         buf.write(u"\n_\3`\3`\3`\3`\3a\3a\3a\3a\3a\3a\3a\3b\3b\5b\u04b9\n")
         buf.write(u"b\3c\3c\3c\3c\3c\3c\3c\3c\3c\3c\3d\3d\3d\6d\u04c8\nd")
         buf.write(u"\rd\16d\u04c9\3d\3d\3d\3d\3d\3d\6d\u04d2\nd\rd\16d\u04d3")
-        buf.write(u"\3d\3d\3d\3d\3d\3d\5d\u04dc\nd\5d\u04de\nd\5d\u04e0\n")
-        buf.write(u"d\3e\3e\3e\3e\3e\3\u02cb\2f\3\3\5\4\7\5\t\6\13\7\r\b")
-        buf.write(u"\17\t\21\n\23\13\25\f\27\r\31\16\33\17\35\20\37\21!\22")
-        buf.write(u"#\23%\24\'\25)\26+\27-\30/\31\61\32\63\33\65\34\67\35")
+        buf.write(u"\3d\3d\3d\3d\3d\5d\u04db\nd\5d\u04dd\nd\5d\u04df\nd\3")
+        buf.write(u"e\3e\3e\3e\3e\3\u02cb\2f\3\3\5\4\7\5\t\6\13\7\r\b\17")
+        buf.write(u"\t\21\n\23\13\25\f\27\r\31\16\33\17\35\20\37\21!\22#")
+        buf.write(u"\23%\24\'\25)\26+\27-\30/\31\61\32\63\33\65\34\67\35")
         buf.write(u"9\36;\37= ?!A\"C#E$G%I&K\'M(O)Q*S+U,W-Y.[/]\60_\61a\62")
         buf.write(u"c\63e\64g\65i\66k\67m8o9q:s;u<w=y>{?}@\177A\u0081B\u0083")
         buf.write(u"C\u0085D\u0087E\u0089F\u008bG\u008dH\u008fI\u0091J\u0093")
@@ -107,7 +106,7 @@ def serializedATN():
         buf.write(u"R\u00a5S\u00a7\2\u00a9\2\u00abT\u00adU\u00afV\u00b1W")
         buf.write(u"\u00b3X\u00b5Y\u00b7Z\u00b9[\u00bb\\\u00bd]\u00bf\2\u00c1")
         buf.write(u"\2\u00c3^\u00c5\2\u00c7\2\u00c9_\3\2\6\5\2\13\f\17\17")
-        buf.write(u"\"\"\4\2C\\c|\6\2CFH\\cfh|\3\2\62;\2\u0533\2\3\3\2\2")
+        buf.write(u"\"\"\4\2C\\c|\6\2CFH\\cfh|\3\2\62;\2\u0531\2\3\3\2\2")
         buf.write(u"\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2\2\2")
         buf.write(u"\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\2\25")
         buf.write(u"\3\2\2\2\2\27\3\2\2\2\2\31\3\2\2\2\2\33\3\2\2\2\2\35")
@@ -162,7 +161,7 @@ def serializedATN():
         buf.write(u"\u031c\3\2\2\2\u00b7\u031e\3\2\2\2\u00b9\u0323\3\2\2")
         buf.write(u"\2\u00bb\u0326\3\2\2\2\u00bd\u04a9\3\2\2\2\u00bf\u04ab")
         buf.write(u"\3\2\2\2\u00c1\u04af\3\2\2\2\u00c3\u04b8\3\2\2\2\u00c5")
-        buf.write(u"\u04ba\3\2\2\2\u00c7\u04c7\3\2\2\2\u00c9\u04e1\3\2\2")
+        buf.write(u"\u04ba\3\2\2\2\u00c7\u04c7\3\2\2\2\u00c9\u04e0\3\2\2")
         buf.write(u"\2\u00cb\u00cd\t\2\2\2\u00cc\u00cb\3\2\2\2\u00cd\u00ce")
         buf.write(u"\3\2\2\2\u00ce\u00cc\3\2\2\2\u00ce\u00cf\3\2\2\2\u00cf")
         buf.write(u"\u00d0\3\2\2\2\u00d0\u00d1\b\2\2\2\u00d1\4\3\2\2\2\u00d2")
@@ -545,24 +544,23 @@ def serializedATN():
         buf.write(u"\u04c8\5\u00a7T\2\u04c6\u04c8\5\u00a9U\2\u04c7\u04c4")
         buf.write(u"\3\2\2\2\u04c7\u04c5\3\2\2\2\u04c7\u04c6\3\2\2\2\u04c8")
         buf.write(u"\u04c9\3\2\2\2\u04c9\u04c7\3\2\2\2\u04c9\u04ca\3\2\2")
-        buf.write(u"\2\u04ca\u04df\3\2\2\2\u04cb\u04dd\5\u0093J\2\u04cc\u04d1")
+        buf.write(u"\2\u04ca\u04de\3\2\2\2\u04cb\u04dc\5\u0093J\2\u04cc\u04d1")
         buf.write(u"\5\21\t\2\u04cd\u04d2\5\u00bd_\2\u04ce\u04d2\5\u00a7")
         buf.write(u"T\2\u04cf\u04d2\5\u00a9U\2\u04d0\u04d2\5\u009bN\2\u04d1")
         buf.write(u"\u04cd\3\2\2\2\u04d1\u04ce\3\2\2\2\u04d1\u04cf\3\2\2")
         buf.write(u"\2\u04d1\u04d0\3\2\2\2\u04d2\u04d3\3\2\2\2\u04d3\u04d1")
         buf.write(u"\3\2\2\2\u04d3\u04d4\3\2\2\2\u04d4\u04d5\3\2\2\2\u04d5")
-        buf.write(u"\u04d6\5\23\n\2\u04d6\u04de\3\2\2\2\u04d7\u04dc\5\u00bd")
-        buf.write(u"_\2\u04d8\u04dc\5\u00a7T\2\u04d9\u04dc\5\u00a9U\2\u04da")
-        buf.write(u"\u04dc\5\u009bN\2\u04db\u04d7\3\2\2\2\u04db\u04d8\3\2")
-        buf.write(u"\2\2\u04db\u04d9\3\2\2\2\u04db\u04da\3\2\2\2\u04dc\u04de")
-        buf.write(u"\3\2\2\2\u04dd\u04cc\3\2\2\2\u04dd\u04db\3\2\2\2\u04de")
-        buf.write(u"\u04e0\3\2\2\2\u04df\u04cb\3\2\2\2\u04df\u04e0\3\2\2")
-        buf.write(u"\2\u04e0\u00c8\3\2\2\2\u04e1\u04e2\5\u00c5c\2\u04e2\u04e3")
-        buf.write(u"\5\21\t\2\u04e3\u04e4\5\u00c7d\2\u04e4\u04e5\5\23\n\2")
-        buf.write(u"\u04e5\u00ca\3\2\2\2\33\2\u00ce\u0146\u0172\u0291\u02cb")
-        buf.write(u"\u02d3\u02d5\u02e4\u02ed\u02f3\u02fd\u0304\u0306\u030c")
-        buf.write(u"\u0311\u04a9\u04b8\u04c7\u04c9\u04d1\u04d3\u04db\u04dd")
-        buf.write(u"\u04df\3\b\2\2")
+        buf.write(u"\u04d6\5\23\n\2\u04d6\u04dd\3\2\2\2\u04d7\u04db\5\u00bd")
+        buf.write(u"_\2\u04d8\u04db\5\u00a7T\2\u04d9\u04db\5\u00a9U\2\u04da")
+        buf.write(u"\u04d7\3\2\2\2\u04da\u04d8\3\2\2\2\u04da\u04d9\3\2\2")
+        buf.write(u"\2\u04db\u04dd\3\2\2\2\u04dc\u04cc\3\2\2\2\u04dc\u04da")
+        buf.write(u"\3\2\2\2\u04dd\u04df\3\2\2\2\u04de\u04cb\3\2\2\2\u04de")
+        buf.write(u"\u04df\3\2\2\2\u04df\u00c8\3\2\2\2\u04e0\u04e1\5\u00c5")
+        buf.write(u"c\2\u04e1\u04e2\5\21\t\2\u04e2\u04e3\5\u00c7d\2\u04e3")
+        buf.write(u"\u04e4\5\23\n\2\u04e4\u00ca\3\2\2\2\33\2\u00ce\u0146")
+        buf.write(u"\u0172\u0291\u02cb\u02d3\u02d5\u02e4\u02ed\u02f3\u02fd")
+        buf.write(u"\u0304\u0306\u030c\u0311\u04a9\u04b8\u04c7\u04c9\u04d1")
+        buf.write(u"\u04d3\u04da\u04dc\u04de\3\b\2\2")
         return buf.getvalue()
 
 
@@ -570,7 +568,7 @@ class PSLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
-    decisionsToDFA = [ DFA(ds, i) for i, ds in enumerate(atn.decisionToState) ]
+    decisionsToDFA = [DFA(ds, i) for i, ds in enumerate(atn.decisionToState)]
 
     WS = 1
     ADD = 2
@@ -666,74 +664,74 @@ class PSLexer(Lexer):
     SYMBOL = 92
     VARIABLE = 93
 
-    channelNames = [ u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN" ]
+    channelNames = [u"DEFAULT_TOKEN_CHANNEL", u"HIDDEN"]
 
-    modeNames = [ u"DEFAULT_MODE" ]
+    modeNames = [u"DEFAULT_MODE"]
 
-    literalNames = [ u"<INVALID>",
-            u"'+'", u"'-'", u"'*'", u"'/'", u"'('", u"')'", u"'{'", u"'}'", 
-            u"'\\{'", u"'\\}'", u"'['", u"']'", u"'\\left'", u"'\\right'", 
-            u"'\\mleft'", u"'\\mright'", u"'|'", u"'\\lim'", u"'\\int'", 
-            u"'\\sum'", u"'\\prod'", u"'\\log'", u"'\\ln'", u"'\\sin'", 
-            u"'\\cos'", u"'\\tan'", u"'\\csc'", u"'\\sec'", u"'\\cot'", 
-            u"'\\arcsin'", u"'\\arccos'", u"'\\arctan'", u"'\\arccsc'", 
-            u"'\\arcsec'", u"'\\arccot'", u"'\\sinh'", u"'\\cosh'", u"'\\tanh'", 
-            u"'\\arsinh'", u"'\\arcosh'", u"'\\artanh'", u"'\\arcsinh'", 
-            u"'\\arccosh'", u"'\\arctanh'", u"'arsinh'", u"'arcsinh'", u"'arcosh'", 
-            u"'arccosh'", u"'artanh'", u"'arctanh'", u"'\\sqrt'", u"'\\times'", 
-            u"'\\cdot'", u"'\\div'", u"'\\frac'", u"'\\binom'", u"'\\choose'", 
-            u"'\\mathit'", u"'\\operatorname'", u"'matrix'", u"'pmatrix'", 
-            u"'bmatrix'", u"'&'", u"'\\\\'", u"'\\overline'", u"'\\bar'", 
-            u"'_'", u"'^'", u"':'", u"';'", u"','", u"'e'", u"'E'", u"'='", 
-            u"'<'", u"'\\leq'", u"'>'", u"'\\geq'", u"'!='", u"'!'" ]
+    literalNames = [u"<INVALID>",
+                    u"'+'", u"'-'", u"'*'", u"'/'", u"'('", u"')'", u"'{'", u"'}'",
+                    u"'\\{'", u"'\\}'", u"'['", u"']'", u"'\\left'", u"'\\right'",
+                    u"'\\mleft'", u"'\\mright'", u"'|'", u"'\\lim'", u"'\\int'",
+                    u"'\\sum'", u"'\\prod'", u"'\\log'", u"'\\ln'", u"'\\sin'",
+                    u"'\\cos'", u"'\\tan'", u"'\\csc'", u"'\\sec'", u"'\\cot'",
+                    u"'\\arcsin'", u"'\\arccos'", u"'\\arctan'", u"'\\arccsc'",
+                    u"'\\arcsec'", u"'\\arccot'", u"'\\sinh'", u"'\\cosh'", u"'\\tanh'",
+                    u"'\\arsinh'", u"'\\arcosh'", u"'\\artanh'", u"'\\arcsinh'",
+                    u"'\\arccosh'", u"'\\arctanh'", u"'arsinh'", u"'arcsinh'", u"'arcosh'",
+                    u"'arccosh'", u"'artanh'", u"'arctanh'", u"'\\sqrt'", u"'\\times'",
+                    u"'\\cdot'", u"'\\div'", u"'\\frac'", u"'\\binom'", u"'\\choose'",
+                    u"'\\mathit'", u"'\\operatorname'", u"'matrix'", u"'pmatrix'",
+                    u"'bmatrix'", u"'&'", u"'\\\\'", u"'\\overline'", u"'\\bar'",
+                    u"'_'", u"'^'", u"':'", u"';'", u"','", u"'e'", u"'E'", u"'='",
+                    u"'<'", u"'\\leq'", u"'>'", u"'\\geq'", u"'!='", u"'!'"]
 
-    symbolicNames = [ u"<INVALID>",
-            u"WS", u"ADD", u"SUB", u"MUL", u"DIV", u"L_PAREN", u"R_PAREN", 
-            u"L_BRACE", u"R_BRACE", u"L_BRACE_VISUAL", u"R_BRACE_VISUAL", 
-            u"L_BRACKET", u"R_BRACKET", u"L_LEFT", u"R_RIGHT", u"ML_LEFT", 
-            u"MR_RIGHT", u"BAR", u"FUNC_LIM", u"LIM_APPROACH_SYM", u"FUNC_INT", 
-            u"FUNC_SUM", u"FUNC_PROD", u"FUNC_LOG", u"FUNC_LN", u"FUNC_EXP", 
-            u"FUNC_SIN", u"FUNC_COS", u"FUNC_TAN", u"FUNC_CSC", u"FUNC_SEC", 
-            u"FUNC_COT", u"FUNC_ARCSIN", u"FUNC_ARCCOS", u"FUNC_ARCTAN", 
-            u"FUNC_ARCCSC", u"FUNC_ARCSEC", u"FUNC_ARCCOT", u"FUNC_SINH", 
-            u"FUNC_COSH", u"FUNC_TANH", u"FUNC_ARSINH", u"FUNC_ARCOSH", 
-            u"FUNC_ARTANH", u"FUNC_ARCSINH", u"FUNC_ARCCOSH", u"FUNC_ARCTANH", 
-            u"FUNC_ARSINH_NAME", u"FUNC_ARCSINH_NAME", u"FUNC_ARCOSH_NAME", 
-            u"FUNC_ARCCOSH_NAME", u"FUNC_ARTANH_NAME", u"FUNC_ARCTANH_NAME", 
-            u"FUNC_SQRT", u"CMD_TIMES", u"CMD_CDOT", u"CMD_DIV", u"CMD_FRAC", 
-            u"CMD_BINOM", u"CMD_CHOOSE", u"CMD_MATHIT", u"CMD_OPERATORNAME", 
-            u"MATRIX_TYPE_MATRIX", u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX", 
-            u"MATRIX_TYPES", u"CMD_MATRIX_START", u"CMD_MATRIX_END", u"MATRIX_DEL_COL", 
-            u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR", u"UNDERSCORE", 
-            u"CARET", u"COLON", u"SEMICOLON", u"COMMA", u"DIFFERENTIAL", 
-            u"EXP_E", u"E_NOTATION_E", u"LETTER_NO_E", u"NUMBER", u"E_NOTATION", 
-            u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", u"BANG", 
-            u"GREEK_LETTER", u"SYMBOL", u"VARIABLE" ]
+    symbolicNames = [u"<INVALID>",
+                     u"WS", u"ADD", u"SUB", u"MUL", u"DIV", u"L_PAREN", u"R_PAREN",
+                     u"L_BRACE", u"R_BRACE", u"L_BRACE_VISUAL", u"R_BRACE_VISUAL",
+                     u"L_BRACKET", u"R_BRACKET", u"L_LEFT", u"R_RIGHT", u"ML_LEFT",
+                     u"MR_RIGHT", u"BAR", u"FUNC_LIM", u"LIM_APPROACH_SYM", u"FUNC_INT",
+                     u"FUNC_SUM", u"FUNC_PROD", u"FUNC_LOG", u"FUNC_LN", u"FUNC_EXP",
+                     u"FUNC_SIN", u"FUNC_COS", u"FUNC_TAN", u"FUNC_CSC", u"FUNC_SEC",
+                     u"FUNC_COT", u"FUNC_ARCSIN", u"FUNC_ARCCOS", u"FUNC_ARCTAN",
+                     u"FUNC_ARCCSC", u"FUNC_ARCSEC", u"FUNC_ARCCOT", u"FUNC_SINH",
+                     u"FUNC_COSH", u"FUNC_TANH", u"FUNC_ARSINH", u"FUNC_ARCOSH",
+                     u"FUNC_ARTANH", u"FUNC_ARCSINH", u"FUNC_ARCCOSH", u"FUNC_ARCTANH",
+                     u"FUNC_ARSINH_NAME", u"FUNC_ARCSINH_NAME", u"FUNC_ARCOSH_NAME",
+                     u"FUNC_ARCCOSH_NAME", u"FUNC_ARTANH_NAME", u"FUNC_ARCTANH_NAME",
+                     u"FUNC_SQRT", u"CMD_TIMES", u"CMD_CDOT", u"CMD_DIV", u"CMD_FRAC",
+                     u"CMD_BINOM", u"CMD_CHOOSE", u"CMD_MATHIT", u"CMD_OPERATORNAME",
+                     u"MATRIX_TYPE_MATRIX", u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX",
+                     u"MATRIX_TYPES", u"CMD_MATRIX_START", u"CMD_MATRIX_END", u"MATRIX_DEL_COL",
+                     u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR", u"UNDERSCORE",
+                     u"CARET", u"COLON", u"SEMICOLON", u"COMMA", u"DIFFERENTIAL",
+                     u"EXP_E", u"E_NOTATION_E", u"LETTER_NO_E", u"NUMBER", u"E_NOTATION",
+                     u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", u"BANG",
+                     u"GREEK_LETTER", u"SYMBOL", u"VARIABLE"]
 
-    ruleNames = [ u"WS", u"ADD", u"SUB", u"MUL", u"DIV", u"L_PAREN", u"R_PAREN", 
-                  u"L_BRACE", u"R_BRACE", u"L_BRACE_VISUAL", u"R_BRACE_VISUAL", 
-                  u"L_BRACKET", u"R_BRACKET", u"L_LEFT", u"R_RIGHT", u"ML_LEFT", 
-                  u"MR_RIGHT", u"BAR", u"FUNC_LIM", u"LIM_APPROACH_SYM", 
-                  u"FUNC_INT", u"FUNC_SUM", u"FUNC_PROD", u"FUNC_LOG", u"FUNC_LN", 
-                  u"FUNC_EXP", u"FUNC_SIN", u"FUNC_COS", u"FUNC_TAN", u"FUNC_CSC", 
-                  u"FUNC_SEC", u"FUNC_COT", u"FUNC_ARCSIN", u"FUNC_ARCCOS", 
-                  u"FUNC_ARCTAN", u"FUNC_ARCCSC", u"FUNC_ARCSEC", u"FUNC_ARCCOT", 
-                  u"FUNC_SINH", u"FUNC_COSH", u"FUNC_TANH", u"FUNC_ARSINH", 
-                  u"FUNC_ARCOSH", u"FUNC_ARTANH", u"FUNC_ARCSINH", u"FUNC_ARCCOSH", 
-                  u"FUNC_ARCTANH", u"FUNC_ARSINH_NAME", u"FUNC_ARCSINH_NAME", 
-                  u"FUNC_ARCOSH_NAME", u"FUNC_ARCCOSH_NAME", u"FUNC_ARTANH_NAME", 
-                  u"FUNC_ARCTANH_NAME", u"FUNC_SQRT", u"CMD_TIMES", u"CMD_CDOT", 
-                  u"CMD_DIV", u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE", 
-                  u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX", 
-                  u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX", u"MATRIX_TYPES", 
-                  u"CMD_MATRIX_START", u"CMD_MATRIX_END", u"MATRIX_DEL_COL", 
-                  u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR", 
-                  u"UNDERSCORE", u"CARET", u"COLON", u"SEMICOLON", u"COMMA", 
-                  u"WS_CHAR", u"DIFFERENTIAL", u"EXP_E", u"E_NOTATION_E", 
-                  u"LETTER_NO_E", u"LETTER", u"DIGIT", u"NUMBER", u"E_NOTATION", 
-                  u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", u"BANG", 
-                  u"GREEK_LETTER", u"PI", u"INFTY", u"SYMBOL", u"VARIABLE_CMD", 
-                  u"VARIABLE_SYMBOL", u"VARIABLE" ]
+    ruleNames = [u"WS", u"ADD", u"SUB", u"MUL", u"DIV", u"L_PAREN", u"R_PAREN",
+                 u"L_BRACE", u"R_BRACE", u"L_BRACE_VISUAL", u"R_BRACE_VISUAL",
+                 u"L_BRACKET", u"R_BRACKET", u"L_LEFT", u"R_RIGHT", u"ML_LEFT",
+                 u"MR_RIGHT", u"BAR", u"FUNC_LIM", u"LIM_APPROACH_SYM",
+                 u"FUNC_INT", u"FUNC_SUM", u"FUNC_PROD", u"FUNC_LOG", u"FUNC_LN",
+                 u"FUNC_EXP", u"FUNC_SIN", u"FUNC_COS", u"FUNC_TAN", u"FUNC_CSC",
+                 u"FUNC_SEC", u"FUNC_COT", u"FUNC_ARCSIN", u"FUNC_ARCCOS",
+                 u"FUNC_ARCTAN", u"FUNC_ARCCSC", u"FUNC_ARCSEC", u"FUNC_ARCCOT",
+                 u"FUNC_SINH", u"FUNC_COSH", u"FUNC_TANH", u"FUNC_ARSINH",
+                 u"FUNC_ARCOSH", u"FUNC_ARTANH", u"FUNC_ARCSINH", u"FUNC_ARCCOSH",
+                 u"FUNC_ARCTANH", u"FUNC_ARSINH_NAME", u"FUNC_ARCSINH_NAME",
+                 u"FUNC_ARCOSH_NAME", u"FUNC_ARCCOSH_NAME", u"FUNC_ARTANH_NAME",
+                 u"FUNC_ARCTANH_NAME", u"FUNC_SQRT", u"CMD_TIMES", u"CMD_CDOT",
+                 u"CMD_DIV", u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE",
+                 u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX",
+                 u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX", u"MATRIX_TYPES",
+                 u"CMD_MATRIX_START", u"CMD_MATRIX_END", u"MATRIX_DEL_COL",
+                 u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR",
+                 u"UNDERSCORE", u"CARET", u"COLON", u"SEMICOLON", u"COMMA",
+                 u"WS_CHAR", u"DIFFERENTIAL", u"EXP_E", u"E_NOTATION_E",
+                 u"LETTER_NO_E", u"LETTER", u"DIGIT", u"NUMBER", u"E_NOTATION",
+                 u"EQUAL", u"LT", u"LTE", u"GT", u"GTE", u"UNEQUAL", u"BANG",
+                 u"GREEK_LETTER", u"PI", u"INFTY", u"SYMBOL", u"VARIABLE_CMD",
+                 u"VARIABLE_SYMBOL", u"VARIABLE"]
 
     grammarFileName = u"PS.g4"
 
@@ -743,5 +741,3 @@ class PSLexer(Lexer):
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None
-
-

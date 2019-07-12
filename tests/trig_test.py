@@ -16,5 +16,6 @@ from sympy import asinh, Symbol
 # math = process_sympy(latex)
 # print("latex: %s to math: %s" %(latex,math))
 
+
 def test_arcsinh():
-	assert_equal("\\operatorname{arcsinh}\\left(1\\right)", asinh(1))
+    assert_equal("\\operatorname{arcsinh}\\left(1\\right)", asinh(1))

@@ -10,6 +10,6 @@ cd $rel_path
 echo "pre-push hook started..."
 
 source .env/bin/activate || source .env/Scripts/activate
-pytest || exit 1
+pytest tests || exit 1
 
 exit 0

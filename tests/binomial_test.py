@@ -7,17 +7,30 @@ y = Symbol('y', real=True)
 theta = Symbol('theta', real=True)
 gamma = Symbol('gamma', real=True)
 
+
 def test_binomial_numeric():
-	assert_equal("\\binom{16}{2}", binomial(16,2))
+    assert_equal("\\binom{16}{2}", binomial(16, 2))
+
+
 def test_binomial_symbols():
-	assert_equal("\\binom{x}{y}", binomial(x,y))
+    assert_equal("\\binom{x}{y}", binomial(x, y))
+
+
 def test_binomial_greek_symbols():
-	assert_equal("\\binom{\\theta}{\\gamma}", binomial(theta,gamma))
+    assert_equal("\\binom{\\theta}{\\gamma}", binomial(theta, gamma))
+
+
 def test_binomial_expr():
-	assert_equal("\\binom{16+2}{\\frac{4}{2}}", binomial(16+2,4/2))
+    assert_equal("\\binom{16+2}{\\frac{4}{2}}", binomial(16 + 2, 4 / 2))
+
+
 def test_choose_numeric():
-	assert_equal("\\choose{16}{2}", binomial(16,2))
+    assert_equal("\\choose{16}{2}", binomial(16, 2))
+
+
 def test_choose_symbols():
-	assert_equal("\\choose{x}{y}", binomial(x,y))
+    assert_equal("\\choose{x}{y}", binomial(x, y))
+
+
 def test_choose_greek_symbols():
-	assert_equal("\\choose{\\theta}{\\gamma}", binomial(theta,gamma))
+    assert_equal("\\choose{\\theta}{\\gamma}", binomial(theta, gamma))

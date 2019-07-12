@@ -18,6 +18,10 @@ def test_variable_letter_subscript():
     assert_equal("\\variable{x_y}", Symbol('x_y' + hashlib.md5('x_y'.encode()).hexdigest(), real=True))
 
 
+def test_variable_letter_comma_subscript():
+    assert_equal("\\variable{x_{i,j}}", Symbol('x_{i,j}' + hashlib.md5('x_{i,j}'.encode()).hexdigest(), real=True))
+
+
 def test_variable_digit_subscript():
     assert_equal("\\variable{x_1}", Symbol('x_1' + hashlib.md5('x_1'.encode()).hexdigest(), real=True))
 
@@ -49,8 +53,18 @@ def test_variable_greek_letter_subscript():
     assert_equal("\\variable{\\alpha_\\beta}\\alpha", Symbol('\\alpha_\\beta' + hashlib.md5('\\alpha_\\beta'.encode()).hexdigest(), real=True) * Symbol('alpha', real=True))
 
 
-def test_variable_complex_name():
-    assert_equal("\\variable{x\\beta10_y\\alpha20}", Symbol('x\\beta10_y\\alpha20' + hashlib.md5('x\\beta10_y\\alpha20'.encode()).hexdigest(), real=True))
+def test_variable_bad_unbraced_long_subscript():
+    with pytest.raises(Exception):
+        assert_equal("\\variable{x\\beta10_y\\alpha20}", None)
+
+
+def test_variable_bad_unbraced_long_complex_subscript():
+    with pytest.raises(Exception):
+        assert_equal("\\variable{x_yz}", None)
+
+
+def test_variable_braced_subscript():
+    assert_equal("\\variable{x\\beta10_{y\\alpha20}}", Symbol('x\\beta10_{y\\alpha20}' + hashlib.md5('x\\beta10_{y\\alpha20}'.encode()).hexdigest(), real=True))
 
 
 def test_variable_complex_expr():

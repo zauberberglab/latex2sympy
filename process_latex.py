@@ -93,7 +93,7 @@ class MathErrorListener(ErrorListener):
         elif msg.startswith("mismatched"):
             names = PSParser.literalNames
             expected = [names[i] for i in e.getExpectedTokens() if i < len(names)]
-            if expected < 10:
+            if len(expected) < 10:
                 expected = " ".join(expected)
                 err = (fmt % ("I expected one of these: " + expected,
                     self.src, marker))

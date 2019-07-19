@@ -476,6 +476,7 @@ def convert_frac(frac):
     else:
         return Div(expr_top, expr_bot, evaluate=False)
 
+
 def convert_binom(binom):
     expr_top = convert_expr(binom.upper)
     expr_bot = convert_expr(binom.lower)
@@ -610,6 +611,9 @@ def handle_integral(func):
                     int_var = sympy.Symbol(s[1:], real=True)
                 int_sym = sym
         if int_var:
+            if integrand.func == Div:
+                integrand = sympy.Mul(*integrand.args, evaluate=False)
+
             integrand = integrand.subs(int_sym, 1)
         else:
             # Assume dx by default

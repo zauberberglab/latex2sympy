@@ -164,7 +164,9 @@ def convert_add(add):
         if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
             return sympy.MatAdd(lh, -1*rh, evaluate=False)
         else:
-            return Sub(lh, rh, evaluate=False)
+            # If we want to force ordering for variables this should be:
+            # return Sub(lh, rh, evaluate=False)
+            return sympy.Add(lh, sympy.Mul(-1, rh, evaluate=False), evaluate=False)
     else:
         return convert_mp(add.mp())
 

@@ -36,3 +36,4 @@ process_sympy("\\frac{d}{dx} x^{2}")
 
 Contributors are welcome! Feel free to open a pull request
 or an issue.
+

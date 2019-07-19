@@ -162,7 +162,7 @@ def convert_add(add):
 
         # if linalg processing keep matrix mutable
         if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
-            return sympy.MatAdd(lh, sympy.Mul(-1, rh, evaluate=False), evaluate=False)
+            return sympy.MatAdd(lh, -1*rh, evaluate=False)
         else:
             return Sub(lh, rh, evaluate=False)
     else:
@@ -292,7 +292,7 @@ def convert_postfix(postfix):
             if ev.eval_at_sub():
                 at_a = do_subs(exp, ev.eval_at_sub())
             if at_b != None and at_a != None:
-                exp = Div(at_b, at_a, evaluate=False)
+                exp = Sub(at_b, at_a, evaluate=False)
             elif at_b != None:
                 exp = at_b
             elif at_a != None:
@@ -668,7 +668,7 @@ def handle_exp(func):
             exp_arg = convert_atom(func.supexpr().atom())
     else:
         exp_arg = 1
-    return sympy.exp(exp_arg, evaluate=False)
+    return sympy.exp(exp_arg)
 
 def get_differential_var(d):
     text = get_differential_var_str(d.getText())

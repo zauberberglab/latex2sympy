@@ -21,7 +21,8 @@ import hashlib
 LINALG_PROCESSING = False
 PLACEHOLDER_VALUES = {}
 
-def process_sympy(sympy, placeholder_values = {}, linalg = False):
+
+def process_sympy(sympy, placeholder_values={}, linalg=False):
 
     # linalg settings
     global LINALG_PROCESSING
@@ -35,7 +36,7 @@ def process_sympy(sympy, placeholder_values = {}, linalg = False):
     else:
         PLACEHOLDER_VALUES = {}
 
-    # setup listner
+    # setup listener
     matherror = MathErrorListener(sympy)
 
     # stream input
@@ -76,6 +77,7 @@ def process_sympy(sympy, placeholder_values = {}, linalg = False):
     LINALG_PROCESSING = False
 
     return return_data
+
 
 class MathErrorListener(ErrorListener):
     def __init__(self, src):
@@ -151,7 +153,7 @@ def convert_add(add):
 
        # if linalg processing use matadd unless lh or rh are  a number
        if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
-           return sympy.MatAdd(lh,rh, evaluate=False)
+           return sympy.MatAdd(lh, rh, evaluate=False)
        else:
            return sympy.Add(lh, rh, evaluate=False)
     elif add.SUB():
@@ -160,9 +162,9 @@ def convert_add(add):
 
         # if linalg processing keep matrix mutable
         if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
-            return sympy.MatAdd(lh,-1*rh, evaluate=False)
+            return sympy.MatAdd(lh, sympy.Mul(-1, rh, evaluate=False), evaluate=False)
         else:
-            return sympy.Add(lh, -1 * rh, evaluate=False)
+            return Sub(lh, rh, evaluate=False)
     else:
         return convert_mp(add.mp())
 
@@ -180,7 +182,7 @@ def convert_mp(mp):
 
         # if linalg processing keep matrix mutable
         if LINALG_PROCESSING:
-            return sympy.MatMul(lh,rh, evaluate=False)
+            return sympy.MatMul(lh, rh, evaluate=False)
         else:
             return sympy.Mul(lh, rh, evaluate=False)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
@@ -189,7 +191,7 @@ def convert_mp(mp):
         if LINALG_PROCESSING:
             return sympy.MatMul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
         else:
-            return sympy.Mul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
+            return Div(lh, rh, -1, evaluate=False)
     else:
         if hasattr(mp, 'unary'):
             return convert_unary(mp.unary())
@@ -244,7 +246,7 @@ def convert_postfix_list(arr, i=0):
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
             if LINALG_PROCESSING:
-                return sympy.MatMul(res,rh, evaluate=False)
+                return sympy.MatMul(res, rh, evaluate=False)
             else:
                 return sympy.Mul(res, rh, evaluate=False)
     else: # must be derivative
@@ -290,7 +292,7 @@ def convert_postfix(postfix):
             if ev.eval_at_sub():
                 at_a = do_subs(exp, ev.eval_at_sub())
             if at_b != None and at_a != None:
-                exp = sympy.Add(at_b, -1 * at_a, evaluate=False)
+                exp = Div(at_b, at_a, evaluate=False)
             elif at_b != None:
                 exp = at_b
             elif at_a != None:
@@ -472,7 +474,7 @@ def convert_frac(frac):
     if LINALG_PROCESSING:
         return sympy.MatMul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
     else:
-        return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
+        return Div(expr_top, expr_bot, evaluate=False)
 
 def convert_binom(binom):
     expr_top = convert_expr(binom.upper)
@@ -666,7 +668,7 @@ def handle_exp(func):
             exp_arg = convert_atom(func.supexpr().atom())
     else:
         exp_arg = 1
-    return sympy.exp(exp_arg)
+    return sympy.exp(exp_arg, evaluate=False)
 
 def get_differential_var(d):
     text = get_differential_var_str(d.getText())
@@ -682,6 +684,27 @@ def get_differential_var_str(text):
     if text[0] == "\\":
         text = text[1:]
     return text
+
+
+class Div(sympy.Mul):
+
+    def __new__(cls, *args, **options):
+        args = (args[0], sympy.Pow(args[1], -1, evaluate=False))
+        return super().__new__(Div, *args, **options)
+
+    def _sympyrepr(self, expr, order=None):
+        return "Div(%s)" % ",".join(map(sympy.srepr, self.args))
+
+
+class Sub(sympy.Add):
+
+    def __new__(cls, *args, **options):
+        args = (args[0], sympy.Mul(-1, args[1], evaluate=False))
+        return super().__new__(Sub, *args, **options)
+
+    def _sympyrepr(self, expr, order=None):
+        return "Sub(%s)" % ",".join(map(sympy.srepr, self.args))
+
 
 def test_sympy():
     print(process_sympy("e^{(45 + 2)}"))

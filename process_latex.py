@@ -166,7 +166,11 @@ def convert_add(add):
         else:
             # If we want to force ordering for variables this should be:
             # return Sub(lh, rh, evaluate=False)
-            return sympy.Add(lh, sympy.Mul(-1, rh, evaluate=False), evaluate=False)
+            if rh.func.is_Number:
+                rh = -rh
+            else:
+                rh = sympy.Mul(-1, rh, evaluate=False)
+            return sympy.Add(lh, rh, evaluate=False)
     else:
         return convert_mp(add.mp())
 
@@ -221,7 +225,10 @@ def convert_unary(unary):
         if LINALG_PROCESSING:
             return sympy.MatMul(-1, tmp_convert_nested_unary, evaluate=False)
         else:
-            return sympy.Mul(-1, tmp_convert_nested_unary, evaluate=False)
+            if tmp_convert_nested_unary.func.is_Number:
+                return -tmp_convert_nested_unary
+            else:
+                return sympy.Mul(-1, tmp_convert_nested_unary, evaluate=False)
     elif postfix:
         return convert_postfix_list(postfix)
 

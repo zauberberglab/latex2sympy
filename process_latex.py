@@ -1,6 +1,7 @@
 import sympy
 import antlr4
 from antlr4.error.ErrorListener import ErrorListener
+from sympy.core.operations import AssocOp
 
 try:
     from gen.PSParser import PSParser
@@ -197,7 +198,7 @@ def convert_mp(mp):
         if LINALG_PROCESSING:
             return sympy.MatMul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
         else:
-            return Div(lh, rh, -1, evaluate=False)
+            return Div(lh, rh, in_parsing=True, evaluate=False)
     else:
         if hasattr(mp, 'unary'):
             return convert_unary(mp.unary())
@@ -483,7 +484,7 @@ def convert_frac(frac):
     if LINALG_PROCESSING:
         return sympy.MatMul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
     else:
-        return Div(expr_top, expr_bot, evaluate=False)
+        return Div(expr_top, expr_bot, in_parsing=True, evaluate=False)
 
 
 def convert_binom(binom):
@@ -701,8 +702,11 @@ def get_differential_var_str(text):
 
 class Div(sympy.Mul):
 
-    def __new__(cls, *args, **options):
-        args = (args[0], sympy.Pow(args[1], -1, evaluate=False))
+    is_Mul = True
+
+    def __new__(cls, *args, in_parsing=False, **options):
+        if in_parsing:
+            args = (args[0], sympy.Pow(args[1], -1, evaluate=False))
         return super().__new__(Div, *args, **options)
 
     def _sympyrepr(self, expr, order=None):
@@ -711,8 +715,9 @@ class Div(sympy.Mul):
 
 class Sub(sympy.Add):
 
-    def __new__(cls, *args, **options):
-        args = (args[0], sympy.Mul(-1, args[1], evaluate=False))
+    def __new__(cls, *args, in_parsing=False, **options):
+        if in_parsing:
+            args = (args[0], sympy.Mul(-1, args[1], evaluate=False))
         return super().__new__(Sub, *args, **options)
 
     def _sympyrepr(self, expr, order=None):

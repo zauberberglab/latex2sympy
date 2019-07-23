@@ -1,6 +1,5 @@
 from sympy import *
 # from sympy.abc import x,y,z,a,b,c,f,t,k,n
-from latex2sympy.process_latex import Root
 
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
@@ -13,7 +12,7 @@ t = Symbol('t', real=True)
 k = Symbol('k', real=True)
 n = Symbol('n', real=True)
 
-from process_latex import process_sympy
+from process_latex import process_sympy, Root
 import hashlib
 
 theta = Symbol('theta', real=True)

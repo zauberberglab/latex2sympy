@@ -582,9 +582,9 @@ def convert_func(func):
         expr = convert_expr(func.base)
         if func.root:
             r = convert_expr(func.root)
-            return sympy.root(expr, r)
+            return Root(expr, 1 / r, evaluate=False)
         else:
-            return sympy.sqrt(expr)
+            return Root(expr, sympy.S.Half, evaluate=False)
     elif func.FUNC_SUM():
         return handle_sum_or_prod(func, "summation")
     elif func.FUNC_PROD():
@@ -702,8 +702,6 @@ def get_differential_var_str(text):
 
 class Div(sympy.Mul):
 
-    is_Mul = True
-
     def __new__(cls, *args, in_parsing=False, **options):
         if in_parsing:
             args = (args[0], sympy.Pow(args[1], -1, evaluate=False))
@@ -711,6 +709,15 @@ class Div(sympy.Mul):
 
     def _sympyrepr(self, expr, order=None):
         return "Div(%s)" % ",".join(map(sympy.srepr, self.args))
+
+
+class Root(sympy.Pow):
+
+    def __new__(cls, *args, **options):
+        return super().__new__(Root, *args, **options)
+
+    def _sympyrepr(self, expr, order=None):
+        return "Root(%s)" % ",".join(map(sympy.srepr, self.args))
 
 
 class Sub(sympy.Add):

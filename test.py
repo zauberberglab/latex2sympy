@@ -1,5 +1,7 @@
 from sympy import *
 # from sympy.abc import x,y,z,a,b,c,f,t,k,n
+from latex2sympy.process_latex import Root
+
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
 z = Symbol('z', real=True)
@@ -210,8 +212,8 @@ GOOD_PAIRS = [
     ("\\choose{x}{y}", binomial(x,y) ),
     ("\\choose{\\theta}{\\gamma}", binomial(theta,Symbol('gamma', real=True)) ),
     ("\\begin{matrix}1&2\\\\3&4\\end{matrix}", Matrix([[1,2],[3,4]])),
-    ("\\begin{matrix}x&x^2\\\\\sqrt{x}&x\\end{matrix}", Matrix([[x,x**2],[sqrt(x),x]])),
-    ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([sqrt(x),sin(theta)])),
+    ("\\begin{matrix}x&x^2\\\\\sqrt{x}&x\\end{matrix}", Matrix([[x,x**2],[Root(x, S.Half),x]])),
+    ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([Root(x, S.Half),sin(theta)])),
     ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1,2],[3,4]])),
     ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1,2],[3,4]])),
 
@@ -321,7 +323,7 @@ for s, eq, *args in GOOD_PAIRS:
             value = eq - parsed
             value_simp = simplify(value)
 
-        if parsed != eq and value != 0 and value_simp != 0:
+        if srepr(parsed) != srepr(eq) and value != 0 and value_simp != 0:
             print("ERROR: \"%s\" did not parse to %s but parsed to %s" % (s, eq, parsed))
             print("diff: %s and simplified: %s" % (value, value_simp))
         else:

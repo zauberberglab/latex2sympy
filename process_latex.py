@@ -19,16 +19,10 @@ from sympy.parsing.sympy_parser import parse_expr
 import hashlib
 
 # default process normal algebra
-LINALG_PROCESSING = False
 PLACEHOLDER_VALUES = {}
 
 
-def process_sympy(sympy, placeholder_values={}, linalg=False):
-
-    # linalg settings
-    global LINALG_PROCESSING
-    if linalg:
-        LINALG_PROCESSING = True
+def process_sympy(sympy, placeholder_values={}):
 
     # placeholder values
     global PLACEHOLDER_VALUES
@@ -71,11 +65,6 @@ def process_sympy(sympy, placeholder_values={}, linalg=False):
     else:
         relation = math.relation()
         return_data = convert_relation(relation)
-
-    # make sure setting can be returned before resetting
-    linalg = LINALG_PROCESSING
-    # reset the setting
-    LINALG_PROCESSING = False
 
     return return_data
 
@@ -130,9 +119,6 @@ def convert_expr(expr):
         return convert_add(expr.additive())
 
 def convert_matrix(matrix):
-    # set to linag processing
-    global LINALG_PROCESSING
-    LINALG_PROCESSING = True
 
     # build matrix
     row = matrix.matrix_row()
@@ -147,23 +133,22 @@ def convert_matrix(matrix):
     #return the matrix
     return sympy.Matrix(tmp)
 
+
 def convert_add(add):
     if add.ADD():
-       lh = convert_add(add.additive(0))
-       rh = convert_add(add.additive(1))
+        lh = convert_add(add.additive(0))
+        rh = convert_add(add.additive(1))
 
-       # if linalg processing use matadd unless lh or rh are  a number
-       if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
-           return sympy.MatAdd(lh, rh, evaluate=False)
-       else:
-           return sympy.Add(lh, rh, evaluate=False)
+        if lh.is_Matrix and rh.is_Matrix:
+            return sympy.MatAdd(lh, rh, evaluate=False)
+        else:
+            return sympy.Add(lh, rh, evaluate=False)
     elif add.SUB():
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
 
-        # if linalg processing keep matrix mutable
-        if LINALG_PROCESSING and not (isinstance(lh, (sympy.Number, sympy.NumberSymbol)) or isinstance(rh, (sympy.Number, sympy.NumberSymbol))):
-            return sympy.MatAdd(lh, -1*rh, evaluate=False)
+        if lh.is_Matrix and rh.is_Matrix:
+            return sympy.MatAdd(lh, sympy.MatMul(-1, rh, evaluate=False), evaluate=False)
         else:
             # If we want to force ordering for variables this should be:
             # return Sub(lh, rh, evaluate=False)
@@ -174,6 +159,7 @@ def convert_add(add):
             return sympy.Add(lh, rh, evaluate=False)
     else:
         return convert_mp(add.mp())
+
 
 def convert_mp(mp):
     if hasattr(mp, 'mp'):
@@ -187,15 +173,14 @@ def convert_mp(mp):
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
 
-        # if linalg processing keep matrix mutable
-        if LINALG_PROCESSING:
+        if lh.is_Matrix and rh.is_Matrix:
             return sympy.MatMul(lh, rh, evaluate=False)
         else:
             return sympy.Mul(lh, rh, evaluate=False)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
-        if LINALG_PROCESSING:
+        if lh.is_Matrix and rh.is_Matrix:
             return sympy.MatMul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
         else:
             return Div(lh, rh, in_parsing=True, evaluate=False)
@@ -204,6 +189,7 @@ def convert_mp(mp):
             return convert_unary(mp.unary())
         else:
             return convert_unary(mp.unary_nofunc())
+
 
 def convert_unary(unary):
     if hasattr(unary, 'unary'):
@@ -220,10 +206,8 @@ def convert_unary(unary):
     if unary.ADD():
         return convert_unary(nested_unary)
     elif unary.SUB():
-        # do this first to determine whether LINALG is needed
         tmp_convert_nested_unary = convert_unary(nested_unary)
-        # if linalg do simple multiplication
-        if LINALG_PROCESSING:
+        if tmp_convert_nested_unary.is_Matrix:
             return sympy.MatMul(-1, tmp_convert_nested_unary, evaluate=False)
         else:
             if tmp_convert_nested_unary.func.is_Number:
@@ -255,7 +239,7 @@ def convert_postfix_list(arr, i=0):
 
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
-            if LINALG_PROCESSING:
+            if res.is_Matrix and rh.is_Matrix:
                 return sympy.MatMul(res, rh, evaluate=False)
             else:
                 return sympy.Mul(res, rh, evaluate=False)
@@ -441,6 +425,7 @@ def rule2text(ctx):
 
     return stream.getText(startIdx, stopIdx)
 
+
 def convert_frac(frac):
     diff_op = False
     partial_op = False
@@ -481,7 +466,7 @@ def convert_frac(frac):
 
     expr_top = convert_expr(frac.upper)
     expr_bot = convert_expr(frac.lower)
-    if LINALG_PROCESSING:
+    if expr_top.is_Matrix and expr_bot.is_Matrix:
         return sympy.MatMul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
     else:
         return Div(expr_top, expr_bot, in_parsing=True, evaluate=False)

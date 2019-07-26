@@ -152,7 +152,7 @@ def convert_add(add):
         else:
             # If we want to force ordering for variables this should be:
             # return Sub(lh, rh, evaluate=False)
-            if rh.func.is_Number:
+            if not rh.is_Matrix and rh.func.is_Number:
                 rh = -rh
             else:
                 rh = sympy.Mul(-1, rh, evaluate=False)

@@ -230,10 +230,10 @@ GOOD_PAIRS = [
     ("e",exp(1)),
 
     # lin alg processing
-    ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta,Matrix([[1,2],[3,4]])) ),
-    ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", MatAdd(MatMul(theta, Matrix([[1],[3]])), -1*Matrix([[-1],[2]]) ) ),
-    ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", MatMul(MatMul(theta, Matrix([[1,0],[0,1]])), Matrix([3,-2])) ),
-    ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(MatMul(1,Pow(9,-1, evaluate=False), evaluate=False), MatMul(theta, Matrix([[1,2],[3,4]]) ) ) ),
+    ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", Mul(theta, Matrix([[1,2],[3,4]]), evaluate=False)),
+    ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", Add(Mul(theta, Matrix([[1],[3]]), evaluate=False), Mul(-1, Matrix([[-1],[2]]), evaluate=False), evaluate=False) ),
+    ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", Mul(Mul(theta, Matrix([[1,0],[0,1]]), evaluate=False), Matrix([3,-2]), evaluate=False)),
+    ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", Mul(Mul(1,Pow(9,-1, evaluate=False), evaluate=False), Mul(theta, Matrix([[1,2],[3,4]], evaluate=False), evaluate=False), evaluate=False)),
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1])]),
@@ -242,10 +242,10 @@ GOOD_PAIRS = [
     ("\\left{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right}", Matrix([1,2,3])),
     ("{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}}", Matrix([1,2,3])),
 
-    # placeholder replacement during latex2sympy with linalg forced
-    ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}\\cdot[!v!]", MatMul(Matrix([[1,2],[3,4]]), Matrix([1,2])), {'v': Matrix([1,2])}, True ),
-    ("[!M!]\\cdot[!v!]", MatMul(Matrix([[1,2],[3,4]]), Matrix([1,2])), {'M': Matrix([[1,2],[3,4]]), 'v': Matrix([1,2])}, True ),
-    ("\\begin{pmatrix}3&-1\\end{pmatrix}\\cdot[!M!]\\cdot[!v!]", MatMul(MatMul(Matrix([[3,-1]]), Matrix([[1,2],[3,4]])), Matrix([1,2])), {'M': Matrix([[1,2],[3,4]]), 'v': Matrix([1,2])}, True ),
+    # placeholder replacement during latex2sympy
+    ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}\\cdot[!v!]", MatMul(Matrix([[1,2],[3,4]]), Matrix([1,2])), {'v': Matrix([1,2])}),
+    ("[!M!]\\cdot[!v!]", MatMul(Matrix([[1,2],[3,4]]), Matrix([1,2])), {'M': Matrix([[1,2],[3,4]]), 'v': Matrix([1,2])}),
+    ("\\begin{pmatrix}3&-1\\end{pmatrix}\\cdot[!M!]\\cdot[!v!]", MatMul(MatMul(Matrix([[3,-1]]), Matrix([[1,2],[3,4]])), Matrix([1,2])), {'M': Matrix([[1,2],[3,4]]), 'v': Matrix([1,2])}),
 ]
 
 # These bad latex strings should raise an exception when parsed
@@ -300,18 +300,19 @@ passed_good = 0
 total = 0
 passed = 0
 for s, eq, *args in GOOD_PAIRS:
-    # extra settings
-    force_linalg = False
     placeholder_values = {}
     if args:
         placeholder_values = args[0] if len(args) > 0 else placeholder_values
-        force_linalg = args[1] if len(args) > 1 else force_linalg
 
     # counters
     total += 1
     total_good += 1
     try:
-        parsed = process_sympy(s, placeholder_values, force_linalg)
+        parsed = process_sympy(s, placeholder_values)
+    except Exception as e:
+        print("ERROR: Exception when parsing \"%s\"" % s)
+
+    try:
         if isinstance(eq,(list,)):
             check = eq == parsed
             if check:
@@ -329,7 +330,8 @@ for s, eq, *args in GOOD_PAIRS:
             passed += 1
             passed_good += 1
     except Exception as e:
-        print("ERROR: Exception when parsing \"%s\"" % s)
+        print("ERROR: Exception when comparing \"%s\"" % s)
+
 for s in BAD_STRINGS:
     total += 1
     try:

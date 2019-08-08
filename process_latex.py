@@ -139,7 +139,7 @@ def convert_add(add):
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
 
-        if lh.is_Matrix and rh.is_Matrix:
+        if lh.is_Matrix or rh.is_Matrix:
             return sympy.MatAdd(lh, rh, evaluate=False)
         else:
             return sympy.Add(lh, rh, evaluate=False)
@@ -147,7 +147,7 @@ def convert_add(add):
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
 
-        if lh.is_Matrix and rh.is_Matrix:
+        if lh.is_Matrix or rh.is_Matrix:
             return sympy.MatAdd(lh, sympy.MatMul(-1, rh, evaluate=False), evaluate=False)
         else:
             # If we want to force ordering for variables this should be:
@@ -173,14 +173,14 @@ def convert_mp(mp):
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
 
-        if lh.is_Matrix and rh.is_Matrix:
+        if lh.is_Matrix or rh.is_Matrix:
             return sympy.MatMul(lh, rh, evaluate=False)
         else:
             return sympy.Mul(lh, rh, evaluate=False)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
-        if lh.is_Matrix and rh.is_Matrix:
+        if lh.is_Matrix or rh.is_Matrix:
             return sympy.MatMul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
         else:
             return Div(lh, rh, in_parsing=True, evaluate=False)
@@ -239,7 +239,7 @@ def convert_postfix_list(arr, i=0):
 
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
-            if res.is_Matrix and rh.is_Matrix:
+            if res.is_Matrix or rh.is_Matrix:
                 return sympy.MatMul(res, rh, evaluate=False)
             else:
                 return sympy.Mul(res, rh, evaluate=False)
@@ -466,7 +466,7 @@ def convert_frac(frac):
 
     expr_top = convert_expr(frac.upper)
     expr_bot = convert_expr(frac.lower)
-    if expr_top.is_Matrix and expr_bot.is_Matrix:
+    if expr_top.is_Matrix or expr_bot.is_Matrix:
         return sympy.MatMul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
     else:
         return Div(expr_top, expr_bot, in_parsing=True, evaluate=False)

@@ -230,10 +230,10 @@ GOOD_PAIRS = [
     ("e",exp(1)),
 
     # lin alg processing
-    ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", Mul(theta, Matrix([[1,2],[3,4]]), evaluate=False)),
-    ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", Add(Mul(theta, Matrix([[1],[3]]), evaluate=False), Mul(-1, Matrix([[-1],[2]]), evaluate=False), evaluate=False) ),
-    ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", Mul(Mul(theta, Matrix([[1,0],[0,1]]), evaluate=False), Matrix([3,-2]), evaluate=False)),
-    ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", Mul(Mul(1,Pow(9,-1, evaluate=False), evaluate=False), Mul(theta, Matrix([[1,2],[3,4]], evaluate=False), evaluate=False), evaluate=False)),
+    ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta, Matrix([[1,2],[3,4]]), evaluate=False)),
+    ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", MatAdd(MatMul(theta, Matrix([[1],[3]]), evaluate=False), MatMul(-1, Matrix([[-1],[2]]), evaluate=False), evaluate=False) ),
+    ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", MatMul(MatMul(theta, Matrix([[1,0],[0,1]]), evaluate=False), Matrix([3,-2]), evaluate=False)),
+    ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(MatMul(1,Pow(9,-1, evaluate=False), evaluate=False), MatMul(theta, Matrix([[1,2],[3,4]], evaluate=False), evaluate=False), evaluate=False)),
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1,2,3]), Matrix([4,3,1])]),
     ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}\\right\\}", [Matrix([1,2,3]), Matrix([4,3,1])]),

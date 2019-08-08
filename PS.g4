@@ -111,10 +111,10 @@ NUMBER:
 
 EQUAL: '=';
 LT: '<';
-LTE: '\\leq';
+LTE: '\\leq' | '\\le';
 GT: '>';
-GTE: '\\geq';
-UNEQUAL: '!=';
+GTE: '\\geq' | '\\ge';
+UNEQUAL: '!=' | '\\ne' | '\\neq';
 
 BANG: '!';
 

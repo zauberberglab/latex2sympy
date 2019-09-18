@@ -229,6 +229,11 @@ GOOD_PAIRS = [
     ("\\sin(x)*e^x", sin(x)*exp(x)),
     ("e",exp(1)),
 
+    #multiplication without cmd
+    ("2x2y",2*x*2*y),
+    ("2x2",2*x*2),
+    ("x2",x*2),
+
     # lin alg processing
     ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta, Matrix([[1,2],[3,4]]), evaluate=False)),
     ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", MatAdd(MatMul(theta, Matrix([[1],[3]]), evaluate=False), MatMul(-1, Matrix([[-1],[2]]), evaluate=False), evaluate=False) ),

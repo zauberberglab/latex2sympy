@@ -226,17 +226,6 @@ def convert_postfix_list(arr, i=0):
         if i == len(arr) - 1:
             return res # nothing to multiply by
         else:
-            if i > 0:
-                left = convert_postfix(arr[i - 1])
-                right = convert_postfix(arr[i + 1])
-                if isinstance(left, sympy.Expr) and isinstance(right, sympy.Expr):
-                    left_syms  = convert_postfix(arr[i - 1]).atoms(sympy.Symbol)
-                    right_syms = convert_postfix(arr[i + 1]).atoms(sympy.Symbol)
-                    # if the left and right sides contain no variables and the
-                    # symbol in between is 'x', treat as multiplication.
-                    if len(left_syms) == 0 and len(right_syms) == 0 and str(res) == "x":
-                        return convert_postfix_list(arr, i + 1)
-
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
             if res.is_Matrix or rh.is_Matrix:

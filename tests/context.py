@@ -1,5 +1,5 @@
 from sympy import simplify, srepr, Add, Mul, Pow
-from latex2sympy.latex2sympy import process_sympy, Root
+from latex2sympy.latex2sympy import process_sympy, Div, Root, Sub
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -19,6 +19,14 @@ def _Pow(a, b):
     return Pow(a, b, evaluate=False)
 
 
+def _Div(a, b):
+    return Div(a, b, in_parsing=True, evaluate=False)
+
+
+def _Sub(a, b):
+    return Sub(a, b, in_parsing=True, evaluate=False)
+
+
 def compare(actual, expected, symbolically=False):
     # if isinstance(expected, (list,)):
     #     check = expected == actual
@@ -35,7 +43,12 @@ def compare(actual, expected, symbolically=False):
     else:
         actual_exp_tree = srepr(actual)
         expected_exp_tree = srepr(expected)
-        assert actual_exp_tree == expected_exp_tree
+        try:
+            assert actual_exp_tree == expected_exp_tree
+        except:
+            print('actual exp tree = ', actual_exp_tree, 'expected_exp_tree = ', expected_exp_tree)
+            if isinstance(actual, int) or isinstance(actual, float) or actual.is_number and isinstance(expected, int) or isinstance(expected, float) or expected.is_number:
+                assert actual == expected
 
 
 def assert_equal(latex, expr, variable_values={}, symbolically=False):

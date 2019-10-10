@@ -1,8 +1,8 @@
-from .context import assert_equal, process_sympy, Root, _Add, _Mul, _Pow
+from .context import assert_equal, process_sympy, Root, _Sub, _Div, _Add, _Mul, _Pow
 import pytest
 import hashlib
 from sympy import (
-    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational, Integer,
+    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational,
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
@@ -43,12 +43,12 @@ def pytest_generate_tests(metafunc):
 class TestAllGood(object):
     # These latex strings should parse to the corresponding SymPy expression
     GOOD_PAIRS = [
-        ("0", Integer(0)),
-        ("1", Integer(1)),
+        ("0", 0),
+        ("1", 1),
         ("-3.14", -3.14),
         ("5-3", _Add(5, -3)),
-        ("(-7.13)(1.5)", _Mul(_Mul(-1, 7.13), 1.5)),
-        ("\\left(-7.13\\right)\\left(1.5\\right)", _Mul(_Mul(-1, 7.13), 1.5)),
+        ("(-7.13)(1.5)", _Mul(Rational('-7.13'), Rational('1.5'))),
+        ("\\left(-7.13\\right)\\left(1.5\\right)", _Mul(Rational('-7.13'), Rational('1.5'))),
         ("x", x),
         ("2x", 2 * x),
         ("x^2", x**2),
@@ -93,8 +93,8 @@ class TestAllGood(object):
         ("\\cos^2(x)", cos(x)**2),
         ("\\cos(x)^2", cos(x)**2),
         ("\\frac{a}{b}", a / b),
-        ("\\frac{a + b}{c}", _Mul(a + b, _Pow(c, -1))),
-        ("\\frac{7}{3}", _Mul(7, _Pow(3, -1))),
+        ("\\frac{a + b}{c}", _Div(a + b, c)),
+        ("\\frac{7}{3}", _Div(7, 3)),
         ("(\\csc x)(\\sec y)", csc(x) * sec(y)),
         ("\\lim_{x \\to 3} a", Limit(a, x, 3)),
         ("\\lim_{x \\rightarrow 3} a", Limit(a, x, 3)),
@@ -118,8 +118,8 @@ class TestAllGood(object):
         ("|x||y|", _Abs(x) * _Abs(y)),
         ("||x||y||", _Abs(_Abs(x) * _Abs(y))),
         ("\\pi^{|xy|}", pi**_Abs(x * y)),
-        ("\\frac{\\pi}{3}", pi / 3),
-        ("\\sin{\\frac{\\pi}{2}}", sin(pi / 2, evaluate=False)),
+        ("\\frac{\\pi}{3}", _Div(pi, 3)),
+        ("\\sin{\\frac{\\pi}{2}}", sin(_Div(pi, 2), evaluate=False)),
         ("a+bI", a + I * b),
         ("e^{I\\pi}", -1),
         ("\\int x dx", Integral(x, x)),

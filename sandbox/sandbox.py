@@ -1,10 +1,11 @@
-from sympy import Symbol, sympify, simplify, Eq, factor, srepr
+from sympy import Symbol, sympify, simplify, Eq, factor, srepr, pi
 from latex2sympy import process_sympy
 
 # x = Symbol('x', real=True)
 
-a = process_sympy('-100')
-print(a > -101)
+latex = '\\frac{\\pi}{3}'
+print(srepr(process_sympy(latex)))
+print(srepr(pi / 3))
 
 # answer_sets = [
 # 	{'correct_answer': '(x-y)(x+2y)', 'student_answers': ['x^2+xy-2y^2', '(x-y)(x+2y)', '(x+2y)(x-y)', '(2y+x)(-y+x)']}

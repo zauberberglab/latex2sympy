@@ -1,5 +1,5 @@
 from sympy import simplify, srepr, Add, Mul, Pow
-from latex2sympy.latex2sympy import process_sympy
+from latex2sympy.latex2sympy import process_sympy, Root
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -38,6 +38,6 @@ def compare(actual, expected, symbolically=False):
         assert actual_exp_tree == expected_exp_tree
 
 
-def assert_equal(latex, expr, variable_values={}, linalg=False, symbolically=False):
-    parsed = process_sympy(latex, variable_values, linalg)
+def assert_equal(latex, expr, variable_values={}, symbolically=False):
+    parsed = process_sympy(latex, variable_values)
     compare(parsed, expr, symbolically)

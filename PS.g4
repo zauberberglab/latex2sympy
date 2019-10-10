@@ -118,10 +118,10 @@ E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
 EQUAL: '=';
 LT: '<';
-LTE: '\\leq';
+LTE: '\\leq' | '\\le';
 GT: '>';
-GTE: '\\geq';
-UNEQUAL: '!=';
+GTE: '\\geq' | '\\ge';
+UNEQUAL: '!=' | '\\ne' | '\\neq';
 
 BANG: '!';
 

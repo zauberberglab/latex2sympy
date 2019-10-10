@@ -215,7 +215,11 @@ class TestAllGood(object):
         ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1, 2], [3, 4]])),
         ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1, 2], [3, 4]])),
 
-        # e in scientific e notation
+        # scientific notation
+        ("2.5x10^2", 250),
+        ("1,500x10^{-1}", 150),
+
+        # e notation
         ("2.5E2", 250),
         ("1,500E-1", 150),
 

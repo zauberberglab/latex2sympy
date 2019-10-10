@@ -28,16 +28,6 @@ def _Sub(a, b):
 
 
 def compare(actual, expected, symbolically=False):
-    # if isinstance(expected, (list,)):
-    #     check = expected == actual
-    #     if check:
-    #         value = 0
-    #     else:
-    #         value = 1
-    # else:
-    #     value = expected - actual
-    #     value_simp = simplify(value)
-    # assert actual == expected or value == 0 or value_simp == 0
     if symbolically:
         assert simplify(actual - expected) == 0
     else:
@@ -48,7 +38,7 @@ def compare(actual, expected, symbolically=False):
         except:
             print('actual exp tree = ', actual_exp_tree, 'expected_exp_tree = ', expected_exp_tree)
             if isinstance(actual, int) or isinstance(actual, float) or actual.is_number and isinstance(expected, int) or isinstance(expected, float) or expected.is_number:
-                assert actual == expected
+                assert actual == expected or actual - expected == 0 or simplify(actual - expected) == 0
 
 
 def assert_equal(latex, expr, variable_values={}, symbolically=False):

@@ -290,7 +290,7 @@ def convert_postfix(postfix):
             if ev.eval_at_sub():
                 at_a = do_subs(exp, ev.eval_at_sub())
             if at_b is not None and at_a is not None:
-                exp = Sub(at_b, at_a, evaluate=False)
+                exp = Sub(at_b, at_a, in_parsing=True, evaluate=False)
             elif at_b is not None:
                 exp = at_b
             elif at_a is not None:

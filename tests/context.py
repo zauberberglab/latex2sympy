@@ -1,5 +1,5 @@
 from sympy import simplify
-from latex2sympy.latex2sympy import process_sympy
+from latex2sympy.latex2sympy import process_sympy, Root
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -18,6 +18,6 @@ def compare(actual, expected):
     assert actual == expected or value == 0 or value_simp == 0
 
 
-def assert_equal(latex, expr, variable_values={}, linalg=False):
-    parsed = process_sympy(latex, variable_values, linalg)
+def assert_equal(latex, expr, variable_values={}):
+    parsed = process_sympy(latex, variable_values)
     compare(parsed, expr)

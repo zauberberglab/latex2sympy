@@ -1,8 +1,8 @@
-from .context import assert_equal, process_sympy
+from .context import assert_equal, process_sympy, Root
 import pytest
 import hashlib
 from sympy import (
-    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne,
+    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S,
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
@@ -221,8 +221,8 @@ class TestAllGood(object):
         ("1-f(x)", 1 - f * x),
 
         ("\\begin{matrix}1&2\\\\3&4\\end{matrix}", Matrix([[1, 2], [3, 4]])),
-        ("\\begin{matrix}x&x^2\\\\\\sqrt{x}&x\\end{matrix}", Matrix([[x, x**2], [sqrt(x), x]])),
-        ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([sqrt(x), sin(theta)])),
+        ("\\begin{matrix}x&x^2\\\\\sqrt{x}&x\\end{matrix}", Matrix([[x, x**2], [Root(x, S.Half), x]])),
+        ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([Root(x, S.Half), sin(theta)])),
         ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1, 2], [3, 4]])),
         ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1, 2], [3, 4]])),
 
@@ -230,11 +230,16 @@ class TestAllGood(object):
         ("2.5E2", 250),
         ("1,500E-1", 150),
 
+        # multiplication without cmd
+        ("2x2y", 2 * x * 2 * y),
+        ("2x2", 2 * x * 2),
+        ("x2", x * 2),
+
         # lin alg processing
-        ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta, Matrix([[1, 2], [3, 4]]))),
-        ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", MatAdd(MatMul(theta, Matrix([[1], [3]])), -1 * Matrix([[-1], [2]]))),
-        ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", MatMul(MatMul(theta, Matrix([[1, 0], [0, 1]])), Matrix([3, -2]))),
-        ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(MatMul(1, Pow(9, -1, evaluate=False), evaluate=False), MatMul(theta, Matrix([[1, 2], [3, 4]])))),
+        ("\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(theta, Matrix([[1, 2], [3, 4]]), evaluate=False)),
+        ("\\theta\\begin{matrix}1\\\\3\\end{matrix} - \\begin{matrix}-1\\\\2\\end{matrix}", MatAdd(MatMul(theta, Matrix([[1], [3]]), evaluate=False), MatMul(-1, Matrix([[-1], [2]]), evaluate=False), evaluate=False)),
+        ("\\theta\\begin{matrix}1&0\\\\0&1\\end{matrix}*\\begin{matrix}3\\\\-2\\end{matrix}", MatMul(MatMul(theta, Matrix([[1, 0], [0, 1]]), evaluate=False), Matrix([3, -2]), evaluate=False)),
+        ("\\frac{1}{9}\\theta\\begin{matrix}1&2\\\\3&4\\end{matrix}", MatMul(MatMul(1, Pow(9, -1, evaluate=False), evaluate=False), MatMul(theta, Matrix([[1, 2], [3, 4]]), evaluate=False))),
         ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1, 2, 3]), Matrix([4, 3, 1])]),
         ("\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix};\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}", [Matrix([1, 2, 3]), Matrix([4, 3, 1])]),
         ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix},\\begin{pmatrix}4\\\\3\\\\1\\end{pmatrix}\\right\\}", [Matrix([1, 2, 3]), Matrix([4, 3, 1])]),

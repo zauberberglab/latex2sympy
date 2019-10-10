@@ -1,5 +1,5 @@
 from sympy import simplify, srepr, Add, Mul, Pow
-from latex2sympy.latex2sympy import process_sympy, Div, Root, Sub
+from latex2sympy.latex2sympy import process_sympy
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -17,14 +17,6 @@ def _Mul(a, b):
 
 def _Pow(a, b):
     return Pow(a, b, evaluate=False)
-
-
-def _Div(a, b):
-    return Div(a, b, in_parsing=True, evaluate=False)
-
-
-def _Sub(a, b):
-    return Sub(a, b, in_parsing=True, evaluate=False)
 
 
 def compare(actual, expected, symbolically=False):

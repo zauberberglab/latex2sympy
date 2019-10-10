@@ -1,4 +1,4 @@
-from .context import assert_equal, process_sympy, Root, _Sub, _Div, _Add, _Mul, _Pow
+from .context import assert_equal, process_sympy, _Add, _Mul, _Pow
 import pytest
 import hashlib
 from sympy import (
@@ -93,8 +93,8 @@ class TestAllGood(object):
         ("\\cos^2(x)", cos(x)**2),
         ("\\cos(x)^2", cos(x)**2),
         ("\\frac{a}{b}", a / b),
-        ("\\frac{a + b}{c}", _Div(a + b, c)),
-        ("\\frac{7}{3}", _Div(7, 3)),
+        ("\\frac{a + b}{c}", _Mul(a + b, _Pow(c, -1))),
+        ("\\frac{7}{3}", _Mul(7, _Pow(3, -1))),
         ("(\\csc x)(\\sec y)", csc(x) * sec(y)),
         ("\\lim_{x \\to 3} a", Limit(a, x, 3)),
         ("\\lim_{x \\rightarrow 3} a", Limit(a, x, 3)),
@@ -118,8 +118,8 @@ class TestAllGood(object):
         ("|x||y|", _Abs(x) * _Abs(y)),
         ("||x||y||", _Abs(_Abs(x) * _Abs(y))),
         ("\\pi^{|xy|}", pi**_Abs(x * y)),
-        ("\\frac{\\pi}{3}", _Div(pi, 3)),
-        ("\\sin{\\frac{\\pi}{2}}", sin(_Div(pi, 2), evaluate=False)),
+        ("\\frac{\\pi}{3}", _Mul(pi, _Pow(3, -1))),
+        ("\\sin{\\frac{\\pi}{2}}", sin(_Mul(pi, _Pow(2, -1)), evaluate=False)),
         ("a+bI", a + I * b),
         ("e^{I\\pi}", -1),
         ("\\int x dx", Integral(x, x)),
@@ -210,8 +210,8 @@ class TestAllGood(object):
         ("1-f(x)", 1 - f * x),
 
         ("\\begin{matrix}1&2\\\\3&4\\end{matrix}", Matrix([[1, 2], [3, 4]])),
-        ("\\begin{matrix}x&x^2\\\\\sqrt{x}&x\\end{matrix}", Matrix([[x, x**2], [Root(x, S.Half), x]])),
-        ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([Root(x, S.Half), sin(theta)])),
+        ("\\begin{matrix}x&x^2\\\\\sqrt{x}&x\\end{matrix}", Matrix([[x, x**2], [_Pow(x, S.Half), x]])),
+        ("\\begin{matrix}\\sqrt{x}\\\\\\sin(\\theta)\\end{matrix}", Matrix([_Pow(x, S.Half), sin(theta)])),
         ("\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}", Matrix([[1, 2], [3, 4]])),
         ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1, 2], [3, 4]])),
 

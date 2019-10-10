@@ -185,7 +185,7 @@ def convert_mp(mp):
         if lh.is_Matrix or rh.is_Matrix:
             return sympy.MatMul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
         else:
-            return Div(lh, rh, in_parsing=True, evaluate=False)
+            return sympy.Mul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
     else:
         if hasattr(mp, 'unary'):
             return convert_unary(mp.unary())
@@ -290,7 +290,7 @@ def convert_postfix(postfix):
             if ev.eval_at_sub():
                 at_a = do_subs(exp, ev.eval_at_sub())
             if at_b is not None and at_a is not None:
-                exp = Sub(at_b, at_a, in_parsing=True, evaluate=False)
+                exp = sympy.Add(at_b, sympy.Mul(at_a, -1, evaluate=False), evaluate=False)
             elif at_b is not None:
                 exp = at_b
             elif at_a is not None:
@@ -487,7 +487,7 @@ def convert_frac(frac):
     if expr_top.is_Matrix or expr_bot.is_Matrix:
         return sympy.MatMul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
     else:
-        return Div(expr_top, expr_bot, in_parsing=True, evaluate=False)
+        return sympy.Mul(expr_top, sympy.Pow(expr_bot, -1, evaluate=False), evaluate=False)
 
 
 def convert_binom(binom):
@@ -587,9 +587,9 @@ def convert_func(func):
         expr = convert_expr(func.base)
         if func.root:
             r = convert_expr(func.root)
-            return Root(expr, 1 / r, evaluate=False)
+            return sympy.Pow(expr, 1 / r, evaluate=False)
         else:
-            return Root(expr, sympy.S.Half, evaluate=False)
+            return sympy.Pow(expr, sympy.S.Half, evaluate=False)
     elif func.FUNC_SUM():
         return handle_sum_or_prod(func, "summation")
     elif func.FUNC_PROD():
@@ -628,9 +628,6 @@ def handle_integral(func):
                     int_var = sympy.Symbol(s[1:], real=True)
                 int_sym = sym
         if int_var:
-            if integrand.func == Div:
-                integrand = sympy.Mul(*integrand.args, evaluate=False)
-
             integrand = integrand.subs(int_sym, 1)
         else:
             # Assume dx by default
@@ -709,34 +706,3 @@ def get_differential_var_str(text):
     if text[0] == "\\":
         text = text[1:]
     return text
-
-
-class Div(sympy.Mul):
-
-    def __new__(cls, *args, in_parsing=False, **options):
-        if in_parsing:
-            args = (args[0], sympy.Pow(args[1], -1, evaluate=False))
-        return super().__new__(Div, *args, **options)
-
-    def _sympyrepr(self, expr, order=None):
-        return "Div(%s)" % ",".join(map(sympy.srepr, self.args))
-
-
-class Root(sympy.Pow):
-
-    def __new__(cls, *args, **options):
-        return super().__new__(Root, *args, **options)
-
-    def _sympyrepr(self, expr, order=None):
-        return "Root(%s)" % ",".join(map(sympy.srepr, self.args))
-
-
-class Sub(sympy.Add):
-
-    def __new__(cls, *args, in_parsing=False, **options):
-        if in_parsing:
-            args = (args[0], sympy.Mul(-1, args[1], evaluate=False))
-        return super().__new__(Sub, *args, **options)
-
-    def _sympyrepr(self, expr, order=None):
-        return "Sub(%s)" % ",".join(map(sympy.srepr, self.args))

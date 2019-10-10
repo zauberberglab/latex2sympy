@@ -29,4 +29,4 @@ def test_bracket_leftright():
 
 
 def test_bracket_mixed():
-    assert_equal("\\frac{1}{2}ab(a+b)", 1 / 2 * a * b * (a + b))
+    assert_equal("\\frac{1}{2}ab(a+b)", 1 / 2 * a * b * (a + b), symbolically=True)

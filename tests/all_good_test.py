@@ -1,8 +1,8 @@
-from .context import assert_equal, process_sympy
+from .context import assert_equal, process_sympy, _Add, _Mul, _Pow
 import pytest
 import hashlib
 from sympy import (
-    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne,
+    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, Integer, Number, Rational,
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
@@ -22,18 +22,6 @@ n = Symbol('n', real=True)
 theta = Symbol('theta', real=True)
 
 # shorthand definitions
-
-
-def _Add(a, b):
-    return Add(a, b, evaluate=False)
-
-
-def _Mul(a, b):
-    return Mul(a, b, evaluate=False)
-
-
-def _Pow(a, b):
-    return Pow(a, b, evaluate=False)
 
 
 def _Abs(a):
@@ -57,7 +45,8 @@ class TestAllGood(object):
     GOOD_PAIRS = [
         ("0", 0),
         ("1", 1),
-        ("-3.14", _Mul(-1, 3.14)),
+        ("-3.14", -3.14),
+        ("5-3", _Add(5, -3)),
         ("(-7.13)(1.5)", _Mul(_Mul(-1, 7.13), 1.5)),
         ("\\left(-7.13\\right)\\left(1.5\\right)", _Mul(_Mul(-1, 7.13), 1.5)),
         ("x", x),
@@ -70,7 +59,7 @@ class TestAllGood(object):
         ("a / b", a / b),
         ("a \\div b", a / b),
         ("a + b", a + b),
-        ("a + b - a", _Add(a + b, -a)),
+        ("a + b - a", a + b - a),
         ("a^2 + b^2 = c^2", Eq(a**2 + b**2, c**2)),
         ("a^2 + b^2 != 2c^2", Ne(a**2 + b**2, 2 * c**2)),
         ("\\sin \\theta", sin(theta)),
@@ -130,7 +119,7 @@ class TestAllGood(object):
         ("||x||y||", _Abs(_Abs(x) * _Abs(y))),
         ("\\pi^{|xy|}", pi**_Abs(x * y)),
         ("\\frac{\\pi}{3}", pi / 3),
-        ("\\sin{\\frac{\\pi}{2}}", sin(pi / 2)),
+        ("\\sin{\\frac{\\pi}{2}}", sin(pi / 2, evaluate=False)),
         ("a+bI", a + I * b),
         ("e^{I\\pi}", -1),
         ("\\int x dx", Integral(x, x)),
@@ -216,8 +205,8 @@ class TestAllGood(object):
         ("\\ln\\left(\\left[x-\\theta\\right]\\right)", _log(x - theta, E)),
         ("\\ln\\left(\\left\\{x-\\theta\\right\\}\\right)", _log(x - theta, E)),
         ("\\ln\\left(\\left|x-\\theta\\right|\\right)", _log(_Abs(x - theta), E)),
-        ("\\frac{1}{2}xy(x+y)", x * y * (x + y) / 2),
-        ("\\frac{1}{2}\\theta(x+y)", theta * (x + y) / 2),
+        ("\\frac{1}{2}xy(x+y)", (Rational(1) / 2) * x * y * (x + y)),
+        ("\\frac{1}{2}\\theta(x+y)", (Rational(1) / 2) * theta * (x + y)),
         ("1-f(x)", 1 - f * x),
 
         ("\\begin{matrix}1&2\\\\3&4\\end{matrix}", Matrix([[1, 2], [3, 4]])),

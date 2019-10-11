@@ -18,4 +18,4 @@ from sympy import asinh, Symbol
 
 
 def test_arcsinh():
-    assert_equal("\\operatorname{arcsinh}\\left(1\\right)", asinh(1))
+    assert_equal("\\operatorname{arcsinh}\\left(1\\right)", asinh(1, evaluate=False))

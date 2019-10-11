@@ -44,7 +44,7 @@ sub_settings_symbols[Symbol('v' + hashlib.md5('v'.encode()).hexdigest(), commuta
 latex = "[!M!]\\cdot[!v!]"
 math_check = Mul(Symbol('M' + hashlib.md5('M'.encode()).hexdigest(), commutative=False), Symbol('v' + hashlib.md5('v'.encode()).hexdigest(), commutative=False))
 # placeholders
-equation_sympy = process_sympy(latex, linalg=True)
+equation_sympy = process_sympy(latex)
 print(latex)
 print(math_check)
 print(equation_sympy)
@@ -56,7 +56,7 @@ t0 = time.time()
 # process_sympy and substitute at the same time
 # Only needed for linalg input
 placeholder_values = {'M': M, 'v': v}
-equation_sympy_subs = process_sympy(latex, placeholder_values=placeholder_values)
+equation_sympy_subs = process_sympy(latex, variable_values=placeholder_values)
 
 t1 = time.time()
 print('equation with substituted placeholders = %s' % (str(equation_sympy_subs)))

@@ -1,6 +1,6 @@
 from .context import assert_equal
 import pytest
-from sympy import Sum, I, Symbol
+from sympy import Sum, I, Symbol, Integer
 
 a = Symbol('a', real=True)
 b = Symbol('b', real=True)
@@ -14,7 +14,7 @@ def test_complex():
 
 
 def test_complex_e():
-    assert_equal("e^{I\\pi}", -1)
+    assert_equal("e^{I\\pi}", Integer(-1))
 
 
 def test_complex_sum():

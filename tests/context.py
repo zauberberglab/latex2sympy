@@ -28,9 +28,12 @@ def compare(actual, expected, symbolically=False):
         try:
             assert actual_exp_tree == expected_exp_tree
         except:
-            print('actual exp tree = ', actual_exp_tree, 'expected_exp_tree = ', expected_exp_tree)
             if isinstance(actual, int) or isinstance(actual, float) or actual.is_number and isinstance(expected, int) or isinstance(expected, float) or expected.is_number:
                 assert actual == expected or actual - expected == 0 or simplify(actual - expected) == 0
+            else:
+                print('expected_exp_tree = ', expected_exp_tree)
+                print('actual exp tree = ', actual_exp_tree)
+                raise
 
 
 def assert_equal(latex, expr, variable_values={}, symbolically=False):

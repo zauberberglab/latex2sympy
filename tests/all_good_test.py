@@ -2,7 +2,7 @@ from .context import assert_equal, process_sympy, _Add, _Mul, _Pow
 import pytest
 import hashlib
 from sympy import (
-    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational,
+    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational, Integer,
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
@@ -59,7 +59,7 @@ class TestAllGood(object):
         ("a / b", a / b),
         ("a \\div b", a / b),
         ("a + b", a + b),
-        ("a + b - a", a + b - a),
+        ("a + b - a", Add(a, b, _Mul(-1, a), evaluate=False)),
         ("a^2 + b^2 = c^2", Eq(a**2 + b**2, c**2)),
         ("a^2 + b^2 != 2c^2", Ne(a**2 + b**2, 2 * c**2)),
         ("\\sin \\theta", sin(theta)),
@@ -138,7 +138,7 @@ class TestAllGood(object):
         ("\\int^{b}_{a} x dx", Integral(x, (x, a, b))),
         # ("\\int_{f(a)}^{f(b)} f(z) dz", Integral(f(z), (z, f(a), f(b)))),
         ("\\int (x+a)", Integral(_Add(x, a), x)),
-        ("\\int a + b + c dx", Integral(_Add(_Add(a, b), c), x)),
+        ("\\int a + b + c dx", Integral(Add(a, b, c, evaluate=False), x)),
         ("\\int \\frac{dz}{z}", Integral(Pow(z, -1), z)),
         ("\\int \\frac{3 dz}{z}", Integral(3 * Pow(z, -1), z)),
         ("\\int \\frac{1}{x} dx", Integral(Pow(x, -1), x)),
@@ -205,8 +205,8 @@ class TestAllGood(object):
         ("\\ln\\left(\\left[x-\\theta\\right]\\right)", _log(x - theta, E)),
         ("\\ln\\left(\\left\\{x-\\theta\\right\\}\\right)", _log(x - theta, E)),
         ("\\ln\\left(\\left|x-\\theta\\right|\\right)", _log(_Abs(x - theta), E)),
-        ("\\frac{1}{2}xy(x+y)", (Rational(1) / 2) * x * y * (x + y)),
-        ("\\frac{1}{2}\\theta(x+y)", (Rational(1) / 2) * theta * (x + y)),
+        ("\\frac{1}{2}xy(x+y)", Mul(_Pow(2, -1), x, y, (x + y), evaluate=False)),
+        ("\\frac{1}{2}\\theta(x+y)", Mul(_Pow(2, -1), theta, (x + y), evaluate=False)),
         ("1-f(x)", 1 - f * x),
 
         ("\\begin{matrix}1&2\\\\3&4\\end{matrix}", Matrix([[1, 2], [3, 4]])),
@@ -216,16 +216,16 @@ class TestAllGood(object):
         ("\\begin{bmatrix}1&2\\\\3&4\\end{bmatrix}", Matrix([[1, 2], [3, 4]])),
 
         # scientific notation
-        ("2.5x10^2", 250),
-        ("1,500x10^{-1}", 150),
+        ("2.5\\times 10^2", 250),
+        ("1,500\\times 10^{-1}", 150),
 
         # e notation
         ("2.5E2", 250),
         ("1,500E-1", 150),
 
         # multiplication without cmd
-        ("2x2y", 2 * x * 2 * y),
-        ("2x2", 2 * x * 2),
+        ("2x2y", Mul(2, x, 2, y, evaluate=False)),
+        ("2x2", Mul(2, x, 2, evaluate=False)),
         ("x2", x * 2),
 
         # lin alg processing

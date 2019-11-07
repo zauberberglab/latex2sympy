@@ -20,7 +20,7 @@ fi
 
 # Run unit tests
 echo "starting tests..."
-if pytest
+if pytest tests
 then echo "tests finished."
 else exit 1
 fi

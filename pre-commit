@@ -10,9 +10,19 @@ cd $rel_path
 echo "pre-commit hook started..."
 
 # Activate virtual environment
-source .env/bin/activate || source .env/Scripts/activate
+echo "activating venv..."
+if test -f .env/bin/activate
+then source .env/bin/activate && echo "venv activated."
+elif test -f .env/Scripts/activate
+then source .env/Scripts/activate && echo "venv activated."
+else exit 1
+fi
 
 # Run auto formatting on all staged python files, then add those changes
-autopep8 --in-place `git diff --name-only --cached | grep '.py'` && git add `git diff --name-only --cached` || exit 1
+echo "auto-formatting code..."
+if autopep8 --in-place `git diff --name-status --cached | grep '.py' | awk 'match($1, "A|M"){print $2}'` && git add `git diff --name-status --cached | grep '.py' | awk 'match($1, "A|M"){print $2}'`
+then echo "code was auto-formatted."
+else echo "no code was auto-formatted."
+fi
 
 exit 0

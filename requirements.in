@@ -1,8 +1,2 @@
 sympy
 antlr4-python3-runtime
-# Development
-pip-tools
-pytest
-pytest-cov
-pycodestyle
-autopep8

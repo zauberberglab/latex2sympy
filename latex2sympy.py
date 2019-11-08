@@ -136,29 +136,93 @@ def convert_matrix(matrix):
     return sympy.Matrix(tmp)
 
 
+def add_flat(lh, rh):
+    if hasattr(lh, 'is_Add') and lh.is_Add or hasattr(rh, 'is_Add') and rh.is_Add:
+        args = []
+        if hasattr(lh, 'is_Add') and lh.is_Add:
+            args += list(lh.args)
+        else:
+            args += [lh]
+        if hasattr(rh, 'is_Add') and rh.is_Add:
+            args = args + list(rh.args)
+        else:
+            args += [rh]
+        return sympy.Add(*args, evaluate=False)
+    else:
+        return sympy.Add(lh, rh, evaluate=False)
+
+
+def mat_add_flat(lh, rh):
+    if hasattr(lh, 'is_MatAdd') and lh.is_MatAdd or hasattr(rh, 'is_MatAdd') and rh.is_MatAdd:
+        args = []
+        if hasattr(lh, 'is_MatAdd') and lh.is_MatAdd:
+            args += list(lh.args)
+        else:
+            args += [lh]
+        if hasattr(rh, 'is_MatAdd') and rh.is_MatAdd:
+            args = args + list(rh.args)
+        else:
+            args += [rh]
+        return sympy.MatAdd(*args, evaluate=False)
+    else:
+        return sympy.MatAdd(lh, rh, evaluate=False)
+
+
+def mul_flat(lh, rh):
+    if hasattr(lh, 'is_Mul') and lh.is_Mul or hasattr(rh, 'is_Mul') and rh.is_Mul:
+        args = []
+        if hasattr(lh, 'is_Mul') and lh.is_Mul:
+            args += list(lh.args)
+        else:
+            args += [lh]
+        if hasattr(rh, 'is_Mul') and rh.is_Mul:
+            args = args + list(rh.args)
+        else:
+            args += [rh]
+        return sympy.Mul(*args, evaluate=False)
+    else:
+        return sympy.Mul(lh, rh, evaluate=False)
+
+
+def mat_mul_flat(lh, rh):
+    if hasattr(lh, 'is_MatMul') and lh.is_MatMul or hasattr(rh, 'is_MatMul') and rh.is_MatMul:
+        args = []
+        if hasattr(lh, 'is_MatMul') and lh.is_MatMul:
+            args += list(lh.args)
+        else:
+            args += [lh]
+        if hasattr(rh, 'is_MatMul') and rh.is_MatMul:
+            args = args + list(rh.args)
+        else:
+            args += [rh]
+        return sympy.MatMul(*args, evaluate=False)
+    else:
+        return sympy.MatMul(lh, rh, evaluate=False)
+
+
 def convert_add(add):
     if add.ADD():
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
 
         if lh.is_Matrix or rh.is_Matrix:
-            return sympy.MatAdd(lh, rh, evaluate=False)
+            return mat_add_flat(lh, rh)
         else:
-            return sympy.Add(lh, rh, evaluate=False)
+            return add_flat(lh, rh)
     elif add.SUB():
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
 
         if lh.is_Matrix or rh.is_Matrix:
-            return sympy.MatAdd(lh, sympy.MatMul(-1, rh, evaluate=False), evaluate=False)
+            return mat_add_flat(lh, mat_mul_flat(-1, rh))
         else:
             # If we want to force ordering for variables this should be:
             # return Sub(lh, rh, evaluate=False)
             if not rh.is_Matrix and rh.func.is_Number:
                 rh = -rh
             else:
-                rh = sympy.Mul(-1, rh, evaluate=False)
-            return sympy.Add(lh, rh, evaluate=False)
+                rh = mul_flat(-1, rh)
+            return add_flat(lh, rh)
     else:
         return convert_mp(add.mp())
 
@@ -176,9 +240,9 @@ def convert_mp(mp):
         rh = convert_mp(mp_right)
 
         if lh.is_Matrix or rh.is_Matrix:
-            return sympy.MatMul(lh, rh, evaluate=False)
+            return mat_mul_flat(lh, rh)
         else:
-            return sympy.Mul(lh, rh, evaluate=False)
+            return mul_flat(lh, rh)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
@@ -229,22 +293,12 @@ def convert_postfix_list(arr, i=0):
         if i == len(arr) - 1:
             return res  # nothing to multiply by
         else:
-            if i > 0:
-                left = convert_postfix(arr[i - 1])
-                right = convert_postfix(arr[i + 1])
-                if isinstance(left, sympy.Expr) and isinstance(right, sympy.Expr):
-                    left_syms = convert_postfix(arr[i - 1]).atoms(sympy.Symbol)
-                    right_syms = convert_postfix(arr[i + 1]).atoms(sympy.Symbol)
-                    # if the left and right sides contain no variables and the
-                    # symbol in between is 'x', treat as multiplication.
-                    if len(left_syms) == 0 and len(right_syms) == 0 and str(res) == "x":
-                        return convert_postfix_list(arr, i + 1)
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
             if res.is_Matrix or rh.is_Matrix:
-                return sympy.MatMul(res, rh, evaluate=False)
+                return mat_mul_flat(res, rh)
             else:
-                return sympy.Mul(res, rh, evaluate=False)
+                return mul_flat(res, rh)
     else:  # must be derivative
         wrt = res[0]
         if i == len(arr) - 1:
@@ -290,7 +344,7 @@ def convert_postfix(postfix):
             if ev.eval_at_sub():
                 at_a = do_subs(exp, ev.eval_at_sub())
             if at_b is not None and at_a is not None:
-                exp = sympy.Add(at_b, sympy.Mul(at_a, -1, evaluate=False), evaluate=False)
+                exp = add_flat(at_b, mul_flat(at_a, -1))
             elif at_b is not None:
                 exp = at_b
             elif at_a is not None:

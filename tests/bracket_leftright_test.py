@@ -1,6 +1,7 @@
-from .context import assert_equal
+from .context import assert_equal, _Pow
 import pytest
-from sympy import Integral, sin, Symbol
+from sympy import Integral, sin, Symbol, Mul, Integer, Pow
+from latex2sympy.latex2sympy import process_sympy
 
 a = Symbol('a', real=True)
 b = Symbol('b', real=True)
@@ -29,4 +30,4 @@ def test_bracket_leftright():
 
 
 def test_bracket_mixed():
-    assert_equal("\\frac{1}{2}ab(a+b)", 1 / 2 * a * b * (a + b))
+    assert_equal("\\frac{1}{2}ab(a+b)", Mul(_Pow(2, -1), a, b, (a + b), evaluate=False))

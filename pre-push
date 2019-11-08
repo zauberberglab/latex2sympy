@@ -9,7 +9,20 @@ cd $rel_path
 
 echo "pre-push hook started..."
 
-source .env/bin/activate || source .env/Scripts/activate
-pytest tests || exit 1
+# Activate virtual environment
+echo "activating venv..."
+if test -f .env/bin/activate
+then source .env/bin/activate && echo "venv activated."
+elif test -f .env/Scripts/activate
+then source .env/Scripts/activate && echo "venv activated."
+else exit 1
+fi
+
+# Run unit tests
+echo "starting tests..."
+if pytest tests
+then echo "tests finished."
+else exit 1
+fi
 
 exit 0

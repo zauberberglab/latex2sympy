@@ -27,7 +27,7 @@ def compare(actual, expected, symbolically=False):
         expected_exp_tree = srepr(expected)
         try:
             assert actual_exp_tree == expected_exp_tree
-        except:
+        except Exception:
             if isinstance(actual, int) or isinstance(actual, float) or actual.is_number and isinstance(expected, int) or isinstance(expected, float) or expected.is_number:
                 assert actual == expected or actual - expected == 0 or simplify(actual - expected) == 0
             else:

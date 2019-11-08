@@ -152,6 +152,22 @@ def add_flat(lh, rh):
         return sympy.Add(lh, rh, evaluate=False)
 
 
+def mat_add_flat(lh, rh):
+    if hasattr(lh, 'is_MatAdd') and lh.is_MatAdd or hasattr(rh, 'is_MatAdd') and rh.is_MatAdd:
+        args = []
+        if hasattr(lh, 'is_MatAdd') and lh.is_MatAdd:
+            args += list(lh.args)
+        else:
+            args += [lh]
+        if hasattr(rh, 'is_MatAdd') and rh.is_MatAdd:
+            args = args + list(rh.args)
+        else:
+            args += [rh]
+        return sympy.MatAdd(*args, evaluate=False)
+    else:
+        return sympy.MatAdd(lh, rh, evaluate=False)
+
+
 def mul_flat(lh, rh):
     if hasattr(lh, 'is_Mul') and lh.is_Mul or hasattr(rh, 'is_Mul') and rh.is_Mul:
         args = []
@@ -168,13 +184,29 @@ def mul_flat(lh, rh):
         return sympy.Mul(lh, rh, evaluate=False)
 
 
+def mat_mul_flat(lh, rh):
+    if hasattr(lh, 'is_MatMul') and lh.is_MatMul or hasattr(rh, 'is_MatMul') and rh.is_MatMul:
+        args = []
+        if hasattr(lh, 'is_MatMul') and lh.is_MatMul:
+            args += list(lh.args)
+        else:
+            args += [lh]
+        if hasattr(rh, 'is_MatMul') and rh.is_MatMul:
+            args = args + list(rh.args)
+        else:
+            args += [rh]
+        return sympy.MatMul(*args, evaluate=False)
+    else:
+        return sympy.MatMul(lh, rh, evaluate=False)
+
+
 def convert_add(add):
     if add.ADD():
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
 
         if lh.is_Matrix or rh.is_Matrix:
-            return sympy.MatAdd(lh, rh, evaluate=False)
+            return mat_add_flat(lh, rh)
         else:
             return add_flat(lh, rh)
     elif add.SUB():
@@ -182,7 +214,7 @@ def convert_add(add):
         rh = convert_add(add.additive(1))
 
         if lh.is_Matrix or rh.is_Matrix:
-            return sympy.MatAdd(lh, sympy.MatMul(-1, rh, evaluate=False), evaluate=False)
+            return mat_add_flat(lh, mat_mul_flat(-1, rh))
         else:
             # If we want to force ordering for variables this should be:
             # return Sub(lh, rh, evaluate=False)
@@ -208,7 +240,7 @@ def convert_mp(mp):
         rh = convert_mp(mp_right)
 
         if lh.is_Matrix or rh.is_Matrix:
-            return sympy.MatMul(lh, rh, evaluate=False)
+            return mat_mul_flat(lh, rh)
         else:
             return mul_flat(lh, rh)
     elif mp.DIV() or mp.CMD_DIV() or mp.COLON():
@@ -264,7 +296,7 @@ def convert_postfix_list(arr, i=0):
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
             if res.is_Matrix or rh.is_Matrix:
-                return sympy.MatMul(res, rh, evaluate=False)
+                return mat_mul_flat(res, rh)
             else:
                 return mul_flat(res, rh)
     else:  # must be derivative

@@ -54,6 +54,7 @@ class TestAllGood(object):
         ("x^2", x**2),
         ("x^{3 + 1}", x**_Add(3, 1)),
         ("x^{\\left\\{3 + 1\\right\\}}", x**_Add(3, 1)),
+        ("-3y + 2x", _Add(_Mul(2, x), Mul(-1, 3, y, evaluate=False))),
         ("-c", -c),
         ("a \\cdot b", a * b),
         ("a / b", a / b),

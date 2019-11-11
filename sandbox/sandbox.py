@@ -40,6 +40,12 @@ answer_sets = [
             '\\pi 2\\variable{r}^2',
             '2\\times \\pi \\times \\variable{r}^2'
         ]
+    },
+    {
+        'correct_answer': '2x - 3y',
+        'student_answers': [
+            '-3y + 2x'
+        ]
     }
 ]
 

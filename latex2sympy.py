@@ -7,7 +7,7 @@ try:
     from gen.PSParser import PSParser
     from gen.PSLexer import PSLexer
     from gen.PSListener import PSListener
-except:
+except Exception:
     from .gen.PSParser import PSParser
     from .gen.PSLexer import PSLexer
     from .gen.PSListener import PSListener
@@ -274,12 +274,12 @@ def convert_unary(unary):
     elif unary.SUB():
         tmp_convert_nested_unary = convert_unary(nested_unary)
         if tmp_convert_nested_unary.is_Matrix:
-            return sympy.MatMul(-1, tmp_convert_nested_unary, evaluate=False)
+            return mat_mul_flat(-1, tmp_convert_nested_unary, evaluate=False)
         else:
             if tmp_convert_nested_unary.func.is_Number:
                 return -tmp_convert_nested_unary
             else:
-                return sympy.Mul(-1, tmp_convert_nested_unary, evaluate=False)
+                return mul_flat(-1, tmp_convert_nested_unary)
     elif postfix:
         return convert_postfix_list(postfix)
 

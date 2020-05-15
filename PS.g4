@@ -126,10 +126,10 @@ UNEQUAL: '!=' | '\\ne' | '\\neq';
 
 BANG: '!';
 
-DOLLAR_SIGN: '$';
+fragment DOLLAR_SIGN: '\\$';
 DOLLAR_NUMBER: DOLLAR_SIGN NUMBER;
 
-PERCENT_SIGN: '%';
+fragment PERCENT_SIGN: '\\%';
 PERCENT_NUMBER: NUMBER PERCENT_SIGN;
 
 //Excludes some letters for use as e.g. constants in SYMBOL

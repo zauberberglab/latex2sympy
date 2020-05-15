@@ -9,7 +9,7 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3")
-        buf.write(u"d\u0283\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
+        buf.write(u"b\u0283\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t")
         buf.write(u"\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r")
         buf.write(u"\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4")
         buf.write(u"\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30")
@@ -71,7 +71,7 @@ def serializedATN():
         buf.write(u"\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64")
         buf.write(u"\668:<>@BDFHJLNPRTVX\2\f\3\2IJ\3\2W\\\3\2\4\5\5\2\6\7")
         buf.write(u"9;MM\3\2RT\3\2=>\3\2\32\61\3\2\62\67\3\2\30\31\4\2TT")
-        buf.write(u"bb\2\u02bb\2Z\3\2\2\2\4^\3\2\2\2\6`\3\2\2\2\bk\3\2\2")
+        buf.write(u"``\2\u02bb\2Z\3\2\2\2\4^\3\2\2\2\6`\3\2\2\2\bk\3\2\2")
         buf.write(u"\2\ns\3\2\2\2\f\u00a3\3\2\2\2\16\u00b9\3\2\2\2\20\u00bb")
         buf.write(u"\3\2\2\2\22\u00bf\3\2\2\2\24\u00c1\3\2\2\2\26\u00cc\3")
         buf.write(u"\2\2\2\30\u00d7\3\2\2\2\32\u00e9\3\2\2\2\34\u00f4\3\2")
@@ -224,14 +224,14 @@ def serializedATN():
         buf.write(u"\2\u01a7\u019b\3\2\2\2\u01a7\u01a1\3\2\2\2\u01a8\65\3")
         buf.write(u"\2\2\2\u01a9\u01aa\5\2\2\2\u01aa\u01ab\7\n\2\2\u01ab")
         buf.write(u"\u01ac\5\22\n\2\u01ac\u01ad\7\13\2\2\u01ad\67\3\2\2\2")
-        buf.write(u"\u01ae\u01b2\7T\2\2\u01af\u01b2\7b\2\2\u01b0\u01b2\5")
+        buf.write(u"\u01ae\u01b2\7T\2\2\u01af\u01b2\7`\2\2\u01b0\u01b2\5")
         buf.write(u"\66\34\2\u01b1\u01ae\3\2\2\2\u01b1\u01af\3\2\2\2\u01b1")
         buf.write(u"\u01b0\3\2\2\2\u01b2\u01b4\3\2\2\2\u01b3\u01b5\5R*\2")
         buf.write(u"\u01b4\u01b3\3\2\2\2\u01b4\u01b5\3\2\2\2\u01b5\u01bf")
-        buf.write(u"\3\2\2\2\u01b6\u01bf\7c\2\2\u01b7\u01bf\7U\2\2\u01b8")
+        buf.write(u"\3\2\2\2\u01b6\u01bf\7a\2\2\u01b7\u01bf\7U\2\2\u01b8")
         buf.write(u"\u01bf\7V\2\2\u01b9\u01bf\7Q\2\2\u01ba\u01bf\5:\36\2")
-        buf.write(u"\u01bb\u01bf\7d\2\2\u01bc\u01bf\7_\2\2\u01bd\u01bf\7")
-        buf.write(u"a\2\2\u01be\u01b1\3\2\2\2\u01be\u01b6\3\2\2\2\u01be\u01b7")
+        buf.write(u"\u01bb\u01bf\7b\2\2\u01bc\u01bf\7^\2\2\u01bd\u01bf\7")
+        buf.write(u"_\2\2\u01be\u01b1\3\2\2\2\u01be\u01b6\3\2\2\2\u01be\u01b7")
         buf.write(u"\3\2\2\2\u01be\u01b8\3\2\2\2\u01be\u01b9\3\2\2\2\u01be")
         buf.write(u"\u01ba\3\2\2\2\u01be\u01bb\3\2\2\2\u01be\u01bc\3\2\2")
         buf.write(u"\2\u01be\u01bd\3\2\2\2\u01bf9\3\2\2\2\u01c0\u01c1\7?")
@@ -356,8 +356,7 @@ class PSParser (Parser):
                     u"'\\bar'", u"'_'", u"'^'", u"':'", u"';'", u"','",
                     u"'.'", u"<INVALID>", u"'e'", u"'E'", u"<INVALID>",
                     u"<INVALID>", u"<INVALID>", u"'='", u"'<'", u"<INVALID>",
-                    u"'>'", u"<INVALID>", u"<INVALID>", u"'!'", u"'$'",
-                    u"<INVALID>", u"'%'"]
+                    u"'>'", u"<INVALID>", u"<INVALID>", u"'!'"]
 
     symbolicNames = [u"<INVALID>", u"WS", u"ADD", u"SUB", u"MUL", u"DIV",
                      u"L_PAREN", u"R_PAREN", u"L_BRACE", u"R_BRACE", u"L_BRACE_VISUAL",
@@ -382,9 +381,8 @@ class PSParser (Parser):
                      u"SEMICOLON", u"COMMA", u"PERIOD", u"DIFFERENTIAL",
                      u"EXP_E", u"E_NOTATION_E", u"LETTER_NO_E", u"NUMBER",
                      u"E_NOTATION", u"EQUAL", u"LT", u"LTE", u"GT", u"GTE",
-                     u"UNEQUAL", u"BANG", u"DOLLAR_SIGN", u"DOLLAR_NUMBER",
-                     u"PERCENT_SIGN", u"PERCENT_NUMBER", u"GREEK_LETTER",
-                     u"SYMBOL", u"VARIABLE"]
+                     u"UNEQUAL", u"BANG", u"DOLLAR_NUMBER", u"PERCENT_NUMBER",
+                     u"GREEK_LETTER", u"SYMBOL", u"VARIABLE"]
 
     RULE_accent_symbol = 0
     RULE_math = 1
@@ -535,13 +533,11 @@ class PSParser (Parser):
     GTE = 89
     UNEQUAL = 90
     BANG = 91
-    DOLLAR_SIGN = 92
-    DOLLAR_NUMBER = 93
-    PERCENT_SIGN = 94
-    PERCENT_NUMBER = 95
-    GREEK_LETTER = 96
-    SYMBOL = 97
-    VARIABLE = 98
+    DOLLAR_NUMBER = 92
+    PERCENT_NUMBER = 93
+    GREEK_LETTER = 94
+    SYMBOL = 95
+    VARIABLE = 96
 
     def __init__(self, input, output=sys.stdout):
         super(PSParser, self).__init__(input, output=output)

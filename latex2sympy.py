@@ -486,6 +486,21 @@ def convert_atom(atom):
 
         # return the symbol
         return symbol
+    elif atom.DOLLAR_NUMBER():
+        text = atom.DOLLAR_NUMBER().getText().replace("\\$", "").replace(",", "")
+        try:
+            sr = sympy.Rational(text)
+            return sr
+        except (TypeError, ValueError):
+            return sympy.Number(text)
+    elif atom.PERCENT_NUMBER():
+        text = atom.PERCENT_NUMBER().getText().replace("\\%", "").replace(",", "")
+        try:
+            number = sympy.Rational(text)
+        except (TypeError, ValueError):
+            number = sympy.Number(text)
+        percent = sympy.Mul(number, sympy.Pow(100, -1, evaluate=False), evaluate=False)
+        return percent
 
 
 def rule2text(ctx):

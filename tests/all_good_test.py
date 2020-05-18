@@ -241,6 +241,16 @@ class TestAllGood(object):
         ("\\left\\{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right\\}", Matrix([1, 2, 3])),
         ("\\left{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}\\right}", Matrix([1, 2, 3])),
         ("{\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}}", Matrix([1, 2, 3])),
+
+        # us dollars
+        ("\\$1,000.00", 1000),
+        ("\\$543.21", 543.21),
+        ("\\$0.009", 0.009),
+
+        # percentages
+        ("100\\%", 1),
+        ("1.5\\%", 0.015),
+        ("0.05\\%", 0.0005)
     ]
 
     def test_good_pair(self, s, eq):

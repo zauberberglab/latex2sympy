@@ -101,6 +101,7 @@ CARET: '^';
 COLON: ':';
 SEMICOLON: ';';
 COMMA: ',';
+PERIOD: '.';
 
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
@@ -111,8 +112,8 @@ LETTER_NO_E: [a-df-zA-DF-Z]; // exclude e for exponential function and e notatio
 fragment LETTER: [a-zA-Z];
 fragment DIGIT: [0-9];
 NUMBER:
-    DIGIT+ (',' DIGIT DIGIT DIGIT)*
-    | DIGIT* (',' DIGIT DIGIT DIGIT)* '.' DIGIT+;
+    DIGIT+ (COMMA DIGIT DIGIT DIGIT)*
+    | DIGIT* (COMMA DIGIT DIGIT DIGIT)* PERIOD DIGIT+;
 
 E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
@@ -124,6 +125,12 @@ GTE: '\\geq' | '\\ge';
 UNEQUAL: '!=' | '\\ne' | '\\neq';
 
 BANG: '!';
+
+fragment DOLLAR_SIGN: '\\$';
+DOLLAR_NUMBER: DOLLAR_SIGN NUMBER;
+
+fragment PERCENT_SIGN: '\\%';
+PERCENT_NUMBER: NUMBER PERCENT_SIGN;
 
 //Excludes some letters for use as e.g. constants in SYMBOL
 GREEK_LETTER:
@@ -314,7 +321,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
+atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE | DOLLAR_NUMBER | PERCENT_NUMBER;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: (LETTER_NO_E | E_NOTATION_E | EXP_E)+;

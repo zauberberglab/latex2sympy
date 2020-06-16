@@ -189,7 +189,8 @@ GREEK_LETTER:
     '\\omega';
 
 fragment PI: '\\pi';
-fragment INFTY: '\\infty';
+fragment INFTY_CMD: '\\infty';
+fragment INFTY: INFTY_CMD | DOLLAR_SIGN INFTY_CMD | INFTY_CMD PERCENT_SIGN;
 SYMBOL: PI | INFTY;
 
 fragment VARIABLE_CMD: '\\variable';

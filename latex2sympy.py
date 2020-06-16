@@ -437,10 +437,10 @@ def convert_atom(atom):
             s += '_{' + subscriptName + '}'
         return sympy.Symbol(s, real=True)
     elif atom.SYMBOL():
-        s = atom.SYMBOL().getText()[1:]
-        if s == "infty":
+        s = atom.SYMBOL().getText().replace("\\$", "").replace("\\%", "")
+        if s == "\\infty":
             return sympy.oo
-        elif s == 'pi':
+        elif s == '\\pi':
             return sympy.pi
         else:
             raise Exception("Unrecognized symbol")

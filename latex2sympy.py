@@ -499,7 +499,7 @@ def convert_atom(atom):
             number = sympy.Rational(text)
         except (TypeError, ValueError):
             number = sympy.Number(text)
-        percent = sympy.Mul(number, sympy.Pow(100, -1, evaluate=False), evaluate=False)
+        percent = sympy.Rational(number, 100)
         return percent
 
 

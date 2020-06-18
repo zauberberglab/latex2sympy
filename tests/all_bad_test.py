@@ -56,8 +56,7 @@ class TestAllBad(object):
         "a\\%",
         "\\%100",
         # dollar signs without numbers after
-        "\\$",
-        "100\\$"
+        "\\$"
     ]
 
     def test_bad_string(self, s):

@@ -465,8 +465,11 @@ def convert_atom(atom):
         text = rule2text(atom.mathit().mathit_text())
         return sympy.Symbol(text, real=True)
     elif atom.VARIABLE():
-        name = atom.VARIABLE().getText()[10:]
-        name = name[0:len(name) - 1]
+        text = atom.VARIABLE().getText()
+        is_percent = text.endswith("\\%")
+        trim_amount = 3 if is_percent else 1
+        name = text[10:]
+        name = name[0:len(name) - trim_amount]
 
         # add hash to distinguish from regular symbols
         hash = hashlib.md5(name.encode()).hexdigest()
@@ -484,22 +487,18 @@ def convert_atom(atom):
         else:
             symbol = sympy.Symbol(symbol_name, real=True)
 
+        if is_percent:
+            return sympy.Mul(symbol, sympy.Pow(100, -1, evaluate=False), evaluate=False)
+
         # return the symbol
         return symbol
-    elif atom.DOLLAR_NUMBER():
-        text = atom.DOLLAR_NUMBER().getText().replace("\\$", "").replace(",", "")
-        try:
-            sr = sympy.Rational(text)
-            return sr
-        except (TypeError, ValueError):
-            return sympy.Number(text)
     elif atom.PERCENT_NUMBER():
         text = atom.PERCENT_NUMBER().getText().replace("\\%", "").replace(",", "")
         try:
             number = sympy.Rational(text)
         except (TypeError, ValueError):
             number = sympy.Number(text)
-        percent = sympy.Mul(number, sympy.Pow(100, -1, evaluate=False), evaluate=False)
+        percent = sympy.Rational(number, 100)
         return percent
 
 

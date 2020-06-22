@@ -5,6 +5,7 @@ options {
 }
 
 WS: [ \t\r\n]+ -> skip;
+DOLLAR_SIGN: '\\$' -> skip;
 
 ADD: '+';
 SUB: '-';
@@ -126,9 +127,6 @@ UNEQUAL: '!=' | '\\ne' | '\\neq';
 
 BANG: '!';
 
-fragment DOLLAR_SIGN: '\\$';
-DOLLAR_NUMBER: DOLLAR_SIGN NUMBER;
-
 fragment PERCENT_SIGN: '\\%';
 PERCENT_NUMBER: NUMBER PERCENT_SIGN;
 
@@ -195,7 +193,7 @@ SYMBOL: PI | INFTY;
 
 fragment VARIABLE_CMD: '\\variable';
 fragment VARIABLE_SYMBOL: (GREEK_LETTER [ ]? | LETTER | DIGIT)+ (UNDERSCORE ((L_BRACE (GREEK_LETTER [ ]? | LETTER | DIGIT | COMMA)+ R_BRACE) | (GREEK_LETTER [ ]? | LETTER | DIGIT)))?;
-VARIABLE: VARIABLE_CMD L_BRACE VARIABLE_SYMBOL R_BRACE;
+VARIABLE: VARIABLE_CMD L_BRACE VARIABLE_SYMBOL R_BRACE PERCENT_SIGN?;
 
 //collection of accents
 accent_symbol:
@@ -322,7 +320,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE | DOLLAR_NUMBER | PERCENT_NUMBER;
+atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: (LETTER_NO_E | E_NOTATION_E | EXP_E)+;

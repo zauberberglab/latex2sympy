@@ -250,6 +250,10 @@ def convert_mp(mp):
             return sympy.MatMul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
         else:
             return sympy.Mul(lh, sympy.Pow(rh, -1, evaluate=False), evaluate=False)
+    elif mp.CMD_MOD():
+        lh = convert_mp(mp_left)
+        rh = convert_mp(mp_right)
+        return sympy.Mod(lh, rh)
     else:
         if hasattr(mp, 'unary'):
             return convert_unary(mp.unary())

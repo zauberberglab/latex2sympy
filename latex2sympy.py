@@ -253,7 +253,10 @@ def convert_mp(mp):
     elif mp.CMD_MOD():
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
-        return sympy.Mod(lh, rh)
+        if rh.is_Matrix:
+            raise Exception("Cannot perform modulus with a matrix as an operand")
+        else:
+            return sympy.Mod(lh, rh)
     else:
         if hasattr(mp, 'unary'):
             return convert_unary(mp.unary())

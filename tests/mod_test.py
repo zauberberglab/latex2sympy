@@ -1,6 +1,6 @@
 from .context import assert_equal
 import pytest
-from sympy import S, Symbol, Rational, Mod, sqrt, nsimplify, pi, GoldenRatio
+from sympy import Symbol, Rational, Mod, sqrt, nsimplify, pi, GoldenRatio
 from sympy.physics.units import hbar
 
 x = Symbol('x', real=True)
@@ -13,6 +13,7 @@ def test_mod_usual():
     assert_equal("5\\mod 10", Mod(5, 10))
     assert_equal("5\\mod 5", Mod(5, 5))
     assert_equal("3\\mod 2", Mod(3, 2))
+    assert_equal("0 \\mod 6", Mod(0, 6))
     assert_equal("6109\\mod 28", Mod(6109, 28))
     assert_equal("4000000000\\mod 28791", Mod(4000000000, 28791))
     assert_equal("128*10^300\\mod 876123", Mod(128E300, 876123))
@@ -43,7 +44,7 @@ def test_mod_fraction():
 
 def test_mod_float():
     assert_equal("0.41\\mod 2", Mod(Rational('0.41'), 2))
-    assert_equal("143E-13\\mod 21", Mod(143E-13, 21))
+    assert_equal("143E-13\\mod 21", Mod(Rational('143E-13'), 21))
     assert_equal("-9.80665\\mod 9.80665", Mod(-9.80665, 9.80665))
     assert_equal("0.0000923423\\mod -8341.234802909", nsimplify(Mod(0.0000923423, -8341.234802909)))
     assert_equal("\\sqrt{5}\\mod \\sqrt{2}", Mod(sqrt(5), sqrt(2)))
@@ -51,7 +52,7 @@ def test_mod_float():
     assert_equal("\\pi\\mod ((1+\\sqrt{5})/2) ", Mod(pi, GoldenRatio))
     
     # a number modded with any rational number where the numerator is 1 is always zero
-    # TODO: incidentally, Mod(1234, Float('1E-29')) gives a wrong value
+    # TODO: incidentally, `Mod(1234, Rational('1E-29'))` gives a wrong value
     assert_equal("1234\\mod 1E-29", 0)
 
     # TODO: n(3) due to precision issue
@@ -61,9 +62,8 @@ def test_mod_float():
 def test_mod_expr():
     assert_equal("1+1\\mod 2", 1 + Mod(1, 2))
     assert_equal("876123\\mod 128\\times 10^300", Mod(876123, 128) * 1E300)
-    assert_equal("141\\mod 9/3", Rational(S('Mod(141, 9) / 3')))
+    assert_equal("141\\mod 9/3", Rational(Mod(141, 9) / 3))
     assert_equal("872 / (12\\mod 9 * 4) * 2", Rational(2 * 872, (Mod(12, 9) * 4)))
-
 
     # TODO: `Mod(1E29, 74)` yields 8 but `Mod(10**29, 74)` or `Mod(Rational('1E29'))` yields 26. Weird.
     assert_equal("1E-32 * (1E29\\mod 74)", Rational('1E-32') * Mod(Rational('1E29'), 74))
@@ -74,3 +74,4 @@ def test_mod_symbol():
     assert_equal("2x\\mod y", Mod(2 * x, y))
     assert_equal("y + 3\\mod 2 / 4", y + Rational(Mod(3, 2), 4), symbolically=True)
     assert_equal("0.5x * 2 + \\sqrt{x}\\mod 8y", 0.5 * x * 2 + Mod(sqrt(x), 8 * y), symbolically=True)
+    assert_equal("6.673E-11 * ((8.85418782E-12\\mod 9x) + 4) / 2y", Rational('6.673E-11') * (Mod(Rational('8.85418782E-12'), 9 * x) + 4) / (2 * y), symbolically=True)

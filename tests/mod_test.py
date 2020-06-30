@@ -16,8 +16,8 @@ def test_mod_usual():
     assert_equal("0 \\mod 6", Mod(0, 6))
     assert_equal("6109\\mod 28", Mod(6109, 28))
     assert_equal("4000000000\\mod 28791", Mod(4000000000, 28791))
-    assert_equal("128*10^300\\mod 876123", Mod(128E300, 876123))
-    assert_equal("876,123\\mod 128E300)", Mod(876123, 128E300))
+    assert_equal("128*10^300\\mod 876123", Mod(Rational('128E300'), 876123))
+    assert_equal("876,123\\mod 128E300)", Mod(876123, Rational('128E300')))
 
 
 def test_mod_negative():
@@ -28,7 +28,7 @@ def test_mod_negative():
     assert_equal("9\\mod -213", Mod(9, -213))
     assert_equal("123123\\mod -541", Mod(123123, -541))
     assert_equal("-123123\\mod 541", Mod(-123123, 541))
-    assert_equal("-97*10^34\\mod 7", Mod(-97E34, 7))
+    assert_equal("-97E34\\mod 7", Mod(Rational('-97E34'), 7))
 
 
 def test_mod_fraction():
@@ -55,18 +55,16 @@ def test_mod_float():
     # TODO: incidentally, `Mod(1234, Rational('1E-29'))` gives a wrong value
     assert_equal("1234\\mod 1E-29", 0)
 
-    # TODO: n(3) due to precision issue
-    assert_equal("299,792,458\\mod 9.81", Mod(299792458, 9.81).n(3))
-
 
 def test_mod_expr():
     assert_equal("1+1\\mod 2", 1 + Mod(1, 2))
     assert_equal("876123\\mod 128\\times 10^300", Mod(876123, 128) * 1E300)
     assert_equal("141\\mod 9/3", Rational(Mod(141, 9) / 3))
     assert_equal("872 / (12\\mod 9 * 4) * 2", Rational(2 * 872, (Mod(12, 9) * 4)))
-
-    # TODO: `Mod(1E29, 74)` yields 8 but `Mod(10**29, 74)` or `Mod(Rational('1E29'))` yields 26. Weird.
     assert_equal("1E-32 * (1E29\\mod 74)", Rational('1E-32') * Mod(Rational('1E29'), 74))
+
+    # TODO: n(3) due to precision issue
+    assert_equal("299,792,458\\mod 9.81", Mod(299792458, 9.81).n(3))
 
 
 def test_mod_symbol():

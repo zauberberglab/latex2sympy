@@ -254,7 +254,7 @@ def convert_mp(mp):
         lh = convert_mp(mp_left)
         rh = convert_mp(mp_right)
         if rh.is_Matrix:
-            raise Exception("Cannot perform modulus with a matrix as an operand")
+            raise Exception("Cannot perform modulo operation with a matrix as an operand")
         else:
             return sympy.Mod(lh, rh)
     else:

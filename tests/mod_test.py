@@ -50,7 +50,7 @@ def test_mod_float():
     assert_equal("\\sqrt{5}\\mod \\sqrt{2}", Mod(sqrt(5), sqrt(2)))
     assert_equal("987\\mod \\pi", Mod(987, pi))
     assert_equal("\\pi\\mod ((1+\\sqrt{5})/2) ", Mod(pi, GoldenRatio))
-    
+
     # a number modded with any rational number where the numerator is 1 is always zero
     # TODO: incidentally, `Mod(1234, Rational('1E-29'))` gives a wrong value
     assert_equal("1234\\mod 1E-29", 0)

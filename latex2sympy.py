@@ -256,7 +256,7 @@ def convert_mp(mp):
         if rh.is_Matrix:
             raise Exception("Cannot perform modulo operation with a matrix as an operand")
         else:
-            return sympy.Mod(lh, rh)
+            return sympy.Mod(lh, rh, evaluate=False)
     else:
         if hasattr(mp, 'unary'):
             return convert_unary(mp.unary())

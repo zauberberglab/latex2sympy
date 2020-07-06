@@ -50,10 +50,7 @@ def test_mod_float():
     assert_equal("\\sqrt{5}\\mod \\sqrt{2}", Mod(sqrt(5), sqrt(2)))
     assert_equal("987\\mod \\pi", Mod(987, pi))
     assert_equal("\\pi\\mod ((1+\\sqrt{5})/2)", Mod(pi, nsimplify(GoldenRatio)), symbolically=True)
-
-    # a number modded with any rational number where the numerator is 1 is always zero
-    # TODO: incidentally, `Mod(1234, Rational('1E-29'))` gives a wrong value
-    assert_equal("1234\\mod 1E-29", 0)
+    assert_equal("1234\\mod 1E-29", Mod(1234, Rational('1E-29'), evaluate=False))
 
 
 def test_mod_expr():
@@ -62,9 +59,7 @@ def test_mod_expr():
     assert_equal("141\\mod 9/3", Rational(Mod(141, 9) / 3))
     assert_equal("872 / (12\\mod 9 * 4) * 2", Rational(2 * 872, (Mod(12, 9) * 4)))
     assert_equal("1E-32 * (1E29\\mod 74)", Rational('1E-32') * Mod(Rational('1E29'), 74))
-
-    # TODO: n(3) due to precision issue
-    assert_equal("299,792,458\\mod 9.81", Mod(299792458, 9.81).n(3))
+    assert_equal("299,792,458\\mod 9.81", Mod(299792458, Rational('9.81')))
 
 
 def test_mod_symbol():

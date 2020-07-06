@@ -2,11 +2,12 @@ from .context import assert_equal, process_sympy, _Add, _Mul, _Pow
 import pytest
 import hashlib
 from sympy import (
-    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, Mod, factorial, log, Eq, Ne, S, Rational, Integer,
+    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational, Integer,
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
-    exp, binomial, Matrix, MatMul, MatAdd
+    exp, binomial, Matrix, MatMul, MatAdd,
+    Mod
 )
 
 x = Symbol('x', real=True)

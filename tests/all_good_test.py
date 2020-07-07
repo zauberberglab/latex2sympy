@@ -6,7 +6,8 @@ from sympy import (
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
-    exp, binomial, Matrix, MatMul, MatAdd
+    exp, binomial, Matrix, MatMul, MatAdd,
+    Mod
 )
 
 x = Symbol('x', real=True)
@@ -63,6 +64,7 @@ class TestAllGood(object):
         ("a + b - a", Add(a, b, _Mul(-1, a), evaluate=False)),
         ("a^2 + b^2 = c^2", Eq(a**2 + b**2, c**2)),
         ("a^2 + b^2 != 2c^2", Ne(a**2 + b**2, 2 * c**2)),
+        ("a\\mod b", Mod(a, b)),
         ("\\sin \\theta", sin(theta)),
         ("\\sin(\\theta)", sin(theta)),
         ("\\sin\\left(\\theta\\right)", sin(theta)),

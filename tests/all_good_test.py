@@ -2,12 +2,12 @@ from .context import assert_equal, process_sympy, _Add, _Mul, _Pow
 import pytest
 import hashlib
 from sympy import (
-    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational, Integer,
+    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational, Integer, UnevaluatedExpr,
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
     exp, binomial, Matrix, MatMul, MatAdd,
-    Mod
+    Mod, gcd, lcm
 )
 
 x = Symbol('x', real=True)
@@ -95,6 +95,8 @@ class TestAllGood(object):
         ("\\operatorname{artanh}(a)", atanh(a)),
         ("\\cos^2(x)", cos(x)**2),
         ("\\cos(x)^2", cos(x)**2),
+        ("\\gcd(a, b)", UnevaluatedExpr(gcd(a, b))),
+        ("\\lcm(a, b)", UnevaluatedExpr(lcm(a, b))),
         ("\\frac{a}{b}", a / b),
         ("\\frac{a + b}{c}", _Mul(a + b, _Pow(c, -1))),
         ("\\frac{7}{3}", _Mul(7, _Pow(3, -1))),

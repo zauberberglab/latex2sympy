@@ -7,7 +7,7 @@ from sympy import (
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
     exp, binomial, Matrix, MatMul, MatAdd,
-    Mod, gcd, lcm, floor, ceil
+    Mod, gcd, lcm, floor, ceiling
 )
 
 x = Symbol('x', real=True)

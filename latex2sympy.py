@@ -646,6 +646,9 @@ def convert_func(func):
 
             result = apply_nested(getattr(sympy, name), args)
             expr = sympy.UnevaluatedExpr(result)  # gcd() and lcm() don't support evaluate=False
+        
+        if name in ["floor", "ceil"]:
+            expr = getattr(sympy.functions, name)(arg, evaluate=False)
 
         func_pow = None
         should_pow = True

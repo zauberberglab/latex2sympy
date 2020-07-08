@@ -645,9 +645,9 @@ def convert_func(func):
             expr = sympy.UnevaluatedExpr(result)  # gcd() and lcm() don't support evaluate=False
         
         elif name == "floor":
-            expr = sympy.floor(arg, evaluate=False)
+            expr = sympy.functions.floor(arg, evaluate=False)
         elif name == "ceil":
-            expr = sympy.ceiling(arg, evaluate=False)
+            expr = sympy.functions.ceiling(arg, evaluate=False)
 
         func_pow = None
         should_pow = True

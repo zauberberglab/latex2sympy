@@ -2,7 +2,6 @@
 from .context import assert_equal
 import pytest
 from sympy import Symbol, Rational, gcd, igcd, sqrt, nsimplify, pi
-from sympy.physics.units import hbar
 
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)

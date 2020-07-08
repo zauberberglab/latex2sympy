@@ -5,6 +5,7 @@ from sympy import Symbol, Rational, gcd, igcd, sqrt, nsimplify, pi
 
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
+z = Symbol('z', real=True)
 
 
 def test_gcd_usual():
@@ -79,6 +80,7 @@ def test_multiple_parameters():
     assert_equal("\\gcd(144, 2988, 37116, 18, 72, 12, 6)", igcd(144, 2988, 37116, 18, 72, 12, 6))
     assert_equal("\\gcd(32)", gcd(32, 32))
     assert_equal("\\gcd(-8, 4, -2)", gcd(-8, gcd(4, -2)))
+    assert_equal("\\gcd(x, y, z)", gcd(x, gcd(y, z)), symbolically=True)
     assert_equal("\\gcd(6*4, 48, 3)", igcd(6 * 4, 48, 3))
     assert_equal("\\gcd(2.4, 3.6, 0.6)", gcd(Rational('2.4'), gcd(Rational('3.6'), Rational('0.6'))))
     assert_equal("\\gcd(\\sqrt{3}, \\sqrt{2}, \\sqrt{100})", gcd(sqrt(3), gcd(sqrt(2), sqrt(100))))

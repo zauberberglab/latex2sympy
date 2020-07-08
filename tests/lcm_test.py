@@ -5,6 +5,7 @@ from sympy import Symbol, Rational, lcm, ilcm, sqrt, nsimplify, pi
 
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
+z = Symbol('z', real=True)
 
 
 def test_lcm_usual():
@@ -81,6 +82,7 @@ def test_multiple_parameters():
     assert_equal("\\lcm(144, 2988, 37116, 18, 72, 12, 6)", ilcm(144, 2988, 37116, 18, 72, 12, 6))
     assert_equal("\\lcm(32)", lcm(32, 32))
     assert_equal("\\lcm(-8, 4, -2)", lcm(-8, lcm(4, -2)))
+    assert_equal("\\lcm(x, y, z)", lcm(x, lcm(y, z)), symbolically=True)
     assert_equal("\\lcm(6*4, 48, 3)", ilcm(6 * 4, 48, 3))
     assert_equal("\\lcm(2.4, 3.6, 0.6)", lcm(Rational('2.4'), lcm(Rational('3.6'), Rational('0.6'))))
     assert_equal("\\lcm(\\sqrt{3}, \\sqrt{2}, \\sqrt{100})", lcm(sqrt(3), lcm(sqrt(2), sqrt(100))))

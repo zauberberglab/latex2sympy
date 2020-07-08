@@ -45,6 +45,8 @@ class TestAllBad(object):
         "\\sin^x",
         "\\cos^2",
         # "\\cos 1 \\cos",
+        # "\\gcd(3)",
+        # "\\lcm(2)",
         "@", "#", "$", "%", "&", "*",
         "\\",
         "~",

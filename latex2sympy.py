@@ -633,7 +633,7 @@ def convert_func(func):
                     # raise TypeError("Number of arguments must be at least 1 or 2")
                     return lst
 
-                lst = tuple(map(lambda x: sympy.nsimplify(x), lst))
+                lst = tuple(map(sympy.nsimplify, lst))
 
                 if len(lst) < 2:
                     return f(lst[0], lst[0])

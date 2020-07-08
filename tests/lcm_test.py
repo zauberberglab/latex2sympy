@@ -1,4 +1,3 @@
-
 from .context import assert_equal
 import pytest
 from sympy import Symbol, Rational, lcm, ilcm, sqrt, nsimplify, pi

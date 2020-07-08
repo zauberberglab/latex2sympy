@@ -573,8 +573,15 @@ def convert_binom(binom):
 
 def convert_func(func):
     if func.func_normal():
+        # support functions with multiple parameters
+        def resolve_args(args):
+            if not hasattr(args, 'expr'):
+                return []
+            return [convert_func_arg(args)] + resolve_args(args.func_arg())
+
         if func.L_PAREN():  # function called with parenthesis
-            arg = convert_func_arg(func.func_arg())
+            args = resolve_args(func.func_arg())
+            arg = args[0] if args and len(args) == 1 else args  # numpy.squeeze() would be nice
         else:
             arg = convert_func_arg(func.func_arg_noparens())
 
@@ -601,7 +608,7 @@ def convert_func(func):
                 operatorname = "a" + operatorname[3:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
 
-        if (name == "log" or name == "ln"):
+        if name == "log" or name == "ln":
             if func.subexpr():
                 if func.subexpr().atom():
                     base = convert_atom(func.subexpr().atom())
@@ -615,6 +622,30 @@ def convert_func(func):
 
         if name == "exp" or name == "exponentialE":
             expr = sympy.exp(arg)
+
+        if name in ["gcd", "lcm"]:
+            # sympy's gcd() and lcm() only support 2 parameters
+            # this function calculates gcd() and lcm() for as many parameters as passed
+
+            def apply_nested(f, lst):
+                if not lst:
+                    # or modify this function and return the line below
+                    # raise TypeError("Number of arguments must be at least 1 or 2")
+                    return lst
+
+                lst = tuple(map(lambda x: sympy.nsimplify(x), lst))
+
+                if len(lst) < 2:
+                    return f(lst[0], lst[0])
+
+                result = f(lst[0], lst[1])
+                for i in range(2, len(lst)):
+                    result = f(result, lst[i])
+
+                return result
+
+            result = apply_nested(getattr(sympy, name), args)
+            expr = sympy.UnevaluatedExpr(result)  # gcd() and lcm() don't support evaluate=False
 
         func_pow = None
         should_pow = True

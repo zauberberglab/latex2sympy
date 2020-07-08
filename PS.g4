@@ -68,8 +68,9 @@ FUNC_ARCCOSH_NAME: 'arccosh';
 FUNC_ARTANH_NAME: 'artanh';
 FUNC_ARCTANH_NAME: 'arctanh';
 
-
 FUNC_SQRT: '\\sqrt';
+FUNC_GCD: '\\gcd';
+FUNC_LCM: '\\lcm';
 
 //commands
 CMD_TIMES: '\\times';
@@ -349,7 +350,8 @@ func_normal_functions:
     | FUNC_ARCCSC | FUNC_ARCSEC | FUNC_ARCCOT
     | FUNC_SINH | FUNC_COSH | FUNC_TANH
     | FUNC_ARSINH | FUNC_ARCOSH | FUNC_ARTANH
-    | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH;
+    | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH
+    | FUNC_GCD | FUNC_LCM;
 
 func_operator_names:
     FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME
@@ -365,7 +367,7 @@ func:
     (subexpr? supexpr? | supexpr? subexpr?)
     (L_LEFT? L_PAREN func_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_arg MR_RIGHT? R_PAREN | func_arg_noparens)
 
-    //Do not do arbitraty functions but see as multiplications
+    //Do not do arbitrary functions but see as multiplications
     /*| (LETTER_NO_E | SYMBOL) subexpr? // e.g. f(x)
     L_PAREN args R_PAREN
 

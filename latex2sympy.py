@@ -592,14 +592,14 @@ def convert_func(func):
                     "arccot"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-        if name in ["arsinh", "arcosh", "artanh"]:
+        elif name in ["arsinh", "arcosh", "artanh"]:
             name = "a" + name[2:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-        if name in ["arcsinh", "arccosh", "arctanh"]:
+        elif name in ["arcsinh", "arccosh", "arctanh"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
 
-        if name == "operatorname":
+        elif name == "operatorname":
             operatorname = func.func_normal().func_operator_name.getText()
             if operatorname in ["arsinh", "arcosh", "artanh"]:
                 operatorname = "a" + operatorname[2:]
@@ -608,7 +608,7 @@ def convert_func(func):
                 operatorname = "a" + operatorname[3:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
 
-        if name == "log" or name == "ln":
+        elif name == "log" or name == "ln":
             if func.subexpr():
                 if func.subexpr().atom():
                     base = convert_atom(func.subexpr().atom())
@@ -620,10 +620,10 @@ def convert_func(func):
                 base = sympy.E
             expr = sympy.log(arg, base, evaluate=False)
 
-        if name == "exp" or name == "exponentialE":
+        elif name == "exp" or name == "exponentialE":
             expr = sympy.exp(arg)
 
-        if name in ["gcd", "lcm"]:
+        elif name in ["gcd", "lcm"]:
             # sympy's gcd() and lcm() only support 2 parameters
             # this function calculates gcd() and lcm() for as many parameters as passed
 
@@ -644,8 +644,10 @@ def convert_func(func):
             result = apply_nested(getattr(sympy, name), args)
             expr = sympy.UnevaluatedExpr(result)  # gcd() and lcm() don't support evaluate=False
         
-        if name in ["floor", "ceil"]:
-            expr = getattr(sympy.functions, name)(arg, evaluate=False)
+        elif name == "floor":
+            expr = sympy.floor(arg, evaluate=False)
+        elif name == "ceil":
+            expr = sympy.ceiling(arg, evaluate=False)
 
         func_pow = None
         should_pow = True

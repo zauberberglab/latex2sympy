@@ -634,13 +634,9 @@ def convert_func(func):
                     return lst
 
                 lst = tuple(map(sympy.nsimplify, lst))
-                length = len(lst)
 
-                if length < 2:
-                    return f(lst[0], lst[0])
-
-                result = f(lst[0], lst[1])
-                for i in range(2, length):
+                result = lst[0]
+                for i in range(1, len(lst)):
                     result = f(result, lst[i])
 
                 return result

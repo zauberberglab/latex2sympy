@@ -32,6 +32,7 @@ class TestAllBad(object):
         # "a // b",
         # "a \\cdot \\cdot b",
         # "a \\div \\div b",
+        "a\\mod \\begin{matrix}b\\end{matrix}"
         "|",
         "||x|",
         "()",

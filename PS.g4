@@ -79,6 +79,7 @@ CMD_DIV:   '\\div';
 CMD_FRAC:  '\\frac';
 CMD_BINOM: '\\binom';
 CMD_CHOOSE: '\\choose';
+CMD_MOD: '\\mod';
 
 CMD_MATHIT: '\\mathit';
 
@@ -239,11 +240,11 @@ additive:
 
 // mult part
 mp:
-    mp (MUL | CMD_TIMES | CMD_CDOT | DIV | CMD_DIV | COLON) mp
+    mp (MUL | CMD_TIMES | CMD_CDOT | DIV | CMD_DIV | COLON | CMD_MOD) mp
     | unary;
 
 mp_nofunc:
-    mp_nofunc (MUL | CMD_TIMES | CMD_CDOT | DIV | CMD_DIV | COLON) mp_nofunc
+    mp_nofunc (MUL | CMD_TIMES | CMD_CDOT | DIV | CMD_DIV | COLON | CMD_MOD) mp_nofunc
     | unary_nofunc;
 
 unary:
@@ -333,7 +334,7 @@ frac:
     lower=expr
     R_BRACE;
 
-//a binomial experssion
+//a binomial expression
 binom:
     (CMD_BINOM | CMD_CHOOSE) L_BRACE
     upper=expr

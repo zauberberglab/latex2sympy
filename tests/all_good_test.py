@@ -7,7 +7,7 @@ from sympy import (
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
     exp, binomial, Matrix, MatMul, MatAdd,
-    Mod, gcd, lcm
+    Mod, gcd, lcm, floor, ceil
 )
 
 x = Symbol('x', real=True)
@@ -97,6 +97,8 @@ class TestAllGood(object):
         ("\\cos(x)^2", cos(x)**2),
         ("\\gcd(a, b)", UnevaluatedExpr(gcd(a, b))),
         ("\\lcm(a, b)", UnevaluatedExpr(lcm(a, b))),
+        ("\\floor(a)", floor(a)),
+        ("\\ceil(b)", ceil(b)),
         ("\\frac{a}{b}", a / b),
         ("\\frac{a + b}{c}", _Mul(a + b, _Pow(c, -1))),
         ("\\frac{7}{3}", _Mul(7, _Pow(3, -1))),

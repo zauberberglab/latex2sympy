@@ -387,6 +387,10 @@ def convert_comp(comp):
         return convert_expr(comp.group().expr())
     elif comp.abs_group():
         return sympy.Abs(convert_expr(comp.abs_group().expr()), evaluate=False)
+    elif comp.floor_group():
+        return sympy.functions.floor(convert_expr(comp.floor_group().expr()), evaluate=False)
+    elif comp.ceil_group():
+        return sympy.functions.ceiling(convert_expr(comp.ceil_group().expr()), evaluate=False)
     elif comp.atom():
         return convert_atom(comp.atom())
     elif comp.frac():

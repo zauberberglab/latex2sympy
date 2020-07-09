@@ -69,6 +69,8 @@ FUNC_ARTANH_NAME: 'artanh';
 FUNC_ARCTANH_NAME: 'arctanh';
 FUNC_GCD_NAME: 'gcd';
 FUNC_LCM_NAME: 'lcm';
+FUNC_FLOOR_NAME: 'floor';
+FUNC_CEIL_NAME: 'ceil';
 
 FUNC_SQRT: '\\sqrt';
 FUNC_GCD: '\\gcd';
@@ -360,7 +362,7 @@ func_normal_functions:
 func_operator_names:
     FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME
     | FUNC_ARCSINH_NAME | FUNC_ARCCOSH_NAME | FUNC_ARCTANH_NAME
-    | FUNC_GCD_NAME | FUNC_LCM_NAME;
+    | FUNC_GCD_NAME | FUNC_LCM_NAME | FUNC_FLOOR_NAME | FUNC_CEIL_NAME;
 
 func_normal:
     (func_normal_functions)

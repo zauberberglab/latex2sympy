@@ -11,7 +11,7 @@ equivalent SymPy form.
 sh scripts/setup.sh
 ```
 
-The compiled parser is located in the `gen/` directory. The script above should be run **every time the fle `PS.g4` is modified.
+The compiled parser is located in the `gen/` directory. The script above should be run **every time the file `PS.g4` is modified**.
 
 ## Testing
 
@@ -21,7 +21,7 @@ sh scripts/test.sh
 
 ## Usage
 
-In Python 2.7:
+In Python:
 
 ```python
 from latex2sympy import process_sympy
@@ -29,6 +29,9 @@ from latex2sympy import process_sympy
 process_sympy("\\frac{d}{dx} x^{2}")
 # => "diff(x**(2), x)"
 ```
+
+- To modify parser grammar, view the existing structure in `PS.g4`.
+- To modify the action associated with each grammar, look into `latex2sympy.py`.
 
 ## Examples
 

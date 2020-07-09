@@ -573,8 +573,10 @@ def convert_binom(binom):
 
 def convert_func(func):
     if func.func_normal():
-        # support functions with multiple parameters
         def resolve_args(args):
+            """
+            Turn multiple parameters into a list of parameters
+            """
             if not hasattr(args, 'expr'):
                 return []
             return [convert_func_arg(args)] + resolve_args(args.func_arg())
@@ -607,6 +609,8 @@ def convert_func(func):
             if operatorname in ["arcsinh", "arccosh", "arctanh"]:
                 operatorname = "a" + operatorname[3:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
+            if operatorname in ["gcd", "lcm"]:
+                expr = handle_gcd_lcm(operatorname, args)
 
         if name == "log" or name == "ln":
             if func.subexpr():
@@ -624,25 +628,7 @@ def convert_func(func):
             expr = sympy.exp(arg)
 
         if name in ["gcd", "lcm"]:
-            # sympy's gcd() and lcm() only support 2 parameters
-            # this function calculates gcd() and lcm() for as many parameters as passed
-
-            def apply_nested(f, lst):
-                if not lst:
-                    # or modify this function and return the line below
-                    # raise TypeError("Number of arguments must be at least 1 or 2")
-                    return lst
-
-                lst = tuple(map(sympy.nsimplify, lst))
-
-                result = lst[0]
-                for i in range(1, len(lst)):
-                    result = f(result, lst[i])
-
-                return result
-
-            result = apply_nested(getattr(sympy, name), args)
-            expr = sympy.UnevaluatedExpr(result)  # gcd() and lcm() don't support evaluate=False
+            expr = handle_gcd_lcm(name, args)
 
         func_pow = None
         should_pow = True
@@ -792,6 +778,38 @@ def handle_exp(func):
     else:
         exp_arg = 1
     return sympy.exp(exp_arg)
+
+
+def handle_gcd_lcm(f, args):
+    """
+    Return the result of gcd() or lcm(), as UnevaluatedExpr
+
+    f: str - name of function ("gcd" or "lcm")
+    args: List[Expr] - list of function arguments
+    """
+
+    def apply_nested(f, lst):
+        """
+        sympy's gcd() and lcm() only support 2 parameters
+        this function calculates gcd() and lcm() for as many parameters as passed
+        """
+        if not lst:
+            # or modify this function and return the line below
+            # raise TypeError("Number of arguments must be at least 1 (or 2)")
+            return lst
+
+        lst = tuple(map(sympy.nsimplify, lst))
+
+        result = lst[0]
+        for i in range(1, len(lst)):
+            result = f(result, lst[i])
+
+        return result
+
+    result = apply_nested(getattr(sympy, f), args)
+
+    # gcd() and lcm() don't support evaluate=False
+    return sympy.UnevaluatedExpr(result)
 
 
 def get_differential_var(d):

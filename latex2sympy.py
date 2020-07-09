@@ -581,7 +581,7 @@ def convert_func(func):
             """
             Turn multiple parameters into a list of parameters
             """
-            if not hasattr(args, 'expr'):
+            if not (hasattr(args, 'expr') or hasattr(args, 'mp_nofunc')):
                 return []
             return [convert_func_arg(args)] + resolve_args(args.func_arg())
 

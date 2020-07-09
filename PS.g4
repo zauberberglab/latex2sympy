@@ -340,7 +340,7 @@ floor_group:
 ceil_group:
     L_CEIL expr R_CEIL
     | L_LEFT L_CEIL expr R_RIGHT R_CEIL
-    | ML_LEFT CEIL expr MR_RIGHT CEIL;
+    | ML_LEFT L_CEIL expr MR_RIGHT R_CEIL;
 
 
 //indicate an accent

@@ -133,6 +133,8 @@ class TestAllGood(object):
         ("||x||", _Abs(Abs(x))),
         ("|x||y|", _Abs(x) * _Abs(y)),
         ("||x||y||", _Abs(_Abs(x) * _Abs(y))),
+        ("\\lfloor x\\rfloor", floor(x)),
+        ("\\lceil y\\rceil", ceiling(y)),
         ("\\pi^{|xy|}", pi**_Abs(x * y)),
         ("\\frac{\\pi}{3}", _Mul(pi, _Pow(3, -1))),
         ("\\sin{\\frac{\\pi}{2}}", sin(_Mul(pi, _Pow(2, -1)), evaluate=False)),

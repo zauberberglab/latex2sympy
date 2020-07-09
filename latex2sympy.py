@@ -388,9 +388,9 @@ def convert_comp(comp):
     elif comp.abs_group():
         return sympy.Abs(convert_expr(comp.abs_group().expr()), evaluate=False)
     elif comp.floor_group():
-        return sympy.functions.floor(convert_expr(comp.floor_group().expr()), evaluate=False)
+        return handle_floor(convert_expr(comp.floor_group().expr()))
     elif comp.ceil_group():
-        return sympy.functions.ceiling(convert_expr(comp.ceil_group().expr()), evaluate=False)
+        return handle_ceil(convert_expr(comp.ceil_group().expr()))
     elif comp.atom():
         return convert_atom(comp.atom())
     elif comp.frac():
@@ -616,9 +616,9 @@ def convert_func(func):
             elif operatorname in ["gcd", "lcm"]:
                 expr = handle_gcd_lcm(operatorname, args)
             elif operatorname == "floor":
-                expr = sympy.functions.floor(arg, evaluate=False)
+                expr = handle_floor(arg)
             elif operatorname == "ceil":
-                expr = sympy.functions.ceiling(arg, evaluate=False)
+                expr = handle_ceil(arg)
 
         elif name == "log" or name == "ln":
             if func.subexpr():
@@ -639,9 +639,9 @@ def convert_func(func):
             expr = handle_gcd_lcm(name, args)
 
         elif name == "floor":
-            expr = sympy.functions.floor(arg, evaluate=False)
+            expr = handle_floor(arg)
         elif name == "ceil":
-            expr = sympy.functions.ceiling(arg, evaluate=False)
+            expr = handle_ceil(arg)
 
         func_pow = None
         should_pow = True
@@ -823,6 +823,24 @@ def handle_gcd_lcm(f, args):
 
     # gcd() and lcm() don't support evaluate=False
     return sympy.UnevaluatedExpr(result)
+
+
+def handle_floor(expr):
+    """
+    Apply floor() then return the evaluated expression.
+
+    expr: Expr - sympy expression as an argument to floor()
+    """
+    return sympy.functions.floor(expr, evaluate=False)
+
+
+def handle_ceil(expr):
+    """
+    Apply ceil() then return the evaluated expression.
+
+    expr: Expr - sympy expression as an argument to ceil()
+    """
+    return sympy.functions.ceiling(expr, evaluate=False)
 
 
 def get_differential_var(d):

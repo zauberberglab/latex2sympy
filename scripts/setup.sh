@@ -31,7 +31,7 @@ fi
 
 echo ''
 echo "compiling parser..."
-java -jar antlr-4.7.2-complete.jar PS.g4 -o gen
+sh scripts/compile.sh
 echo "parser compiled"
 
 exit 0

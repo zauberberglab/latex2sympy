@@ -5,13 +5,19 @@ equivalent SymPy form.
 
 ## Installation
 
-[ANTLR](http://www.antlr.org/) is used to generate the parser. To set up, please run:
+[ANTLR](http://www.antlr.org/) is used to generate the parser.
 
 ```
 sh scripts/setup.sh
 ```
 
-The compiled parser is located in the `gen/` directory. The script above should be run **every time the file `PS.g4` is modified**.
+## Compiling
+
+The compiled parser is located in the `gen/` directory. The script below should be run **every time the file `PS.g4` is modified**.
+
+```
+sh scripts/compile.sh
+```
 
 ## Testing
 

@@ -5,14 +5,19 @@ equivalent SymPy form.
 
 ## Installation
 
-[ANTLR](http://www.antlr.org/) is used to generate the parser. To compiler the parser, please run the either of the following command:
+[ANTLR](http://www.antlr.org/) is used to generate the parser. To set up, please run:
 
 ```
-python setup.py install
-java -jar antlr-4.7.2-complete.jar PS.g4 -o gen
+sh scripts/setup.sh
 ```
 
-The compiled parser is located in the `gen/` directory. 
+The compiled parser is located in the `gen/` directory. The script above should be run **every time the fle `PS.g4` is modified.
+
+## Testing
+
+```
+sh scripts/test.sh
+```
 
 ## Usage
 

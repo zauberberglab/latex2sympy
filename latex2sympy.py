@@ -449,10 +449,10 @@ def convert_atom(atom):
             return sympy.oo
         elif s == '\\pi':
             return sympy.pi
+        elif s == '\\emptyset':
+            return sympy.S.EmptySet
         else:
             raise Exception("Unrecognized symbol")
-    elif atom.EMPTYSET():
-        return sympy.S.EmptySet
     elif atom.NUMBER():
         s = atom.NUMBER().getText().replace(",", "")
         try:

@@ -190,8 +190,8 @@ GREEK_LETTER:
 fragment PI: '\\pi';
 fragment INFTY_CMD: '\\infty';
 fragment INFTY: INFTY_CMD | DOLLAR_SIGN INFTY_CMD | INFTY_CMD PERCENT_SIGN;
-EMPTYSET: '\\emptyset';
-SYMBOL: PI | INFTY;
+fragment EMPTYSET: '\\emptyset';
+SYMBOL: PI | INFTY | EMPTYSET;
 
 fragment VARIABLE_CMD: '\\variable';
 fragment VARIABLE_SYMBOL: (GREEK_LETTER [ ]? | LETTER | DIGIT)+ (UNDERSCORE ((L_BRACE (GREEK_LETTER [ ]? | LETTER | DIGIT | COMMA)+ R_BRACE) | (GREEK_LETTER [ ]? | LETTER | DIGIT)))?;
@@ -322,7 +322,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: EMPTYSET | (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
+atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: (LETTER_NO_E | E_NOTATION_E | EXP_E)+;

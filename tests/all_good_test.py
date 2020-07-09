@@ -95,6 +95,8 @@ class TestAllGood(object):
         ("\\operatorname{artanh}(a)", atanh(a)),
         ("\\operatorname{gcd}(a, b)", UnevaluatedExpr(gcd(a, b))),
         ("\\operatorname{lcm}(a, b)", UnevaluatedExpr(lcm(a, b))),
+        ("\\operatorname{floor}(a)", floor(a)),
+        ("\\operatorname{ceil}(b)", ceiling(b)),
         ("\\cos^2(x)", cos(x)**2),
         ("\\cos(x)^2", cos(x)**2),
         ("\\gcd(a, b)", UnevaluatedExpr(gcd(a, b))),

@@ -26,6 +26,10 @@ ML_LEFT: '\\mleft';
 MR_RIGHT: '\\mright';
 
 BAR: '|';
+L_FLOOR: '\\lfloor';
+R_FLOOR: '\\rfloor';
+L_CEIL: '\\lceil';
+R_CEIL: '\\rceil';
 
 //functions
 FUNC_LIM:  '\\lim';
@@ -321,6 +325,18 @@ abs_group:
     BAR expr BAR
     | L_LEFT BAR expr R_RIGHT BAR
     | ML_LEFT BAR expr MR_RIGHT BAR;
+
+
+floor_group:
+    L_FLOOR expr R_FLOOR
+    | L_LEFT L_FLOOR expr R_RIGHT R_FLOOR
+    | ML_LEFT L_FLOOR expr MR_RIGHT R_FLOOR;
+
+
+ceil_group:
+    L_CEIL expr R_CEIL
+    | L_LEFT L_CEIL expr R_RIGHT R_CEIL
+    | ML_LEFT CEIL expr MR_RIGHT CEIL;
 
 
 //indicate an accent

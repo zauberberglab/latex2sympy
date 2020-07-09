@@ -293,6 +293,8 @@ exp_nofunc:
 comp:
     group
     | abs_group
+    | floor_group
+    | ceil_group
     | func
     | atom
     | frac
@@ -302,6 +304,8 @@ comp:
 comp_nofunc:
     group
     | abs_group
+    | floor_group
+    | ceil_group
     | atom
     | frac
     | binom

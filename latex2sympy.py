@@ -606,11 +606,15 @@ def convert_func(func):
             if operatorname in ["arsinh", "arcosh", "artanh"]:
                 operatorname = "a" + operatorname[2:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
-            if operatorname in ["arcsinh", "arccosh", "arctanh"]:
+            elif operatorname in ["arcsinh", "arccosh", "arctanh"]:
                 operatorname = "a" + operatorname[3:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
-            if operatorname in ["gcd", "lcm"]:
+            elif operatorname in ["gcd", "lcm"]:
                 expr = handle_gcd_lcm(operatorname, args)
+            elif operatorname == "floor":
+                expr = sympy.functions.floor(arg, evaluate=False)
+            elif operatorname == "ceil":
+                expr = sympy.functions.ceiling(arg, evaluate=False)
 
         elif name == "log" or name == "ln":
             if func.subexpr():

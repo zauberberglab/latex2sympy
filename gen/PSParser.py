@@ -70,7 +70,7 @@ def serializedATN():
         buf.write(u"-\3-\3-\3-\3-\2\b\n\24\26\30*,.\2\4\6\b\n\f\16\20\22")
         buf.write(u"\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNP")
         buf.write(u"RTVX\2\f\3\2OP\3\2]b\3\2\5\6\6\2\7\b>@DDSS\3\2XZ\3\2")
-        buf.write(u"BC\4\2\33\62:=\3\2\638\3\2\31\32\4\2ZZee\2\u02b9\2Z\3")
+        buf.write(u"BC\4\2\33\62<=\3\2\63:\3\2\31\32\4\2ZZee\2\u02b9\2Z\3")
         buf.write(u"\2\2\2\4^\3\2\2\2\6`\3\2\2\2\bk\3\2\2\2\ns\3\2\2\2\f")
         buf.write(u"\u00a3\3\2\2\2\16\u00b9\3\2\2\2\20\u00bb\3\2\2\2\22\u00bf")
         buf.write(u"\3\2\2\2\24\u00c1\3\2\2\2\26\u00cc\3\2\2\2\30\u00d7\3")
@@ -279,7 +279,7 @@ def serializedATN():
         buf.write(u"\2\u0223\u0222\3\2\2\2\u0223\u0224\3\2\2\2\u0224\u0225")
         buf.write(u"\3\2\2\2\u0225\u0229\7W\2\2\u0226\u0229\5> \2\u0227\u0229")
         buf.write(u"\5\24\13\2\u0228\u0223\3\2\2\2\u0228\u0226\3\2\2\2\u0228")
-        buf.write(u"\u0227\3\2\2\2\u0229\u0249\3\2\2\2\u022a\u022f\79\2\2")
+        buf.write(u"\u0227\3\2\2\2\u0229\u0249\3\2\2\2\u022a\u022f\7;\2\2")
         buf.write(u"\u022b\u022c\7\17\2\2\u022c\u022d\5\22\n\2\u022d\u022e")
         buf.write(u"\7\20\2\2\u022e\u0230\3\2\2\2\u022f\u022b\3\2\2\2\u022f")
         buf.write(u"\u0230\3\2\2\2\u0230\u0231\3\2\2\2\u0231\u0232\7\13\2")
@@ -346,16 +346,16 @@ class PSParser ( Parser ):
                      u"'\\sinh'", u"'\\cosh'", u"'\\tanh'", u"'\\arsinh'", 
                      u"'\\arcosh'", u"'\\artanh'", u"'\\arcsinh'", u"'\\arccosh'", 
                      u"'\\arctanh'", u"'arsinh'", u"'arcsinh'", u"'arcosh'", 
-                     u"'arccosh'", u"'artanh'", u"'arctanh'", u"'\\sqrt'", 
-                     u"'\\gcd'", u"'\\lcm'", u"'\\floor'", u"'\\ceil'", 
-                     u"'\\times'", u"'\\cdot'", u"'\\div'", u"'\\frac'", 
-                     u"'\\binom'", u"'\\choose'", u"'\\mod'", u"'\\mathit'", 
-                     u"'\\operatorname'", u"'matrix'", u"'pmatrix'", u"'bmatrix'", 
-                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'&'", u"'\\\\'", 
-                     u"'\\overline'", u"'\\bar'", u"'_'", u"'^'", u"':'", 
-                     u"';'", u"','", u"'.'", u"<INVALID>", u"'e'", u"'E'", 
-                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'='", u"'<'", 
-                     u"<INVALID>", u"'>'", u"<INVALID>", u"<INVALID>", u"'!'" ]
+                     u"'arccosh'", u"'artanh'", u"'arctanh'", u"'gcd'", 
+                     u"'lcm'", u"'\\sqrt'", u"'\\gcd'", u"'\\lcm'", u"'\\times'", 
+                     u"'\\cdot'", u"'\\div'", u"'\\frac'", u"'\\binom'", 
+                     u"'\\choose'", u"'\\mod'", u"'\\mathit'", u"'\\operatorname'", 
+                     u"'matrix'", u"'pmatrix'", u"'bmatrix'", u"<INVALID>", 
+                     u"<INVALID>", u"<INVALID>", u"'&'", u"'\\\\'", u"'\\overline'", 
+                     u"'\\bar'", u"'_'", u"'^'", u"':'", u"';'", u"','", 
+                     u"'.'", u"<INVALID>", u"'e'", u"'E'", u"<INVALID>", 
+                     u"<INVALID>", u"<INVALID>", u"'='", u"'<'", u"<INVALID>", 
+                     u"'>'", u"<INVALID>", u"<INVALID>", u"'!'" ]
 
     symbolicNames = [ u"<INVALID>", u"WS", u"DOLLAR_SIGN", u"ADD", u"SUB", 
                       u"MUL", u"DIV", u"L_PAREN", u"R_PAREN", u"L_BRACE", 
@@ -371,10 +371,10 @@ class PSParser ( Parser ):
                       u"FUNC_ARCSINH", u"FUNC_ARCCOSH", u"FUNC_ARCTANH", 
                       u"FUNC_ARSINH_NAME", u"FUNC_ARCSINH_NAME", u"FUNC_ARCOSH_NAME", 
                       u"FUNC_ARCCOSH_NAME", u"FUNC_ARTANH_NAME", u"FUNC_ARCTANH_NAME", 
-                      u"FUNC_SQRT", u"FUNC_GCD", u"FUNC_LCM", u"FUNC_FLOOR", 
-                      u"FUNC_CEIL", u"CMD_TIMES", u"CMD_CDOT", u"CMD_DIV", 
-                      u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE", u"CMD_MOD", 
-                      u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX", 
+                      u"FUNC_GCD_NAME", u"FUNC_LCM_NAME", u"FUNC_SQRT", 
+                      u"FUNC_GCD", u"FUNC_LCM", u"CMD_TIMES", u"CMD_CDOT", 
+                      u"CMD_DIV", u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE", 
+                      u"CMD_MOD", u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX", 
                       u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX", u"MATRIX_TYPES", 
                       u"CMD_MATRIX_START", u"CMD_MATRIX_END", u"MATRIX_DEL_COL", 
                       u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR", 
@@ -496,11 +496,11 @@ class PSParser ( Parser ):
     FUNC_ARCCOSH_NAME=52
     FUNC_ARTANH_NAME=53
     FUNC_ARCTANH_NAME=54
-    FUNC_SQRT=55
-    FUNC_GCD=56
-    FUNC_LCM=57
-    FUNC_FLOOR=58
-    FUNC_CEIL=59
+    FUNC_GCD_NAME=55
+    FUNC_LCM_NAME=56
+    FUNC_SQRT=57
+    FUNC_GCD=58
+    FUNC_LCM=59
     CMD_TIMES=60
     CMD_CDOT=61
     CMD_DIV=62
@@ -3485,6 +3485,12 @@ class PSParser ( Parser ):
         def FUNC_ARCTANH_NAME(self):
             return self.getToken(PSParser.FUNC_ARCTANH_NAME, 0)
 
+        def FUNC_GCD_NAME(self):
+            return self.getToken(PSParser.FUNC_GCD_NAME, 0)
+
+        def FUNC_LCM_NAME(self):
+            return self.getToken(PSParser.FUNC_LCM_NAME, 0)
+
         def getRuleIndex(self):
             return PSParser.RULE_func_operator_names
 
@@ -3508,7 +3514,7 @@ class PSParser ( Parser ):
             self.enterOuterAlt(localctx, 1)
             self.state = 473
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.FUNC_ARSINH_NAME) | (1 << PSParser.FUNC_ARCSINH_NAME) | (1 << PSParser.FUNC_ARCOSH_NAME) | (1 << PSParser.FUNC_ARCCOSH_NAME) | (1 << PSParser.FUNC_ARTANH_NAME) | (1 << PSParser.FUNC_ARCTANH_NAME))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.FUNC_ARSINH_NAME) | (1 << PSParser.FUNC_ARCSINH_NAME) | (1 << PSParser.FUNC_ARCOSH_NAME) | (1 << PSParser.FUNC_ARCCOSH_NAME) | (1 << PSParser.FUNC_ARTANH_NAME) | (1 << PSParser.FUNC_ARCTANH_NAME) | (1 << PSParser.FUNC_GCD_NAME) | (1 << PSParser.FUNC_LCM_NAME))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)

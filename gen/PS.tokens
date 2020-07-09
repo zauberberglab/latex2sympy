@@ -52,11 +52,19 @@ FUNC_ARCOSH_NAME=51
 FUNC_ARCCOSH_NAME=52
 FUNC_ARTANH_NAME=53
 FUNC_ARCTANH_NAME=54
+<<<<<<< HEAD
 FUNC_SQRT=55
 FUNC_GCD=56
 FUNC_LCM=57
 FUNC_FLOOR=58
 FUNC_CEIL=59
+=======
+FUNC_GCD_NAME=55
+FUNC_LCM_NAME=56
+FUNC_SQRT=57
+FUNC_GCD=58
+FUNC_LCM=59
+>>>>>>> revert-15-revert-14-feature/enable-gcd-lcm
 CMD_TIMES=60
 CMD_CDOT=61
 CMD_DIV=62
@@ -150,11 +158,11 @@ VARIABLE=101
 'arccosh'=52
 'artanh'=53
 'arctanh'=54
-'\\sqrt'=55
-'\\gcd'=56
-'\\lcm'=57
-'\\floor'=58
-'\\ceil'=59
+'gcd'=55
+'lcm'=56
+'\\sqrt'=57
+'\\gcd'=58
+'\\lcm'=59
 '\\times'=60
 '\\cdot'=61
 '\\div'=62

@@ -93,6 +93,8 @@ class TestAllGood(object):
         ("\\operatorname{arsinh}(a)", asinh(a)),
         ("\\operatorname{arcosh}(a)", acosh(a)),
         ("\\operatorname{artanh}(a)", atanh(a)),
+        ("\\operatorname{gcd}(a, b)", UnevaluatedExpr(gcd(a, b))),
+        ("\\operatorname{lcm}(a, b)", UnevaluatedExpr(lcm(a, b))),
         ("\\cos^2(x)", cos(x)**2),
         ("\\cos(x)^2", cos(x)**2),
         ("\\gcd(a, b)", UnevaluatedExpr(gcd(a, b))),

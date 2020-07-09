@@ -5,17 +5,14 @@ equivalent SymPy form.
 
 ## Installation
 
-[ANTLR](http://www.antlr.org/) is used to generate the parser:
+[ANTLR](http://www.antlr.org/) is used to generate the parser. To compiler the parser, please run the either of the following command:
 
 ```
-antlr-4.7.2-complete.jar PS.g4 -o gen
-```
-
-or
-
-```
+python setup.py install
 java -jar antlr-4.7.2-complete.jar PS.g4 -o gen
 ```
+
+The compiled parser is located in the `gen/` directory. 
 
 ## Usage
 

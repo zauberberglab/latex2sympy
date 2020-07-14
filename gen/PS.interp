@@ -19,10 +19,10 @@ null
 '\\mleft'
 '\\mright'
 '|'
-'\\lfloor'
-'\\rfloor'
-'\\lceil'
-'\\rceil'
+null
+null
+null
+null
 '\\lim'
 null
 '\\int'

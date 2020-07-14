@@ -365,30 +365,33 @@ class PSParser (Parser):
     literalNames = [u"<INVALID>", u"<INVALID>", u"'\\$'", u"'+'", u"'-'",
                     u"'*'", u"'/'", u"'('", u"')'", u"'{'", u"'}'", u"'\\{'",
                     u"'\\}'", u"'['", u"']'", u"'\\left'", u"'\\right'",
-                    u"'\\mleft'", u"'\\mright'", u"'|'", u"'\\lim'", u"<INVALID>",
-                    u"'\\int'", u"'\\sum'", u"'\\prod'", u"'\\log'", u"'\\ln'",
-                    u"<INVALID>", u"'\\sin'", u"'\\cos'", u"'\\tan'", u"'\\csc'",
-                    u"'\\sec'", u"'\\cot'", u"'\\arcsin'", u"'\\arccos'",
-                    u"'\\arctan'", u"'\\arccsc'", u"'\\arcsec'", u"'\\arccot'",
-                    u"'\\sinh'", u"'\\cosh'", u"'\\tanh'", u"'\\arsinh'",
-                    u"'\\arcosh'", u"'\\artanh'", u"'\\arcsinh'", u"'\\arccosh'",
-                    u"'\\arctanh'", u"'arsinh'", u"'arcsinh'", u"'arcosh'",
-                    u"'arccosh'", u"'artanh'", u"'arctanh'", u"'gcd'",
-                    u"'lcm'", u"'\\sqrt'", u"'\\gcd'", u"'\\lcm'", u"'\\times'",
-                    u"'\\cdot'", u"'\\div'", u"'\\frac'", u"'\\binom'",
-                    u"'\\choose'", u"'\\mod'", u"'\\mathit'", u"'\\operatorname'",
-                    u"'matrix'", u"'pmatrix'", u"'bmatrix'", u"<INVALID>",
-                    u"<INVALID>", u"<INVALID>", u"'&'", u"'\\\\'", u"'\\overline'",
-                    u"'\\bar'", u"'_'", u"'^'", u"':'", u"';'", u"','",
-                    u"'.'", u"<INVALID>", u"'e'", u"'E'", u"<INVALID>",
-                    u"<INVALID>", u"<INVALID>", u"'='", u"'<'", u"<INVALID>",
-                    u"'>'", u"<INVALID>", u"<INVALID>", u"'!'"]
+                    u"'\\mleft'", u"'\\mright'", u"'|'", u"<INVALID>",
+                    u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'\\lim'",
+                    u"<INVALID>", u"'\\int'", u"'\\sum'", u"'\\prod'",
+                    u"'\\log'", u"'\\ln'", u"<INVALID>", u"'\\sin'", u"'\\cos'",
+                    u"'\\tan'", u"'\\csc'", u"'\\sec'", u"'\\cot'", u"'\\arcsin'",
+                    u"'\\arccos'", u"'\\arctan'", u"'\\arccsc'", u"'\\arcsec'",
+                    u"'\\arccot'", u"'\\sinh'", u"'\\cosh'", u"'\\tanh'",
+                    u"'\\arsinh'", u"'\\arcosh'", u"'\\artanh'", u"'\\arcsinh'",
+                    u"'\\arccosh'", u"'\\arctanh'", u"'arsinh'", u"'arcsinh'",
+                    u"'arcosh'", u"'arccosh'", u"'artanh'", u"'arctanh'",
+                    u"'gcd'", u"'lcm'", u"'floor'", u"'ceil'", u"'\\sqrt'",
+                    u"'\\gcd'", u"'\\lcm'", u"'\\floor'", u"'\\ceil'",
+                    u"'\\times'", u"'\\cdot'", u"'\\div'", u"'\\frac'",
+                    u"'\\binom'", u"'\\choose'", u"'\\mod'", u"'\\mathit'",
+                    u"'\\operatorname'", u"'matrix'", u"'pmatrix'", u"'bmatrix'",
+                    u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'&'", u"'\\\\'",
+                    u"'\\overline'", u"'\\bar'", u"'_'", u"'^'", u"':'",
+                    u"';'", u"','", u"'.'", u"<INVALID>", u"'e'", u"'E'",
+                    u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'='", u"'<'",
+                    u"<INVALID>", u"'>'", u"<INVALID>", u"<INVALID>", u"'!'"]
 
     symbolicNames = [u"<INVALID>", u"WS", u"DOLLAR_SIGN", u"ADD", u"SUB",
                      u"MUL", u"DIV", u"L_PAREN", u"R_PAREN", u"L_BRACE",
                      u"R_BRACE", u"L_BRACE_VISUAL", u"R_BRACE_VISUAL",
                      u"L_BRACKET", u"R_BRACKET", u"L_LEFT", u"R_RIGHT",
-                     u"ML_LEFT", u"MR_RIGHT", u"BAR", u"FUNC_LIM", u"LIM_APPROACH_SYM",
+                     u"ML_LEFT", u"MR_RIGHT", u"BAR", u"L_FLOOR", u"R_FLOOR",
+                     u"L_CEIL", u"R_CEIL", u"FUNC_LIM", u"LIM_APPROACH_SYM",
                      u"FUNC_INT", u"FUNC_SUM", u"FUNC_PROD", u"FUNC_LOG",
                      u"FUNC_LN", u"FUNC_EXP", u"FUNC_SIN", u"FUNC_COS",
                      u"FUNC_TAN", u"FUNC_CSC", u"FUNC_SEC", u"FUNC_COT",
@@ -398,8 +401,9 @@ class PSParser (Parser):
                      u"FUNC_ARCSINH", u"FUNC_ARCCOSH", u"FUNC_ARCTANH",
                      u"FUNC_ARSINH_NAME", u"FUNC_ARCSINH_NAME", u"FUNC_ARCOSH_NAME",
                      u"FUNC_ARCCOSH_NAME", u"FUNC_ARTANH_NAME", u"FUNC_ARCTANH_NAME",
-                     u"FUNC_GCD_NAME", u"FUNC_LCM_NAME", u"FUNC_SQRT",
-                     u"FUNC_GCD", u"FUNC_LCM", u"CMD_TIMES", u"CMD_CDOT",
+                     u"FUNC_GCD_NAME", u"FUNC_LCM_NAME", u"FUNC_FLOOR_NAME",
+                     u"FUNC_CEIL_NAME", u"FUNC_SQRT", u"FUNC_GCD", u"FUNC_LCM",
+                     u"FUNC_FLOOR", u"FUNC_CEIL", u"CMD_TIMES", u"CMD_CDOT",
                      u"CMD_DIV", u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE",
                      u"CMD_MOD", u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX",
                      u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX", u"MATRIX_TYPES",
@@ -490,88 +494,96 @@ class PSParser (Parser):
     ML_LEFT = 17
     MR_RIGHT = 18
     BAR = 19
-    FUNC_LIM = 20
-    LIM_APPROACH_SYM = 21
-    FUNC_INT = 22
-    FUNC_SUM = 23
-    FUNC_PROD = 24
-    FUNC_LOG = 25
-    FUNC_LN = 26
-    FUNC_EXP = 27
-    FUNC_SIN = 28
-    FUNC_COS = 29
-    FUNC_TAN = 30
-    FUNC_CSC = 31
-    FUNC_SEC = 32
-    FUNC_COT = 33
-    FUNC_ARCSIN = 34
-    FUNC_ARCCOS = 35
-    FUNC_ARCTAN = 36
-    FUNC_ARCCSC = 37
-    FUNC_ARCSEC = 38
-    FUNC_ARCCOT = 39
-    FUNC_SINH = 40
-    FUNC_COSH = 41
-    FUNC_TANH = 42
-    FUNC_ARSINH = 43
-    FUNC_ARCOSH = 44
-    FUNC_ARTANH = 45
-    FUNC_ARCSINH = 46
-    FUNC_ARCCOSH = 47
-    FUNC_ARCTANH = 48
-    FUNC_ARSINH_NAME = 49
-    FUNC_ARCSINH_NAME = 50
-    FUNC_ARCOSH_NAME = 51
-    FUNC_ARCCOSH_NAME = 52
-    FUNC_ARTANH_NAME = 53
-    FUNC_ARCTANH_NAME = 54
-    FUNC_GCD_NAME = 55
-    FUNC_LCM_NAME = 56
-    FUNC_SQRT = 57
-    FUNC_GCD = 58
-    FUNC_LCM = 59
-    CMD_TIMES = 60
-    CMD_CDOT = 61
-    CMD_DIV = 62
-    CMD_FRAC = 63
-    CMD_BINOM = 64
-    CMD_CHOOSE = 65
-    CMD_MOD = 66
-    CMD_MATHIT = 67
-    CMD_OPERATORNAME = 68
-    MATRIX_TYPE_MATRIX = 69
-    MATRIX_TYPE_PMATRIX = 70
-    MATRIX_TYPE_BMATRIX = 71
-    MATRIX_TYPES = 72
-    CMD_MATRIX_START = 73
-    CMD_MATRIX_END = 74
-    MATRIX_DEL_COL = 75
-    MATRIX_DEL_ROW = 76
-    ACCENT_OVERLINE = 77
-    ACCENT_BAR = 78
-    UNDERSCORE = 79
-    CARET = 80
-    COLON = 81
-    SEMICOLON = 82
-    COMMA = 83
-    PERIOD = 84
-    DIFFERENTIAL = 85
-    EXP_E = 86
-    E_NOTATION_E = 87
-    LETTER_NO_E = 88
-    NUMBER = 89
-    E_NOTATION = 90
-    EQUAL = 91
-    LT = 92
-    LTE = 93
-    GT = 94
-    GTE = 95
-    UNEQUAL = 96
-    BANG = 97
-    PERCENT_NUMBER = 98
-    GREEK_LETTER = 99
-    SYMBOL = 100
-    VARIABLE = 101
+    L_FLOOR = 20
+    R_FLOOR = 21
+    L_CEIL = 22
+    R_CEIL = 23
+    FUNC_LIM = 24
+    LIM_APPROACH_SYM = 25
+    FUNC_INT = 26
+    FUNC_SUM = 27
+    FUNC_PROD = 28
+    FUNC_LOG = 29
+    FUNC_LN = 30
+    FUNC_EXP = 31
+    FUNC_SIN = 32
+    FUNC_COS = 33
+    FUNC_TAN = 34
+    FUNC_CSC = 35
+    FUNC_SEC = 36
+    FUNC_COT = 37
+    FUNC_ARCSIN = 38
+    FUNC_ARCCOS = 39
+    FUNC_ARCTAN = 40
+    FUNC_ARCCSC = 41
+    FUNC_ARCSEC = 42
+    FUNC_ARCCOT = 43
+    FUNC_SINH = 44
+    FUNC_COSH = 45
+    FUNC_TANH = 46
+    FUNC_ARSINH = 47
+    FUNC_ARCOSH = 48
+    FUNC_ARTANH = 49
+    FUNC_ARCSINH = 50
+    FUNC_ARCCOSH = 51
+    FUNC_ARCTANH = 52
+    FUNC_ARSINH_NAME = 53
+    FUNC_ARCSINH_NAME = 54
+    FUNC_ARCOSH_NAME = 55
+    FUNC_ARCCOSH_NAME = 56
+    FUNC_ARTANH_NAME = 57
+    FUNC_ARCTANH_NAME = 58
+    FUNC_GCD_NAME = 59
+    FUNC_LCM_NAME = 60
+    FUNC_FLOOR_NAME = 61
+    FUNC_CEIL_NAME = 62
+    FUNC_SQRT = 63
+    FUNC_GCD = 64
+    FUNC_LCM = 65
+    FUNC_FLOOR = 66
+    FUNC_CEIL = 67
+    CMD_TIMES = 68
+    CMD_CDOT = 69
+    CMD_DIV = 70
+    CMD_FRAC = 71
+    CMD_BINOM = 72
+    CMD_CHOOSE = 73
+    CMD_MOD = 74
+    CMD_MATHIT = 75
+    CMD_OPERATORNAME = 76
+    MATRIX_TYPE_MATRIX = 77
+    MATRIX_TYPE_PMATRIX = 78
+    MATRIX_TYPE_BMATRIX = 79
+    MATRIX_TYPES = 80
+    CMD_MATRIX_START = 81
+    CMD_MATRIX_END = 82
+    MATRIX_DEL_COL = 83
+    MATRIX_DEL_ROW = 84
+    ACCENT_OVERLINE = 85
+    ACCENT_BAR = 86
+    UNDERSCORE = 87
+    CARET = 88
+    COLON = 89
+    SEMICOLON = 90
+    COMMA = 91
+    PERIOD = 92
+    DIFFERENTIAL = 93
+    EXP_E = 94
+    E_NOTATION_E = 95
+    LETTER_NO_E = 96
+    NUMBER = 97
+    E_NOTATION = 98
+    EQUAL = 99
+    LT = 100
+    LTE = 101
+    GT = 102
+    GTE = 103
+    UNEQUAL = 104
+    BANG = 105
+    PERCENT_NUMBER = 106
+    GREEK_LETTER = 107
+    SYMBOL = 108
+    VARIABLE = 109
 
     def __init__(self, input, output=sys.stdout):
         super(PSParser, self).__init__(input, output=output)
@@ -1385,7 +1397,7 @@ class PSParser (Parser):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 210
                     _la = self._input.LA(1)
-                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.MUL) | (1 << PSParser.DIV) | (1 << PSParser.CMD_TIMES) | (1 << PSParser.CMD_CDOT) | (1 << PSParser.CMD_DIV))) != 0) or _la == PSParser.CMD_MOD or _la == PSParser.COLON):
+                    if not(_la == PSParser.MUL or _la == PSParser.DIV or ((((_la - 68)) & ~0x3f) == 0 and ((1 << (_la - 68)) & ((1 << (PSParser.CMD_TIMES - 68)) | (1 << (PSParser.CMD_CDOT - 68)) | (1 << (PSParser.CMD_DIV - 68)) | (1 << (PSParser.CMD_MOD - 68)) | (1 << (PSParser.COLON - 68)))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -1480,7 +1492,7 @@ class PSParser (Parser):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 221
                     _la = self._input.LA(1)
-                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.MUL) | (1 << PSParser.DIV) | (1 << PSParser.CMD_TIMES) | (1 << PSParser.CMD_CDOT) | (1 << PSParser.CMD_DIV))) != 0) or _la == PSParser.CMD_MOD or _la == PSParser.COLON):
+                    if not(_la == PSParser.MUL or _la == PSParser.DIV or ((((_la - 68)) & ~0x3f) == 0 and ((1 << (_la - 68)) & ((1 << (PSParser.CMD_TIMES - 68)) | (1 << (PSParser.CMD_CDOT - 68)) | (1 << (PSParser.CMD_DIV - 68)) | (1 << (PSParser.CMD_MOD - 68)) | (1 << (PSParser.COLON - 68)))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)

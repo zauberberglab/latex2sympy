@@ -1,7 +1,7 @@
 
 from .context import assert_equal
 import pytest
-from sympy import Symbol, Rational, lcm, ilcm, sqrt, nsimplify, pi
+from sympy import Symbol, Rational, UnevaluatedExpr, lcm, ilcm, sqrt, nsimplify, pi
 
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
@@ -11,9 +11,9 @@ def test_lcm_usual():
     assert_equal("\\lcm(6, 4)", lcm(6, 4))
     assert_equal("\\lcm(4, 6)", lcm(4, 6))
     assert_equal("\\lcm(2, 2)", lcm(2, 2))
-    assert_equal("\\lcm(0, 21)", lcm(0, 21))
-    assert_equal("\\lcm(21, 0)", lcm(21, 0))
-    assert_equal("\\lcm(0, 0)", lcm(0, 0))
+    assert_equal("\\lcm(0, 21)", UnevaluatedExpr(lcm(0, 21)))
+    assert_equal("\\lcm(21, 0)", UnevaluatedExpr(lcm(21, 0)))
+    assert_equal("\\lcm(0, 0)", UnevaluatedExpr(lcm(0, 0)))
     assert_equal("\\lcm(9, 21)", lcm(9, 21))
     assert_equal("\\lcm(6128, 24)", lcm(6128, 24))
     assert_equal("\\lcm(24, 6128)", lcm(24, 6128))

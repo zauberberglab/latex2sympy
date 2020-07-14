@@ -1,7 +1,7 @@
 
 from .context import assert_equal
 import pytest
-from sympy import Symbol, Rational, gcd, igcd, sqrt, nsimplify, pi
+from sympy import Symbol, Rational, UnevaluatedExpr, gcd, igcd, sqrt, nsimplify, pi
 
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
@@ -11,9 +11,9 @@ def test_gcd_usual():
     assert_equal("\\gcd(18, 3)", gcd(18, 3))
     assert_equal("\\gcd(3, 18)", gcd(3, 18))
     assert_equal("\\gcd(2, 2)", gcd(2, 2))
-    assert_equal("\\gcd(0, 21)", gcd(0, 21))
-    assert_equal("\\gcd(21, 0)", gcd(21, 0))
-    assert_equal("\\gcd(0, 0)", gcd(0, 0))
+    assert_equal("\\gcd(0, 21)", UnevaluatedExpr(gcd(0, 21)))
+    assert_equal("\\gcd(21, 0)", UnevaluatedExpr(gcd(21, 0)))
+    assert_equal("\\gcd(0, 0)", UnevaluatedExpr(gcd(0, 0)))
     assert_equal("\\gcd(6128, 24)", gcd(6128, 24))
     assert_equal("\\gcd(24, 6128)", gcd(24, 6128))
     assert_equal("\\gcd(1E20, 1000000)", gcd(Rational('1E20'), 1000000))

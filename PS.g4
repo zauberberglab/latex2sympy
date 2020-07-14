@@ -26,10 +26,10 @@ ML_LEFT: '\\mleft';
 MR_RIGHT: '\\mright';
 
 BAR: '|';
-L_FLOOR: '\\lfloor';
-R_FLOOR: '\\rfloor';
-L_CEIL: '\\lceil';
-R_CEIL: '\\rceil';
+L_FLOOR: '\\lfloor' | '⌊';
+R_FLOOR: '\\rfloor' | '⌋';
+L_CEIL: '\\lceil' | '⌈';
+R_CEIL: '\\rceil'| '⌉';
 
 //functions
 FUNC_LIM:  '\\lim';

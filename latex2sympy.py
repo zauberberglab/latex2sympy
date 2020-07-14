@@ -296,7 +296,7 @@ def convert_postfix_list(arr, i=0):
         raise Exception("Index out of bounds")
 
     res = convert_postfix(arr[i])
-    if isinstance(res, sympy.Expr) or isinstance(res, sympy.Matrix):
+    if isinstance(res, sympy.Expr) or isinstance(res, sympy.Matrix) or res is sympy.S.EmptySet:
         if i == len(arr) - 1:
             return res  # nothing to multiply by
         else:
@@ -453,6 +453,8 @@ def convert_atom(atom):
             return sympy.oo
         elif s == '\\pi':
             return sympy.pi
+        elif s == '\\emptyset':
+            return sympy.S.EmptySet
         else:
             raise Exception("Unrecognized symbol")
     elif atom.NUMBER():

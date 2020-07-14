@@ -267,7 +267,10 @@ class TestAllGood(object):
         # percentages
         ("100\\%", 1),
         ("1.5\\%", 0.015),
-        ("0.05\\%", 0.0005)
+        ("0.05\\%", 0.0005),
+
+        # empty set
+        ("\\emptyset", S.EmptySet)
     ]
 
     def test_good_pair(self, s, eq):

@@ -346,15 +346,16 @@ class PSParser (Parser):
                     u"'\\sinh'", u"'\\cosh'", u"'\\tanh'", u"'\\arsinh'",
                     u"'\\arcosh'", u"'\\artanh'", u"'\\arcsinh'", u"'\\arccosh'",
                     u"'\\arctanh'", u"'arsinh'", u"'arcsinh'", u"'arcosh'",
-                    u"'arccosh'", u"'artanh'", u"'arctanh'", u"'\\sqrt'",
-                    u"'\\times'", u"'\\cdot'", u"'\\div'", u"'\\frac'",
-                    u"'\\binom'", u"'\\choose'", u"'\\mod'", u"'\\mathit'",
-                    u"'\\operatorname'", u"'matrix'", u"'pmatrix'", u"'bmatrix'",
-                    u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'&'", u"'\\\\'",
-                    u"'\\overline'", u"'\\bar'", u"'_'", u"'^'", u"':'",
-                    u"';'", u"','", u"'.'", u"<INVALID>", u"'e'", u"'E'",
-                    u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'='", u"'<'",
-                    u"<INVALID>", u"'>'", u"<INVALID>", u"<INVALID>", u"'!'"]
+                    u"'arccosh'", u"'artanh'", u"'arctanh'", u"'gcd'",
+                    u"'lcm'", u"'\\sqrt'", u"'\\gcd'", u"'\\lcm'", u"'\\times'",
+                    u"'\\cdot'", u"'\\div'", u"'\\frac'", u"'\\binom'",
+                    u"'\\choose'", u"'\\mod'", u"'\\mathit'", u"'\\operatorname'",
+                    u"'matrix'", u"'pmatrix'", u"'bmatrix'", u"<INVALID>",
+                    u"<INVALID>", u"<INVALID>", u"'&'", u"'\\\\'", u"'\\overline'",
+                    u"'\\bar'", u"'_'", u"'^'", u"':'", u"';'", u"','",
+                    u"'.'", u"<INVALID>", u"'e'", u"'E'", u"<INVALID>",
+                    u"<INVALID>", u"<INVALID>", u"'='", u"'<'", u"<INVALID>",
+                    u"'>'", u"<INVALID>", u"<INVALID>", u"'!'"]
 
     symbolicNames = [u"<INVALID>", u"WS", u"DOLLAR_SIGN", u"ADD", u"SUB",
                      u"MUL", u"DIV", u"L_PAREN", u"R_PAREN", u"L_BRACE",
@@ -370,9 +371,10 @@ class PSParser (Parser):
                      u"FUNC_ARCSINH", u"FUNC_ARCCOSH", u"FUNC_ARCTANH",
                      u"FUNC_ARSINH_NAME", u"FUNC_ARCSINH_NAME", u"FUNC_ARCOSH_NAME",
                      u"FUNC_ARCCOSH_NAME", u"FUNC_ARTANH_NAME", u"FUNC_ARCTANH_NAME",
-                     u"FUNC_SQRT", u"CMD_TIMES", u"CMD_CDOT", u"CMD_DIV",
-                     u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE", u"CMD_MOD",
-                     u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX",
+                     u"FUNC_GCD_NAME", u"FUNC_LCM_NAME", u"FUNC_SQRT",
+                     u"FUNC_GCD", u"FUNC_LCM", u"CMD_TIMES", u"CMD_CDOT",
+                     u"CMD_DIV", u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE",
+                     u"CMD_MOD", u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX",
                      u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX", u"MATRIX_TYPES",
                      u"CMD_MATRIX_START", u"CMD_MATRIX_END", u"MATRIX_DEL_COL",
                      u"MATRIX_DEL_ROW", u"ACCENT_OVERLINE", u"ACCENT_BAR",
@@ -494,49 +496,53 @@ class PSParser (Parser):
     FUNC_ARCCOSH_NAME = 52
     FUNC_ARTANH_NAME = 53
     FUNC_ARCTANH_NAME = 54
-    FUNC_SQRT = 55
-    CMD_TIMES = 56
-    CMD_CDOT = 57
-    CMD_DIV = 58
-    CMD_FRAC = 59
-    CMD_BINOM = 60
-    CMD_CHOOSE = 61
-    CMD_MOD = 62
-    CMD_MATHIT = 63
-    CMD_OPERATORNAME = 64
-    MATRIX_TYPE_MATRIX = 65
-    MATRIX_TYPE_PMATRIX = 66
-    MATRIX_TYPE_BMATRIX = 67
-    MATRIX_TYPES = 68
-    CMD_MATRIX_START = 69
-    CMD_MATRIX_END = 70
-    MATRIX_DEL_COL = 71
-    MATRIX_DEL_ROW = 72
-    ACCENT_OVERLINE = 73
-    ACCENT_BAR = 74
-    UNDERSCORE = 75
-    CARET = 76
-    COLON = 77
-    SEMICOLON = 78
-    COMMA = 79
-    PERIOD = 80
-    DIFFERENTIAL = 81
-    EXP_E = 82
-    E_NOTATION_E = 83
-    LETTER_NO_E = 84
-    NUMBER = 85
-    E_NOTATION = 86
-    EQUAL = 87
-    LT = 88
-    LTE = 89
-    GT = 90
-    GTE = 91
-    UNEQUAL = 92
-    BANG = 93
-    PERCENT_NUMBER = 94
-    GREEK_LETTER = 95
-    SYMBOL = 96
-    VARIABLE = 97
+    FUNC_GCD_NAME = 55
+    FUNC_LCM_NAME = 56
+    FUNC_SQRT = 57
+    FUNC_GCD = 58
+    FUNC_LCM = 59
+    CMD_TIMES = 60
+    CMD_CDOT = 61
+    CMD_DIV = 62
+    CMD_FRAC = 63
+    CMD_BINOM = 64
+    CMD_CHOOSE = 65
+    CMD_MOD = 66
+    CMD_MATHIT = 67
+    CMD_OPERATORNAME = 68
+    MATRIX_TYPE_MATRIX = 69
+    MATRIX_TYPE_PMATRIX = 70
+    MATRIX_TYPE_BMATRIX = 71
+    MATRIX_TYPES = 72
+    CMD_MATRIX_START = 73
+    CMD_MATRIX_END = 74
+    MATRIX_DEL_COL = 75
+    MATRIX_DEL_ROW = 76
+    ACCENT_OVERLINE = 77
+    ACCENT_BAR = 78
+    UNDERSCORE = 79
+    CARET = 80
+    COLON = 81
+    SEMICOLON = 82
+    COMMA = 83
+    PERIOD = 84
+    DIFFERENTIAL = 85
+    EXP_E = 86
+    E_NOTATION_E = 87
+    LETTER_NO_E = 88
+    NUMBER = 89
+    E_NOTATION = 90
+    EQUAL = 91
+    LT = 92
+    LTE = 93
+    GT = 94
+    GTE = 95
+    UNEQUAL = 96
+    BANG = 97
+    PERCENT_NUMBER = 98
+    GREEK_LETTER = 99
+    SYMBOL = 100
+    VARIABLE = 101
 
     def __init__(self, input, output=sys.stdout):
         super(PSParser, self).__init__(input, output=output)
@@ -1350,7 +1356,7 @@ class PSParser (Parser):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 206
                     _la = self._input.LA(1)
-                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.MUL) | (1 << PSParser.DIV) | (1 << PSParser.CMD_TIMES) | (1 << PSParser.CMD_CDOT) | (1 << PSParser.CMD_DIV) | (1 << PSParser.CMD_MOD))) != 0) or _la == PSParser.COLON):
+                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.MUL) | (1 << PSParser.DIV) | (1 << PSParser.CMD_TIMES) | (1 << PSParser.CMD_CDOT) | (1 << PSParser.CMD_DIV))) != 0) or _la == PSParser.CMD_MOD or _la == PSParser.COLON):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -1445,7 +1451,7 @@ class PSParser (Parser):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 217
                     _la = self._input.LA(1)
-                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.MUL) | (1 << PSParser.DIV) | (1 << PSParser.CMD_TIMES) | (1 << PSParser.CMD_CDOT) | (1 << PSParser.CMD_DIV) | (1 << PSParser.CMD_MOD))) != 0) or _la == PSParser.COLON):
+                    if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << PSParser.MUL) | (1 << PSParser.DIV) | (1 << PSParser.CMD_TIMES) | (1 << PSParser.CMD_CDOT) | (1 << PSParser.CMD_DIV))) != 0) or _la == PSParser.CMD_MOD or _la == PSParser.COLON):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)

@@ -387,6 +387,10 @@ def convert_comp(comp):
         return convert_expr(comp.group().expr())
     elif comp.abs_group():
         return sympy.Abs(convert_expr(comp.abs_group().expr()), evaluate=False)
+    elif comp.floor_group():
+        return handle_floor(convert_expr(comp.floor_group().expr()))
+    elif comp.ceil_group():
+        return handle_ceil(convert_expr(comp.ceil_group().expr()))
     elif comp.atom():
         return convert_atom(comp.atom())
     elif comp.frac():
@@ -575,8 +579,17 @@ def convert_binom(binom):
 
 def convert_func(func):
     if func.func_normal():
+        def resolve_args(args):
+            """
+            Turn multiple parameters into a list of parameters
+            """
+            if not (hasattr(args, 'expr') or hasattr(args, 'mp_nofunc')):
+                return []
+            return [convert_func_arg(args)] + resolve_args(args.func_arg())
+
         if func.L_PAREN():  # function called with parenthesis
-            arg = convert_func_arg(func.func_arg())
+            args = resolve_args(func.func_arg())
+            arg = args[0] if args and len(args) == 1 else args  # numpy.squeeze() would be nice
         else:
             arg = convert_func_arg(func.func_arg_noparens())
 
@@ -587,23 +600,27 @@ def convert_func(func):
                     "arccot"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-        if name in ["arsinh", "arcosh", "artanh"]:
+        elif name in ["arsinh", "arcosh", "artanh"]:
             name = "a" + name[2:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-        if name in ["arcsinh", "arccosh", "arctanh"]:
+        elif name in ["arcsinh", "arccosh", "arctanh"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-
-        if name == "operatorname":
+        elif name == "operatorname":
             operatorname = func.func_normal().func_operator_name.getText()
             if operatorname in ["arsinh", "arcosh", "artanh"]:
                 operatorname = "a" + operatorname[2:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
-            if operatorname in ["arcsinh", "arccosh", "arctanh"]:
+            elif operatorname in ["arcsinh", "arccosh", "arctanh"]:
                 operatorname = "a" + operatorname[3:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
-
-        if (name == "log" or name == "ln"):
+            elif operatorname in ["gcd", "lcm"]:
+                expr = handle_gcd_lcm(operatorname, args)
+            elif operatorname == "floor":
+                expr = handle_floor(arg)
+            elif operatorname == "ceil":
+                expr = handle_ceil(arg)
+        elif name in ["log", "ln"]:
             if func.subexpr():
                 if func.subexpr().atom():
                     base = convert_atom(func.subexpr().atom())
@@ -614,9 +631,15 @@ def convert_func(func):
             elif name == "ln":
                 base = sympy.E
             expr = sympy.log(arg, base, evaluate=False)
-
-        if name == "exp" or name == "exponentialE":
+        elif name in ["exp", "exponentialE"]:
             expr = sympy.exp(arg)
+        elif name in ["gcd", "lcm"]:
+            expr = handle_gcd_lcm(name, args)
+
+        elif name == "floor":
+            expr = handle_floor(arg)
+        elif name == "ceil":
+            expr = handle_ceil(arg)
 
         func_pow = None
         should_pow = True
@@ -766,6 +789,54 @@ def handle_exp(func):
     else:
         exp_arg = 1
     return sympy.exp(exp_arg)
+
+
+def handle_gcd_lcm(f, args):
+    """
+    Return the result of gcd() or lcm(), as UnevaluatedExpr
+
+    f: str - name of function ("gcd" or "lcm")
+    args: List[Expr] - list of function arguments
+    """
+
+    def apply_nested(f, lst):
+        """
+        sympy's gcd() and lcm() only support 2 parameters
+        this function calculates gcd() and lcm() for as many parameters as passed
+        """
+        if not lst:
+            return lst
+
+        lst = tuple(map(sympy.nsimplify, lst))
+
+        result = lst[0]
+        for i in range(1, len(lst)):
+            result = f(result, lst[i])
+
+        return result
+
+    result = apply_nested(getattr(sympy, f), args)
+
+    # gcd() and lcm() don't support evaluate=False
+    return sympy.UnevaluatedExpr(result)
+
+
+def handle_floor(expr):
+    """
+    Apply floor() then return the floored expression.
+
+    expr: Expr - sympy expression as an argument to floor()
+    """
+    return sympy.functions.floor(expr, evaluate=False)
+
+
+def handle_ceil(expr):
+    """
+    Apply ceil() then return the ceil-ed expression.
+
+    expr: Expr - sympy expression as an argument to ceil()
+    """
+    return sympy.functions.ceiling(expr, evaluate=False)
 
 
 def get_differential_var(d):

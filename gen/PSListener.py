@@ -238,6 +238,24 @@ class PSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PSParser#floor_group.
+    def enterFloor_group(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#floor_group.
+    def exitFloor_group(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by PSParser#ceil_group.
+    def enterCeil_group(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#ceil_group.
+    def exitCeil_group(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by PSParser#accent.
     def enterAccent(self, ctx):
         pass

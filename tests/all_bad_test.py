@@ -35,6 +35,8 @@ class TestAllBad(object):
         "a\\mod \\begin{matrix}b\\end{matrix}"
         "|",
         "||x|",
+        "\\lfloor x",
+        "\\lfloor a \\rceil",
         "()",
         "((((((((((((((((()))))))))))))))))",
         "-",
@@ -46,6 +48,8 @@ class TestAllBad(object):
         "\\sin^x",
         "\\cos^2",
         # "\\cos 1 \\cos",
+        # "\\gcd(3)",
+        # "\\lcm(2)",
         "@", "#", "$", "%", "&", "*",
         "\\",
         "~",

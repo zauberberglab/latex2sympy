@@ -2,12 +2,12 @@ from .context import assert_equal, process_sympy, _Add, _Mul, _Pow
 import pytest
 import hashlib
 from sympy import (
-    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational, Integer,
+    E, I, oo, pi, sqrt, root, Symbol, Add, Mul, Pow, Abs, factorial, log, Eq, Ne, S, Rational, Integer, UnevaluatedExpr,
     sin, cos, tan, sinh, cosh, tanh, asin, acos, atan, asinh, acosh, atanh,
     csc, sec, Sum, Product, Limit, Integral, Derivative,
     LessThan, StrictLessThan, GreaterThan, StrictGreaterThan,
     exp, binomial, Matrix, MatMul, MatAdd,
-    Mod
+    Mod, gcd, lcm, floor, ceiling
 )
 
 x = Symbol('x', real=True)
@@ -93,8 +93,16 @@ class TestAllGood(object):
         ("\\operatorname{arsinh}(a)", asinh(a)),
         ("\\operatorname{arcosh}(a)", acosh(a)),
         ("\\operatorname{artanh}(a)", atanh(a)),
+        ("\\operatorname{gcd}(a, b)", UnevaluatedExpr(gcd(a, b))),
+        ("\\operatorname{lcm}(a, b)", UnevaluatedExpr(lcm(a, b))),
+        ("\\operatorname{floor}(a)", floor(a)),
+        ("\\operatorname{ceil}(b)", ceiling(b)),
         ("\\cos^2(x)", cos(x)**2),
         ("\\cos(x)^2", cos(x)**2),
+        ("\\gcd(a, b)", UnevaluatedExpr(gcd(a, b))),
+        ("\\lcm(a, b)", UnevaluatedExpr(lcm(a, b))),
+        ("\\floor(a)", floor(a)),
+        ("\\ceil(b)", ceiling(b)),
         ("\\frac{a}{b}", a / b),
         ("\\frac{a + b}{c}", _Mul(a + b, _Pow(c, -1))),
         ("\\frac{7}{3}", _Mul(7, _Pow(3, -1))),
@@ -125,6 +133,10 @@ class TestAllGood(object):
         ("||x||", _Abs(Abs(x))),
         ("|x||y|", _Abs(x) * _Abs(y)),
         ("||x||y||", _Abs(_Abs(x) * _Abs(y))),
+        ("⌊x⌋", floor(x)),
+        ("⌈y⌉", ceiling(y)),
+        ("\\lfloor x\\rfloor", floor(x)),
+        ("\\lceil y\\rceil", ceiling(y)),
         ("\\pi^{|xy|}", pi**_Abs(x * y)),
         ("\\frac{\\pi}{3}", _Mul(pi, _Pow(3, -1))),
         ("\\sin{\\frac{\\pi}{2}}", sin(_Mul(pi, _Pow(2, -1)), evaluate=False)),

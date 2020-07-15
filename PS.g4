@@ -26,6 +26,10 @@ ML_LEFT: '\\mleft';
 MR_RIGHT: '\\mright';
 
 BAR: '|';
+L_FLOOR: '\\lfloor' | '⌊';
+R_FLOOR: '\\rfloor' | '⌋';
+L_CEIL: '\\lceil' | '⌈';
+R_CEIL: '\\rceil'| '⌉';
 
 //functions
 FUNC_LIM:  '\\lim';
@@ -67,9 +71,16 @@ FUNC_ARCOSH_NAME: 'arcosh';
 FUNC_ARCCOSH_NAME: 'arccosh';
 FUNC_ARTANH_NAME: 'artanh';
 FUNC_ARCTANH_NAME: 'arctanh';
-
+FUNC_GCD_NAME: 'gcd';
+FUNC_LCM_NAME: 'lcm';
+FUNC_FLOOR_NAME: 'floor';
+FUNC_CEIL_NAME: 'ceil';
 
 FUNC_SQRT: '\\sqrt';
+FUNC_GCD: '\\gcd';
+FUNC_LCM: '\\lcm';
+FUNC_FLOOR: '\\floor';
+FUNC_CEIL: '\\ceil';
 
 //commands
 CMD_TIMES: '\\times';
@@ -283,6 +294,8 @@ exp_nofunc:
 comp:
     group
     | abs_group
+    | floor_group
+    | ceil_group
     | func
     | atom
     | frac
@@ -292,6 +305,8 @@ comp:
 comp_nofunc:
     group
     | abs_group
+    | floor_group
+    | ceil_group
     | atom
     | frac
     | binom
@@ -315,6 +330,18 @@ abs_group:
     BAR expr BAR
     | L_LEFT BAR expr R_RIGHT BAR
     | ML_LEFT BAR expr MR_RIGHT BAR;
+
+
+floor_group:
+    L_FLOOR expr R_FLOOR
+    | L_LEFT L_FLOOR expr R_RIGHT R_FLOOR
+    | ML_LEFT L_FLOOR expr MR_RIGHT R_FLOOR;
+
+
+ceil_group:
+    L_CEIL expr R_CEIL
+    | L_LEFT L_CEIL expr R_RIGHT R_CEIL
+    | ML_LEFT L_CEIL expr MR_RIGHT R_CEIL;
 
 
 //indicate an accent
@@ -350,11 +377,13 @@ func_normal_functions:
     | FUNC_ARCCSC | FUNC_ARCSEC | FUNC_ARCCOT
     | FUNC_SINH | FUNC_COSH | FUNC_TANH
     | FUNC_ARSINH | FUNC_ARCOSH | FUNC_ARTANH
-    | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH;
+    | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH
+    | FUNC_GCD | FUNC_LCM | FUNC_FLOOR | FUNC_CEIL;
 
 func_operator_names:
     FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME
-    | FUNC_ARCSINH_NAME | FUNC_ARCCOSH_NAME | FUNC_ARCTANH_NAME;
+    | FUNC_ARCSINH_NAME | FUNC_ARCCOSH_NAME | FUNC_ARCTANH_NAME
+    | FUNC_GCD_NAME | FUNC_LCM_NAME | FUNC_FLOOR_NAME | FUNC_CEIL_NAME;
 
 func_normal:
     (func_normal_functions)
@@ -366,7 +395,7 @@ func:
     (subexpr? supexpr? | supexpr? subexpr?)
     (L_LEFT? L_PAREN func_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_arg MR_RIGHT? R_PAREN | func_arg_noparens)
 
-    //Do not do arbitraty functions but see as multiplications
+    //Do not do arbitrary functions but see as multiplications
     /*| (LETTER_NO_E | SYMBOL) subexpr? // e.g. f(x)
     L_PAREN args R_PAREN
 

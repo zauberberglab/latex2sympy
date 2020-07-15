@@ -614,7 +614,7 @@ def convert_func(func):
             if operatorname in ["gcd", "lcm"]:
                 expr = handle_gcd_lcm(operatorname, args)
 
-        if name == "log" or name == "ln":
+        if name in ["log", "ln"]:
             if func.subexpr():
                 if func.subexpr().atom():
                     base = convert_atom(func.subexpr().atom())
@@ -626,7 +626,7 @@ def convert_func(func):
                 base = sympy.E
             expr = sympy.log(arg, base, evaluate=False)
 
-        if name == "exp" or name == "exponentialE":
+        if name in ["exp", "exponentialE"]:
             expr = sympy.exp(arg)
 
         if name in ["gcd", "lcm"]:

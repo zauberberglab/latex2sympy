@@ -823,7 +823,7 @@ def handle_gcd_lcm(f, args):
 
 def handle_floor(expr):
     """
-    Apply floor() then return the evaluated expression.
+    Apply floor() then return the floored expression.
 
     expr: Expr - sympy expression as an argument to floor()
     """
@@ -832,7 +832,7 @@ def handle_floor(expr):
 
 def handle_ceil(expr):
     """
-    Apply ceil() then return the evaluated expression.
+    Apply ceil() then return the ceil-ed expression.
 
     expr: Expr - sympy expression as an argument to ceil()
     """

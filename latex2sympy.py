@@ -796,8 +796,6 @@ def handle_gcd_lcm(f, args):
         this function calculates gcd() and lcm() for as many parameters as passed
         """
         if not lst:
-            # or modify this function and return the line below
-            # raise TypeError("Number of arguments must be at least 1 (or 2)")
             return lst
 
         lst = tuple(map(sympy.nsimplify, lst))

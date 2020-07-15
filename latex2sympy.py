@@ -606,7 +606,6 @@ def convert_func(func):
         elif name in ["arcsinh", "arccosh", "arctanh"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-
         elif name == "operatorname":
             operatorname = func.func_normal().func_operator_name.getText()
             if operatorname in ["arsinh", "arcosh", "artanh"]:
@@ -621,8 +620,7 @@ def convert_func(func):
                 expr = handle_floor(arg)
             elif operatorname == "ceil":
                 expr = handle_ceil(arg)
-
-        elif name == "log" or name == "ln":
+        elif name in ["log", "ln"]:
             if func.subexpr():
                 if func.subexpr().atom():
                     base = convert_atom(func.subexpr().atom())
@@ -633,11 +631,9 @@ def convert_func(func):
             elif name == "ln":
                 base = sympy.E
             expr = sympy.log(arg, base, evaluate=False)
-
-        elif name == "exp" or name == "exponentialE":
+        elif name in ["exp", "exponentialE"]:
             expr = sympy.exp(arg)
-
-        if name in ["gcd", "lcm"]:
+        elif name in ["gcd", "lcm"]:
             expr = handle_gcd_lcm(name, args)
 
         elif name == "floor":
@@ -809,8 +805,6 @@ def handle_gcd_lcm(f, args):
         this function calculates gcd() and lcm() for as many parameters as passed
         """
         if not lst:
-            # or modify this function and return the line below
-            # raise TypeError("Number of arguments must be at least 1 (or 2)")
             return lst
 
         lst = tuple(map(sympy.nsimplify, lst))

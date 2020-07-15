@@ -596,14 +596,13 @@ def convert_func(func):
                     "arccot"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-        if name in ["arsinh", "arcosh", "artanh"]:
+        elif name in ["arsinh", "arcosh", "artanh"]:
             name = "a" + name[2:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-        if name in ["arcsinh", "arccosh", "arctanh"]:
+        elif name in ["arcsinh", "arccosh", "arctanh"]:
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
-
-        if name == "operatorname":
+        elif name == "operatorname":
             operatorname = func.func_normal().func_operator_name.getText()
             if operatorname in ["arsinh", "arcosh", "artanh"]:
                 operatorname = "a" + operatorname[2:]
@@ -613,8 +612,7 @@ def convert_func(func):
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
             if operatorname in ["gcd", "lcm"]:
                 expr = handle_gcd_lcm(operatorname, args)
-
-        if name in ["log", "ln"]:
+        elif name in ["log", "ln"]:
             if func.subexpr():
                 if func.subexpr().atom():
                     base = convert_atom(func.subexpr().atom())
@@ -625,11 +623,9 @@ def convert_func(func):
             elif name == "ln":
                 base = sympy.E
             expr = sympy.log(arg, base, evaluate=False)
-
-        if name in ["exp", "exponentialE"]:
+        elif name in ["exp", "exponentialE"]:
             expr = sympy.exp(arg)
-
-        if name in ["gcd", "lcm"]:
+        elif name in ["gcd", "lcm"]:
             expr = handle_gcd_lcm(name, args)
 
         func_pow = None

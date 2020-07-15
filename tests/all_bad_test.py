@@ -35,6 +35,8 @@ class TestAllBad(object):
         "a\\mod \\begin{matrix}b\\end{matrix}"
         "|",
         "||x|",
+        "\\lfloor x",
+        "\\lfloor a \\rceil",
         "()",
         "((((((((((((((((()))))))))))))))))",
         "-",

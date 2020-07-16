@@ -17,7 +17,7 @@ fi
 
 # Run unit test coverage
 echo "starting coverage..."
-if pytest --doctest-modules --cov-report=html --cov-config=.coveragerc --cov=__app__
+if pytest --doctest-modules --cov-report=html --cov-config=.coveragerc --cov=latex2sympy tests
 then echo "coverage finished"
 else exit 1
 fi

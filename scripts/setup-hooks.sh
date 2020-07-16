@@ -1,3 +1,3 @@
 #!/bin/sh
-cp pre-push .git/hooks/
-cp pre-commit .git/hooks/
+cp scripts/pre-push .git/hooks/
+cp scripts/pre-commit .git/hooks/

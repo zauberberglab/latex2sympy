@@ -637,7 +637,7 @@ def convert_func(func):
             expr = handle_gcd_lcm(name, args)
         elif name in ["max", "min"]:
             name = name[0].upper() + name[1:]
-            expr = getattr(sympy.functions, name)(args, evaluate=False)
+            expr = getattr(sympy.functions, name)(*args, evaluate=False)
         elif name == "floor":
             expr = handle_floor(arg)
         elif name == "ceil":

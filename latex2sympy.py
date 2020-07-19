@@ -636,7 +636,7 @@ def convert_func(func):
         elif name in ["gcd", "lcm"]:
             expr = handle_gcd_lcm(name, args)
         elif name in ["max", "min"]:
-            name = upper(name[0]) + name[1:]
+            name = name[0].upper() + name[1:]
             expr = sympy.UnevaluatedExpr(getattr(sympy.functions, name)(args))
         elif name == "floor":
             expr = handle_floor(arg)

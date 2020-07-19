@@ -635,7 +635,9 @@ def convert_func(func):
             expr = sympy.exp(arg)
         elif name in ["gcd", "lcm"]:
             expr = handle_gcd_lcm(name, args)
-
+        elif name in ["max", "min"]:
+            # sympy's max() and min() doesn't support `evaluate=False`
+            expr = sympy.UnevaluatedExpr(getattr(sympy.functions, name)(args))
         elif name == "floor":
             expr = handle_floor(arg)
         elif name == "ceil":

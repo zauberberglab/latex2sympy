@@ -1,6 +1,6 @@
 from .context import assert_equal
 import pytest
-from sympy import Symbol, Rational, Max, sqrt, exp, pi
+from sympy import Symbol, Rational, Float, Max, sqrt, exp, pi, nsimplify
 
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
@@ -34,7 +34,7 @@ def test_max_float():
     assert_equal("\\max(6, 6.2)", Max(6, 6.2))
     assert_equal("\\max(-98.7)", Max(-98.7))
     assert_equal("\\max(7.1, 9)", Max(7.1, 9))
-    assert_equal("\\max(-21E-12, 0.00005)", Max(Rational('-12E-12'), Rational('0.00005')))
+    assert_equal("\\max(-21E-12, 0.00005)", Max(nsimplify(Rational('-21E-12')), Rational('0.00005')), symbolically=True)
     assert_equal("\\max(\\sqrt{3}, 0, 1)", Max(sqrt(3), 0, 1))
 
 
@@ -42,9 +42,9 @@ def test_max_fraction():
     assert_equal("\\max(1/2, 1/4)", Max(Rational('1/2'), Rational('1/4')))
     assert_equal("\\max(6/2, 3)", Max(Rational('6/2'), 3))
     assert_equal("\\max(2/4, 1/2)", Max(Rational('2/4'), Rational('1/2')))
-    assert_equal("\\max(12/5, 6.4)", Max(Rational('-12.5'), 6.4))
+    assert_equal("\\max(-12/5, 6.4)", Max(Rational('-12/5'), Rational('6.4')))
     assert_equal("\\max(1/10)", Max(Rational('1/10')))
-    assert_equal("\\max(1.5, \\pi/2)", Max(1.5, pi / 2))
+    assert_equal("\\max(1.5, \\pi/2)", Max(Rational('1.5'), pi / 2, evaluate=False))
     assert_equal("\\max(-4/3, -2/1, 0/9, -3)", Max(Rational('-4/3'), Rational('-2/1'), Rational('0/9'), -3))
 
 

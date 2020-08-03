@@ -81,6 +81,8 @@ FUNC_GCD: '\\gcd';
 FUNC_LCM: '\\lcm';
 FUNC_FLOOR: '\\floor';
 FUNC_CEIL: '\\ceil';
+FUNC_MAX: '\\max';
+FUNC_MIN: '\\min';
 
 //commands
 CMD_TIMES: '\\times';
@@ -378,7 +380,7 @@ func_normal_functions:
     | FUNC_SINH | FUNC_COSH | FUNC_TANH
     | FUNC_ARSINH | FUNC_ARCOSH | FUNC_ARTANH
     | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH
-    | FUNC_GCD | FUNC_LCM | FUNC_FLOOR | FUNC_CEIL;
+    | FUNC_GCD | FUNC_LCM | FUNC_FLOOR | FUNC_CEIL | FUNC_MAX | FUNC_MIN;
 
 func_operator_names:
     FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME

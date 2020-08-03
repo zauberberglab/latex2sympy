@@ -127,7 +127,7 @@ def test_gcd_symbol():
 
 def test_multiple_parameters():
     assert_equal("\\gcd(830,450)", gcd(830, 450))
-    assert_equal("\\gcd(6,321,429)", gcd(6, 321, 429))
+    assert_equal("\\gcd(6,321,429)", igcd(6, 321, 429))
     assert_equal("\\gcd(3, 6, 2)", igcd(3, 6, 2))
     assert_equal("\\gcd(144, 2988, 37116)", igcd(144, 2988, 37116))
     assert_equal("\\gcd(144, 2988, 37116, 18, 72)", igcd(144, 2988, 37116, 18, 72))

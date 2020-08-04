@@ -301,7 +301,7 @@ def convert_postfix_list(arr, i=0):
         if i == len(arr) - 1:
             return res  # nothing to multiply by
         else:
-            # get next expression to multiply
+            # multiply by next
             rh = convert_postfix_list(arr, i + 1)
 
             if res.is_Matrix or rh.is_Matrix:

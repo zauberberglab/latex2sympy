@@ -41,7 +41,7 @@ def test_ceil_usual():
     assert_equal("\\lceil 8623.4592104E-2\\rceil", ceiling(Rational('8623.4592104E-2')))
     assert_equal("\\lceil \\pi\\rceil", ceiling(pi))
     assert_equal("\\lceil \\sqrt{100}\\rceil", ceiling(sqrt(100)))
-    assert_equal("\\lceil 12,123.4\\lceil", ceiling(Rational('12123.4')))
+    assert_equal("\\lceil 12,123.4\\rceil", ceiling(Rational('12123.4')))
 
     assert_equal("⌈1.1⌉", ceiling(1.1))
     assert_equal("⌈6.9⌉", ceiling(6.9))

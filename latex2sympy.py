@@ -13,7 +13,7 @@ except Exception:
     from .gen.PSListener import PSListener
 
 from sympy.printing.str import StrPrinter
-import pdb
+
 from sympy.parsing.sympy_parser import parse_expr
 
 import hashlib
@@ -115,9 +115,9 @@ def convert_relation(rel):
         return sympy.Ne(lh, rh, evaluate=False)
 
 
-def convert_expr(expr, ignore_sep=True):
+def convert_expr(expr):
     if expr.additive():
-        return convert_add(expr.additive(), ignore_sep)
+        return convert_add(expr.additive())
 
 
 def convert_matrix(matrix):
@@ -200,7 +200,7 @@ def mat_mul_flat(lh, rh):
         return sympy.MatMul(lh, rh, evaluate=False)
 
 
-def convert_add(add, ignore_sep=True):
+def convert_add(add):
     if add.ADD():
         lh = convert_add(add.additive(0))
         rh = convert_add(add.additive(1))
@@ -224,10 +224,10 @@ def convert_add(add, ignore_sep=True):
                 rh = mul_flat(-1, rh)
             return add_flat(lh, rh)
     else:
-        return convert_mp(add.mp(), ignore_sep)
+        return convert_mp(add.mp())
 
 
-def convert_mp(mp, ignore_sep=True):
+def convert_mp(mp):
     if hasattr(mp, 'mp'):
         mp_left = mp.mp(0)
         mp_right = mp.mp(1)
@@ -259,12 +259,12 @@ def convert_mp(mp, ignore_sep=True):
             return sympy.Mod(lh, rh, evaluate=False)
     else:
         if hasattr(mp, 'unary'):
-            return convert_unary(mp.unary(), ignore_sep)
+            return convert_unary(mp.unary())
         else:
             return convert_unary(mp.unary_nofunc())
 
 
-def convert_unary(unary, ignore_sep=True):
+def convert_unary(unary):
     if hasattr(unary, 'unary'):
         nested_unary = unary.unary()
     else:
@@ -288,14 +288,14 @@ def convert_unary(unary, ignore_sep=True):
             else:
                 return mul_flat(-1, tmp_convert_nested_unary)
     elif postfix:
-        return convert_postfix_list(postfix, ignore_sep=ignore_sep)
+        return convert_postfix_list(postfix)
 
 
-def convert_postfix_list(arr, i=0, ignore_sep=True):
+def convert_postfix_list(arr, i=0):
     if i >= len(arr):
         raise Exception("Index out of bounds")
     print(arr[i].getText())
-    res = convert_postfix(arr[i], ignore_sep)
+    res = convert_postfix(arr[i])
 
     if (isinstance(res, sympy.Expr) or
         all(isinstance(elem, sympy.Expr) for elem in res) or
@@ -306,11 +306,7 @@ def convert_postfix_list(arr, i=0, ignore_sep=True):
             return res  # nothing to multiply by
         else:
             # get next expression to multiply
-            rh = convert_postfix_list(arr, i + 1, ignore_sep)
-
-            if not ignore_sep:
-                res = res[0]
-                rh = rh[0]
+            rh = convert_postfix_list(arr, i + 1)
 
             if res.is_Matrix or rh.is_Matrix:
                 return mat_mul_flat(res, rh)
@@ -340,13 +336,13 @@ def do_subs(expr, at):
         return expr.subs(lh, rh)
 
 
-def convert_postfix(postfix, ignore_sep=True):
+def convert_postfix(postfix):
     if hasattr(postfix, 'exp'):
         exp_nested = postfix.exp()
     else:
         exp_nested = postfix.exp_nofunc()
 
-    exp = convert_exp(exp_nested, ignore_sep)
+    exp = convert_exp(exp_nested)
     for op in postfix.postfix_op():
         if op.BANG():
             if isinstance(exp, list):
@@ -370,7 +366,7 @@ def convert_postfix(postfix, ignore_sep=True):
     return exp
 
 
-def convert_exp(exp, ignore_sep=True):
+def convert_exp(exp):
     if hasattr(exp, 'exp'):
         exp_nested = exp.exp()
     else:
@@ -387,12 +383,12 @@ def convert_exp(exp, ignore_sep=True):
         return sympy.Pow(base, exponent, evaluate=False)
     else:
         if hasattr(exp, 'comp'):
-            return convert_comp(exp.comp(), ignore_sep)
+            return convert_comp(exp.comp())
         else:
             return convert_comp(exp.comp_nofunc())
 
 
-def convert_comp(comp, ignore_sep=True):
+def convert_comp(comp):
     if comp.group():
         return convert_expr(comp.group().expr())
     elif comp.abs_group():
@@ -402,7 +398,7 @@ def convert_comp(comp, ignore_sep=True):
     elif comp.ceil_group():
         return handle_ceil(convert_expr(comp.ceil_group().expr()))
     elif comp.atom():
-        return convert_atom(comp.atom(), ignore_sep)
+        return convert_atom(comp.atom())
     elif comp.frac():
         return convert_frac(comp.frac())
     elif comp.binom():
@@ -413,14 +409,12 @@ def convert_comp(comp, ignore_sep=True):
         return convert_func(comp.func())
 
 
-def convert_atom(atom, ignore_sep=True):
-    result = 0
-
+def convert_atom(atom):
     if atom.LETTER_NO_E():
         subscriptName = ''
         s = atom.LETTER_NO_E().getText()
         if s == "I":
-            result = sympy.I
+            return sympy.I
         if atom.subexpr():
             subscript = None
             if atom.subexpr().expr():           # subscript is expr
@@ -428,7 +422,7 @@ def convert_atom(atom, ignore_sep=True):
             else:                               # subscript is atom
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = '_{' + StrPrinter().doprint(subscript) + '}'
-        result = sympy.Symbol(atom.LETTER_NO_E().getText() + subscriptName, real=True)
+        return sympy.Symbol(atom.LETTER_NO_E().getText() + subscriptName, real=True)
     elif atom.GREEK_LETTER():
         s = atom.GREEK_LETTER().getText()[1:]
         if atom.subexpr():
@@ -439,7 +433,7 @@ def convert_atom(atom, ignore_sep=True):
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = StrPrinter().doprint(subscript)
             s += '_{' + subscriptName + '}'
-        result = sympy.Symbol(s, real=True)
+        return sympy.Symbol(s, real=True)
     elif atom.accent():
         # get name for accent
         name = atom.accent().start.text[1:]
@@ -458,45 +452,37 @@ def convert_atom(atom, ignore_sep=True):
                 subscript = convert_atom(atom.subexpr().atom())
             subscriptName = StrPrinter().doprint(subscript)
             s += '_{' + subscriptName + '}'
-        result = sympy.Symbol(s, real=True)
+        return sympy.Symbol(s, real=True)
     elif atom.SYMBOL():
         s = atom.SYMBOL().getText().replace("\\$", "").replace("\\%", "")
         if s == "\\infty":
-            result = sympy.oo
+            return sympy.oo
         elif s == '\\pi':
-            result = sympy.pi
+            return sympy.pi
         elif s == '\\emptyset':
-            result = sympy.S.EmptySet
+            return sympy.S.EmptySet
         else:
             raise Exception("Unrecognized symbol")
-    elif atom.NUMBER() or atom.NUMBER_NOSEP() or atom.E_NOTATION():
-
-        if atom.NUMBER():
-            t = atom.NUMBER()
-        elif atom.NUMBER_NOSEP():
-            t = atom.NUMBER_NOSEP()
-        elif atom.E_NOTATION():
-            t = atom.E_NOTATION()
-
-        s = t.getText()
+    elif atom.NUMBER():
+        s = atom.NUMBER().getText().replace(",", "")
         try:
-            # ignore number separators if enabled, else put in list
-            if ignore_sep:
-                s = s.replace(",", "")
-                sr = sympy.Rational(s)
-            else:
-                s = s.split(",")
-                sr = list(map(sympy.Rational, s))
-            result = sr
+            sr = sympy.Rational(s)
+            return sr
         except (TypeError, ValueError):
-            s = s.replace(",", "")
-            result = sympy.Number(s)
+            return sympy.Number(s)
+    elif atom.E_NOTATION():
+        s = atom.E_NOTATION().getText().replace(",", "")
+        try:
+            sr = sympy.Rational(s)
+            return sr
+        except (TypeError, ValueError):
+            return sympy.Number(s)
     elif atom.DIFFERENTIAL():
         var = get_differential_var(atom.DIFFERENTIAL())
-        result = sympy.Symbol('d' + var.name, real=True)
+        return sympy.Symbol('d' + var.name, real=True)
     elif atom.mathit():
         text = rule2text(atom.mathit().mathit_text())
-        result = sympy.Symbol(text, real=True)
+        return sympy.Symbol(text, real=True)
     elif atom.VARIABLE():
         text = atom.VARIABLE().getText()
         is_percent = text.endswith("\\%")
@@ -520,11 +506,11 @@ def convert_atom(atom, ignore_sep=True):
         else:
             symbol = sympy.Symbol(symbol_name, real=True)
 
-        # return the symbol
-        result = symbol
-
         if is_percent:
-            result = sympy.Mul(symbol, sympy.Pow(100, -1, evaluate=False), evaluate=False)
+            return sympy.Mul(symbol, sympy.Pow(100, -1, evaluate=False), evaluate=False)
+
+        # return the symbol
+        return symbol
 
     elif atom.PERCENT_NUMBER():
         text = atom.PERCENT_NUMBER().getText().replace("\\%", "").replace(",", "")
@@ -533,12 +519,7 @@ def convert_atom(atom, ignore_sep=True):
         except (TypeError, ValueError):
             number = sympy.Number(text)
         percent = sympy.Rational(number, 100)
-        result = percent
-
-    if not ignore_sep and not isinstance(result, list):
-        result = [result]
-
-    return result
+        return percent
 
 
 def rule2text(ctx):
@@ -674,19 +655,12 @@ def convert_func(func):
         return expr
 
     elif func.func_normal_multi_arg():
-        def resolve_args(args, ignore_sep=False):
-            """
-            Turn multiple parameters into a list of parameters
-            """
-            if not (hasattr(args, 'expr') or hasattr(args, 'mp_nofunc')):
-                return []
-            return convert_func_arg(args, ignore_sep) + resolve_args(args.func_multi_arg(), ignore_sep)
-
         if func.L_PAREN():  # function called with parenthesis
-            args = resolve_args(func.func_multi_arg(), ignore_sep=False)
+            args = func.func_multi_arg().getText().split(",")
         else:
-            args = convert_func_arg(func.func_multi_arg_noparens(), ignore_sep=False)
+            args = func.func_multi_arg_noparens().split(",")
 
+        args = list(map(process_sympy, args))
         name = func.func_normal_multi_arg().start.text[1:]
 
         if name == "operatorname":
@@ -743,16 +717,11 @@ def convert_func(func):
         return handle_exp(func)
 
 
-def convert_func_arg(arg, ignore_sep=True):
+def convert_func_arg(arg):
     if hasattr(arg, 'expr'):
-        result = convert_expr(arg.expr(), ignore_sep)
+        return convert_expr(arg.expr())
     else:
-        result = convert_mp(arg.mp_nofunc(), ignore_sep)
-
-    if not ignore_sep and not isinstance(result, list):
-        result = [result]
-
-    return result
+        return convert_mp(arg.mp_nofunc())
 
 
 def handle_integral(func):

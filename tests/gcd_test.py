@@ -137,7 +137,6 @@ def test_multiple_parameters():
     assert_equal("\\gcd(-8, 4,-2)", gcd(-8, gcd(4, -2)))
     assert_equal("\\gcd(x, y,z)", gcd(x, gcd(y, z)), symbolically=True)
     assert_equal("\\gcd(6*4,48, 3)", igcd(6 * 4, 48, 3))
-    pdb.set_trace()
     assert_equal("\\gcd(6*4,48,3)", igcd(6 * 4, 48, 3))
     assert_equal("\\gcd(2.4,3.6, 0.6)", gcd(Rational('2.4'), gcd(Rational('3.6'), Rational('0.6'))))
     assert_equal("\\gcd(2.4,3.6,0.6)", gcd(Rational('2.4'), gcd(Rational('3.6'), Rational('0.6'))))

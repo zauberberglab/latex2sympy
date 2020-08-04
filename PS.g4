@@ -127,9 +127,13 @@ LETTER_NO_E: [a-df-zA-DF-Z]; // exclude e for exponential function and e notatio
 fragment LETTER: [a-zA-Z];
 fragment DIGIT: [0-9];
 
-NUMBER:
+NUMBER_NOSEP:
     DIGIT+ (COMMA DIGIT+)*
-    | DIGIT* (COMMA DIGIT+)* PERIOD DIGIT+;
+    | DIGIT+ ((COMMA DIGIT+)* (PERIOD DIGIT+))+;
+
+NUMBER:
+    DIGIT+ (COMMA DIGIT DIGIT DIGIT)*
+    | DIGIT* (COMMA DIGIT DIGIT DIGIT)* PERIOD DIGIT+;
 
 E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
@@ -352,7 +356,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
+atom: (LETTER_NO_E | GREEK_LETTER | accent) subexpr? | SYMBOL | NUMBER | NUMBER_NOSEP | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
 mathit_text: (LETTER_NO_E | E_NOTATION_E | EXP_E)+;

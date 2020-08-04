@@ -13,7 +13,7 @@ except Exception:
     from .gen.PSListener import PSListener
 
 from sympy.printing.str import StrPrinter
-
+import pdb
 from sympy.parsing.sympy_parser import parse_expr
 
 import hashlib
@@ -294,7 +294,7 @@ def convert_unary(unary, ignore_sep=True):
 def convert_postfix_list(arr, i=0, ignore_sep=True):
     if i >= len(arr):
         raise Exception("Index out of bounds")
-
+    print(arr[i].getText())
     res = convert_postfix(arr[i], ignore_sep)
 
     if (isinstance(res, sympy.Expr) or
@@ -469,22 +469,16 @@ def convert_atom(atom, ignore_sep=True):
             result = sympy.S.EmptySet
         else:
             raise Exception("Unrecognized symbol")
-    elif atom.NUMBER():
-        s = atom.NUMBER().getText()
-        try:
-            # ignore number separators if enabled, else put in list
-            if ignore_sep:
-                s = s.replace(",", "")
-                sr = sympy.Rational(s)
-            else:
-                s = s.split(",")
-                sr = list(map(sympy.Rational, s))
-            result = sr
-        except (TypeError, ValueError):
-            s = s.replace(",", "")
-            result = sympy.Number(s)
-    elif atom.E_NOTATION():
-        s = atom.E_NOTATION().getText()
+    elif atom.NUMBER() or atom.NUMBER_NOSEP() or atom.E_NOTATION():
+
+        if atom.NUMBER():
+            t = atom.NUMBER()
+        elif atom.NUMBER_NOSEP():
+            t = atom.NUMBER_NOSEP()
+        elif atom.E_NOTATION():
+            t = atom.E_NOTATION()
+
+        s = t.getText()
         try:
             # ignore number separators if enabled, else put in list
             if ignore_sep:
@@ -694,10 +688,9 @@ def convert_func(func):
             args = convert_func_arg(func.func_multi_arg_noparens(), ignore_sep=False)
 
         name = func.func_normal_multi_arg().start.text[1:]
-        print(args)
+
         if name == "operatorname":
             operatorname = func.func_normal_multi_arg().func_operator_name.getText()
-
             if operatorname in ["gcd", "lcm"]:
                 expr = handle_gcd_lcm(operatorname, args)
         elif name in ["gcd", "lcm"]:

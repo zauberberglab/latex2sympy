@@ -17,6 +17,7 @@ def test_floor_usual():
     assert_equal("\\floor(8623.4592104E-2)", floor(Rational('8623.4592104E-2')))
     assert_equal("\\floor(\\pi)", floor(pi))
     assert_equal("\\floor(\\sqrt{100})", floor(sqrt(100)))
+    assert_equal("\\floor(12,123.4)", floor(Rational('12123.4')))
 
     assert_equal("\\operatorname{floor}(1.1)", floor(1.1))
     assert_equal("\\operatorname{floor}(6.9)", floor(6.9))
@@ -28,6 +29,7 @@ def test_floor_usual():
     assert_equal("\\operatorname{floor}(8623.4592104E-2)", floor(Rational('8623.4592104E-2')))
     assert_equal("\\operatorname{floor}(\\pi)", floor(pi))
     assert_equal("\\operatorname{floor}(\\sqrt{100})", floor(sqrt(100)))
+    assert_equal("\\operatorname{floor}(12,123.4)", floor(Rational('12123.4')))
 
     assert_equal("\\lfloor 1.1\\rfloor", floor(1.1))
     assert_equal("\\lfloor 6.9\\rfloor", floor(6.9))
@@ -39,6 +41,7 @@ def test_floor_usual():
     assert_equal("\\lfloor 8623.4592104E-2\\rfloor", floor(Rational('8623.4592104E-2')))
     assert_equal("\\lfloor \\pi\\rfloor", floor(pi))
     assert_equal("\\lfloor \\sqrt{100}\\rfloor", floor(sqrt(100)))
+    assert_equal("\\lfloor 12,123.4\\rfloor", floor(Rational('12123.4')))
 
     assert_equal("⌊1.1⌋", floor(1.1))
     assert_equal("⌊6.9⌋", floor(6.9))
@@ -50,6 +53,7 @@ def test_floor_usual():
     assert_equal("⌊8623.4592104E-2⌋", floor(Rational('8623.4592104E-2')))
     assert_equal("⌊\\pi⌋", floor(pi))
     assert_equal("⌊\\sqrt{100}⌋", floor(sqrt(100)))
+    assert_equal("⌊12,123.4⌋", floor(Rational('12123.4')))
 
 
 def test_floor_negative():

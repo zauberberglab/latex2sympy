@@ -37,6 +37,7 @@ class TestAllBad(object):
         "||x|",
         "\\lfloor x",
         "\\lfloor a \\rceil",
+        "\\operatorname{floor}(12.3, 123.4)",
         "()",
         "((((((((((((((((()))))))))))))))))",
         "-",

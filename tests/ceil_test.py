@@ -17,6 +17,7 @@ def test_ceil_usual():
     assert_equal("\\ceil(8623.4592104E-2)", ceiling(Rational('8623.4592104E-2')))
     assert_equal("\\ceil(\\pi)", ceiling(pi))
     assert_equal("\\ceil(\\sqrt{100})", ceiling(sqrt(100)))
+    assert_equal("\\ceil(12,123.4)", ceiling(Rational('12123.4')))
 
     assert_equal("\\operatorname{ceil}(1.1)", ceiling(1.1))
     assert_equal("\\operatorname{ceil}(6.9)", ceiling(6.9))
@@ -28,6 +29,7 @@ def test_ceil_usual():
     assert_equal("\\operatorname{ceil}(8623.4592104E-2)", ceiling(Rational('8623.4592104E-2')))
     assert_equal("\\operatorname{ceil}(\\pi)", ceiling(pi))
     assert_equal("\\operatorname{ceil}(\\sqrt{100})", ceiling(sqrt(100)))
+    assert_equal("\\operatorname{ceil}(12,123.4)", ceiling(Rational('12123.4')))
 
     assert_equal("\\lceil 1.1\\rceil", ceiling(1.1))
     assert_equal("\\lceil 6.9\\rceil", ceiling(6.9))
@@ -39,6 +41,7 @@ def test_ceil_usual():
     assert_equal("\\lceil 8623.4592104E-2\\rceil", ceiling(Rational('8623.4592104E-2')))
     assert_equal("\\lceil \\pi\\rceil", ceiling(pi))
     assert_equal("\\lceil \\sqrt{100}\\rceil", ceiling(sqrt(100)))
+    assert_equal("\\lceil 12,123.4\\lceil", ceiling(Rational('12123.4')))
 
     assert_equal("⌈1.1⌉", ceiling(1.1))
     assert_equal("⌈6.9⌉", ceiling(6.9))
@@ -50,6 +53,7 @@ def test_ceil_usual():
     assert_equal("⌈8623.4592104E-2⌉", ceiling(Rational('8623.4592104E-2')))
     assert_equal("⌈\\pi⌉", ceiling(pi))
     assert_equal("⌈\\sqrt{100}⌉", ceiling(sqrt(100)))
+    assert_equal("⌈12,123.4⌉", ceiling(Rational('12123.4')))
 
 
 def test_ceil_negative():

@@ -669,6 +669,17 @@ def convert_func(func):
             name = name[0].upper() + name[1:]
             expr = getattr(sympy.functions, name)(*args, evaluate=False)
 
+        func_pow = None
+        should_pow = True
+        if func.supexpr():
+            if func.supexpr().expr():
+                func_pow = convert_expr(func.supexpr().expr())
+            else:
+                func_pow = convert_atom(func.supexpr().atom())
+
+        if func_pow and should_pow:
+            expr = sympy.Pow(expr, func_pow, evaluate=False)
+
         return expr
 
     # elif func.LETTER_NO_E() or func.SYMBOL():

@@ -296,12 +296,14 @@ def convert_postfix_list(arr, i=0):
         raise Exception("Index out of bounds")
 
     res = convert_postfix(arr[i])
+
     if isinstance(res, sympy.Expr) or isinstance(res, sympy.Matrix) or res is sympy.S.EmptySet:
         if i == len(arr) - 1:
             return res  # nothing to multiply by
         else:
             # multiply by next
             rh = convert_postfix_list(arr, i + 1)
+
             if res.is_Matrix or rh.is_Matrix:
                 return mat_mul_flat(res, rh)
             else:
@@ -505,6 +507,7 @@ def convert_atom(atom):
 
         # return the symbol
         return symbol
+
     elif atom.PERCENT_NUMBER():
         text = atom.PERCENT_NUMBER().getText().replace("\\%", "").replace(",", "")
         try:
@@ -578,22 +581,13 @@ def convert_binom(binom):
 
 
 def convert_func(func):
-    if func.func_normal():
-        def resolve_args(args):
-            """
-            Turn multiple parameters into a list of parameters
-            """
-            if not (hasattr(args, 'expr') or hasattr(args, 'mp_nofunc')):
-                return []
-            return [convert_func_arg(args)] + resolve_args(args.func_arg())
-
+    if func.func_normal_single_arg():
         if func.L_PAREN():  # function called with parenthesis
-            args = resolve_args(func.func_arg())
-            arg = args[0] if args and len(args) == 1 else args  # numpy.squeeze() would be nice
+            arg = convert_func_arg(func.func_single_arg())
         else:
-            arg = convert_func_arg(func.func_arg_noparens())
+            arg = convert_func_arg(func.func_single_arg_noparens())
 
-        name = func.func_normal().start.text[1:]
+        name = func.func_normal_single_arg().start.text[1:]
 
         # change arc<trig> -> a<trig>
         if name in ["arcsin", "arccos", "arctan", "arccsc", "arcsec",
@@ -607,15 +601,14 @@ def convert_func(func):
             name = "a" + name[3:]
             expr = getattr(sympy.functions, name)(arg, evaluate=False)
         elif name == "operatorname":
-            operatorname = func.func_normal().func_operator_name.getText()
+            operatorname = func.func_normal_single_arg().func_operator_name.getText()
+
             if operatorname in ["arsinh", "arcosh", "artanh"]:
                 operatorname = "a" + operatorname[2:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
             elif operatorname in ["arcsinh", "arccosh", "arctanh"]:
                 operatorname = "a" + operatorname[3:]
                 expr = getattr(sympy.functions, operatorname)(arg, evaluate=False)
-            elif operatorname in ["gcd", "lcm"]:
-                expr = handle_gcd_lcm(operatorname, args)
             elif operatorname == "floor":
                 expr = handle_floor(arg)
             elif operatorname == "ceil":
@@ -633,11 +626,6 @@ def convert_func(func):
             expr = sympy.log(arg, base, evaluate=False)
         elif name in ["exp", "exponentialE"]:
             expr = sympy.exp(arg)
-        elif name in ["gcd", "lcm"]:
-            expr = handle_gcd_lcm(name, args)
-        elif name in ["max", "min"]:
-            name = name[0].upper() + name[1:]
-            expr = getattr(sympy.functions, name)(*args, evaluate=False)
         elif name == "floor":
             expr = handle_floor(arg)
         elif name == "ceil":
@@ -661,6 +649,39 @@ def convert_func(func):
             expr = sympy.Pow(expr, func_pow, evaluate=False)
 
         return expr
+
+    elif func.func_normal_multi_arg():
+        if func.L_PAREN():  # function called with parenthesis
+            args = func.func_multi_arg().getText().split(",")
+        else:
+            args = func.func_multi_arg_noparens().split(",")
+
+        args = list(map(process_sympy, args))
+        name = func.func_normal_multi_arg().start.text[1:]
+
+        if name == "operatorname":
+            operatorname = func.func_normal_multi_arg().func_operator_name.getText()
+            if operatorname in ["gcd", "lcm"]:
+                expr = handle_gcd_lcm(operatorname, args)
+        elif name in ["gcd", "lcm"]:
+            expr = handle_gcd_lcm(name, args)
+        elif name in ["max", "min"]:
+            name = name[0].upper() + name[1:]
+            expr = getattr(sympy.functions, name)(*args, evaluate=False)
+
+        func_pow = None
+        should_pow = True
+        if func.supexpr():
+            if func.supexpr().expr():
+                func_pow = convert_expr(func.supexpr().expr())
+            else:
+                func_pow = convert_atom(func.supexpr().atom())
+
+        if func_pow and should_pow:
+            expr = sympy.Pow(expr, func_pow, evaluate=False)
+
+        return expr
+
     # elif func.LETTER_NO_E() or func.SYMBOL():
     #     print('LETTER_NO_E or symbol')
     #     if func.LETTER_NO_E():
@@ -683,6 +704,7 @@ def convert_func(func):
     #         input_args = input_args.args()
     #     output_args.append(convert_expr(input_args.expr()))
     #     return sympy.Function(fname)(*output_args)
+
     elif func.FUNC_INT():
         return handle_integral(func)
     elif func.FUNC_SQRT():
@@ -801,26 +823,10 @@ def handle_gcd_lcm(f, args):
     args: List[Expr] - list of function arguments
     """
 
-    def apply_nested(f, lst):
-        """
-        sympy's gcd() and lcm() only support 2 parameters
-        this function calculates gcd() and lcm() for as many parameters as passed
-        """
-        if not lst:
-            return lst
-
-        lst = tuple(map(sympy.nsimplify, lst))
-
-        result = lst[0]
-        for i in range(1, len(lst)):
-            result = f(result, lst[i])
-
-        return result
-
-    result = apply_nested(getattr(sympy, f), args)
+    args = tuple(map(sympy.nsimplify, args))
 
     # gcd() and lcm() don't support evaluate=False
-    return sympy.UnevaluatedExpr(result)
+    return sympy.UnevaluatedExpr(getattr(sympy, f)(args))
 
 
 def handle_floor(expr):

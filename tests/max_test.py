@@ -67,3 +67,13 @@ def test_max_symbol():
     assert_equal("\\max(y\\pi, 9)", Max(y * pi, 9), symbolically=True)
     assert_equal("\\max(2y-y, y + 1)", Max(2 * y - y, y + 1), symbolically=True)
     assert_equal("\\max(z, y, x)", Max(z, y, x), symbolically=True)
+
+
+def test_max_multiarg():
+    assert_equal("\\max(1,2)", Max(1, 2))
+    assert_equal("\\max(9,876,543)", Max(9, 876, 543))
+    assert_equal("\\max(x, y,z)", Max(x, y, z), symbolically=True)
+    assert_equal("\\max(5.8,7.4, 2.2,-10)", Max(Rational('5.8'), Rational('7.4'), Rational('2.2'), -10))
+    assert_equal("\\max(\\pi,12E2,84,\\sqrt{5},12/5)", Max(pi, Rational('12E2'), 84, sqrt(5), Rational('12/5')))
+    assert_equal("\\max(823,51)", Max(823, 51))
+    assert_equal("\\max(72*4,23, 9)", Max(72 * 4, 23, 9))

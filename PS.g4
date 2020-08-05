@@ -126,6 +126,7 @@ E_NOTATION_E: 'E';
 LETTER_NO_E: [a-df-zA-DF-Z]; // exclude e for exponential function and e notation
 fragment LETTER: [a-zA-Z];
 fragment DIGIT: [0-9];
+
 NUMBER:
     DIGIT+ (COMMA DIGIT DIGIT DIGIT)*
     | DIGIT* (COMMA DIGIT DIGIT DIGIT)* PERIOD DIGIT+;
@@ -371,7 +372,7 @@ binom:
     lower=expr
     R_BRACE;
 
-func_normal_functions:
+func_normal_functions_single_arg:
     FUNC_LOG | FUNC_LN | FUNC_EXP
     | FUNC_SIN | FUNC_COS | FUNC_TAN
     | FUNC_CSC | FUNC_SEC | FUNC_COT
@@ -380,22 +381,37 @@ func_normal_functions:
     | FUNC_SINH | FUNC_COSH | FUNC_TANH
     | FUNC_ARSINH | FUNC_ARCOSH | FUNC_ARTANH
     | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH
-    | FUNC_GCD | FUNC_LCM | FUNC_FLOOR | FUNC_CEIL | FUNC_MAX | FUNC_MIN;
+    | FUNC_FLOOR | FUNC_CEIL;
 
-func_operator_names:
+func_normal_functions_multi_arg:
+    FUNC_GCD | FUNC_LCM | FUNC_MAX | FUNC_MIN;
+
+func_operator_names_single_arg:
     FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME
     | FUNC_ARCSINH_NAME | FUNC_ARCCOSH_NAME | FUNC_ARCTANH_NAME
-    | FUNC_GCD_NAME | FUNC_LCM_NAME | FUNC_FLOOR_NAME | FUNC_CEIL_NAME;
+    | FUNC_FLOOR_NAME | FUNC_CEIL_NAME;
 
-func_normal:
-    (func_normal_functions)
+func_operator_names_multi_arg:
+    FUNC_GCD_NAME | FUNC_LCM_NAME;
+
+func_normal_single_arg:
+    (func_normal_functions_single_arg)
     |
-    (CMD_OPERATORNAME L_BRACE func_operator_name=func_operator_names R_BRACE);
+    (CMD_OPERATORNAME L_BRACE func_operator_name=func_operator_names_single_arg R_BRACE);
+
+func_normal_multi_arg:
+    (func_normal_functions_multi_arg)
+    |
+    (CMD_OPERATORNAME L_BRACE func_operator_name=func_operator_names_multi_arg R_BRACE);
 
 func:
-    func_normal
+    func_normal_single_arg
     (subexpr? supexpr? | supexpr? subexpr?)
-    (L_LEFT? L_PAREN func_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_arg MR_RIGHT? R_PAREN | func_arg_noparens)
+    (L_LEFT? L_PAREN func_single_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_single_arg MR_RIGHT? R_PAREN | func_single_arg_noparens)
+    
+    | func_normal_multi_arg
+    (subexpr? supexpr? | supexpr? subexpr?)
+    (L_LEFT? L_PAREN func_multi_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_multi_arg MR_RIGHT? R_PAREN | func_multi_arg_noparens)
 
     //Do not do arbitrary functions but see as multiplications
     /*| (LETTER_NO_E | SYMBOL) subexpr? // e.g. f(x)
@@ -427,8 +443,11 @@ limit_sub:
     expr (CARET L_BRACE (ADD | SUB) R_BRACE)?
     R_BRACE;
 
-func_arg: expr | (expr ',' func_arg);
-func_arg_noparens: mp_nofunc;
+func_single_arg: expr;
+func_single_arg_noparens: mp_nofunc;
+
+func_multi_arg: expr | (expr ',' func_multi_arg);
+func_multi_arg_noparens: mp_nofunc;
 
 subexpr: UNDERSCORE (atom | L_BRACE expr R_BRACE);
 supexpr: CARET (atom | L_BRACE expr R_BRACE);

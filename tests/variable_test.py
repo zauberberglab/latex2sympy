@@ -1,9 +1,10 @@
 from .context import assert_equal
 import pytest
 import hashlib
-from sympy import Symbol, Mul, Pow
+from sympy import UnevaluatedExpr, Symbol, Mul, Pow, Max, Min, gcd, lcm, floor, ceiling
 
 x = Symbol('x', real=True)
+y = Symbol('y', real=True)
 
 
 def test_variable_letter():
@@ -77,3 +78,15 @@ def test_variable_dollars():
 
 def test_variable_percentage():
     assert_equal("\\variable{x}\\%", Mul(Symbol('x' + hashlib.md5('x'.encode()).hexdigest(), real=True), Pow(100, -1, evaluate=False), evaluate=False))
+
+
+def test_variable_single_arg_func():
+    assert_equal("\\floor(\\variable{x})", floor(Symbol('x' + hashlib.md5('x'.encode()).hexdigest(), real=True)))
+    assert_equal("\\ceil(\\variable{x})", ceiling(Symbol('x' + hashlib.md5('x'.encode()).hexdigest(), real=True)))
+
+
+def test_variable_multi_arg_func():
+    assert_equal("\\gcd(\\variable{x}, \\variable{y})", UnevaluatedExpr(gcd(Symbol('x' + hashlib.md5('x'.encode()).hexdigest(), real=True), Symbol('y' + hashlib.md5('y'.encode()).hexdigest(), real=True))))
+    assert_equal("\\lcm(\\variable{x}, \\variable{y})", UnevaluatedExpr(lcm(Symbol('x' + hashlib.md5('x'.encode()).hexdigest(), real=True), Symbol('y' + hashlib.md5('y'.encode()).hexdigest(), real=True))))
+    assert_equal("\\max(\\variable{x}, \\variable{y})", Max(Symbol('x' + hashlib.md5('x'.encode()).hexdigest(), real=True), Symbol('y' + hashlib.md5('y'.encode()).hexdigest(), real=True), evaluate=False))
+    assert_equal("\\min(\\variable{x}, \\variable{y})", Min(Symbol('x' + hashlib.md5('x'.encode()).hexdigest(), real=True), Symbol('y' + hashlib.md5('y'.encode()).hexdigest(), real=True), evaluate=False))

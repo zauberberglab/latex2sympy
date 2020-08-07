@@ -656,7 +656,7 @@ def convert_func(func):
         else:
             args = func.func_multi_arg_noparens().split(",")
 
-        args = list(map(process_sympy, args))
+        args = list(map(lambda arg: process_sympy(arg, VARIABLE_VALUES), args))
         name = func.func_normal_multi_arg().start.text[1:]
 
         if name == "operatorname":

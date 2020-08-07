@@ -1,7 +1,7 @@
 from .context import assert_equal
 import pytest
 from sympy import Symbol, Rational, UnevaluatedExpr, gcd, igcd, sqrt, pi
-import pdb
+
 x = Symbol('x', real=True)
 y = Symbol('y', real=True)
 z = Symbol('z', real=True)

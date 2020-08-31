@@ -30,7 +30,7 @@ null
 '\\prod'
 '\\log'
 '\\ln'
-null
+'\\exp'
 '\\sin'
 '\\cos'
 '\\tan'
@@ -95,7 +95,7 @@ null
 ','
 '.'
 null
-'e'
+null
 'E'
 null
 null

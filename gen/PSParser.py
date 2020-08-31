@@ -403,7 +403,7 @@ class PSParser (Parser):
                     u"'\\mleft'", u"'\\mright'", u"'|'", u"<INVALID>",
                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'\\lim'",
                     u"<INVALID>", u"'\\int'", u"'\\sum'", u"'\\prod'",
-                    u"'\\log'", u"'\\ln'", u"<INVALID>", u"'\\sin'", u"'\\cos'",
+                    u"'\\log'", u"'\\ln'", u"'\\exp'", u"'\\sin'", u"'\\cos'",
                     u"'\\tan'", u"'\\csc'", u"'\\sec'", u"'\\cot'", u"'\\arcsin'",
                     u"'\\arccos'", u"'\\arctan'", u"'\\arccsc'", u"'\\arcsec'",
                     u"'\\arccot'", u"'\\sinh'", u"'\\cosh'", u"'\\tanh'",
@@ -418,7 +418,7 @@ class PSParser (Parser):
                     u"'pmatrix'", u"'bmatrix'", u"<INVALID>", u"<INVALID>",
                     u"<INVALID>", u"'&'", u"'\\\\'", u"'\\overline'", u"'\\bar'",
                     u"'_'", u"'^'", u"':'", u"';'", u"','", u"'.'", u"<INVALID>",
-                    u"'e'", u"'E'", u"<INVALID>", u"<INVALID>", u"<INVALID>",
+                    u"<INVALID>", u"'E'", u"<INVALID>", u"<INVALID>", u"<INVALID>",
                     u"'='", u"'<'", u"<INVALID>", u"'>'", u"<INVALID>",
                     u"<INVALID>", u"'!'"]
 

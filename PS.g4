@@ -40,7 +40,7 @@ FUNC_PROD: '\\prod';
 
 FUNC_LOG:  '\\log';
 FUNC_LN:   '\\ln';
-FUNC_EXP: '\\exp' | '\\exponentialE';
+FUNC_EXP: '\\exp';
 FUNC_SIN:  '\\sin';
 FUNC_COS:  '\\cos';
 FUNC_TAN:  '\\tan';
@@ -121,7 +121,7 @@ PERIOD: '.';
 fragment WS_CHAR: [ \t\r\n];
 DIFFERENTIAL: 'd' WS_CHAR*? ([a-zA-Z] | '\\' [a-zA-Z]+);
 
-EXP_E: 'e';
+EXP_E: 'e' | '\\exponentialE';
 E_NOTATION_E: 'E';
 LETTER_NO_E: [a-df-zA-DF-Z]; // exclude e for exponential function and e notation
 fragment LETTER: [a-zA-Z];

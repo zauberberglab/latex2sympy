@@ -19,7 +19,7 @@ def test_exp_func_no_delim():
 
 
 def test_exp_command():
-    assert_equal("\\exponentialE(3)", exp(3))
+    assert_equal("\\exponentialE^{3}", exp(3))
 
 
 def test_exp_numeric():

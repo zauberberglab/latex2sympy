@@ -24,6 +24,10 @@ L_LEFT: '\\left';
 R_RIGHT: '\\right';
 ML_LEFT: '\\mleft';
 MR_RIGHT: '\\mright';
+L_BRACK: '\\lbrack';
+R_BRACK: '\\rbrack';
+L_BRACE_CMD: '\\lbrace';
+R_BRACE_CMD: '\\rbrace';
 
 BAR: '|';
 L_FLOOR: '\\lfloor' | '⌊';
@@ -321,8 +325,10 @@ group:
     | L_BRACE expr R_BRACE
     | L_LEFT L_PAREN expr R_RIGHT R_PAREN
     | L_LEFT L_BRACKET expr R_RIGHT R_BRACKET
+    | L_LEFT L_BRACK expr R_RIGHT R_BRACK
     | L_LEFT L_BRACE expr R_RIGHT R_BRACE
     | L_LEFT L_BRACE_VISUAL expr R_RIGHT R_BRACE_VISUAL
+    | L_LEFT L_BRACE_CMD expr R_RIGHT R_BRACE_CMD
     | ML_LEFT L_PAREN expr MR_RIGHT R_PAREN
     | ML_LEFT L_BRACKET expr MR_RIGHT R_BRACKET
     | ML_LEFT L_BRACE expr MR_RIGHT R_BRACE

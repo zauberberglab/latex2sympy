@@ -14,22 +14,38 @@ DIV: '/';
 
 L_PAREN: '(';
 R_PAREN: ')';
+L_GROUP: '\\lgroup';
+R_GROUP: '\\rgroup';
 L_BRACE: '{';
 R_BRACE: '}';
 L_BRACE_VISUAL: '\\{';
 R_BRACE_VISUAL: '\\}';
+L_BRACE_CMD: '\\lbrace';
+R_BRACE_CMD: '\\rbrace';
 L_BRACKET: '[';
 R_BRACKET: ']';
+L_BRACK: '\\lbrack';
+R_BRACK: '\\rbrack';
+
+BAR: '|';
+L_VERT: '\\lvert';
+R_VERT: '\\rvert';
+VERT: '\\vert';
+
+L_FLOOR: '\\lfloor';
+R_FLOOR: '\\rfloor';
+LL_CORNER: '\\llcorner';
+LR_CORNER: '\\lrcorner';
+
+L_CEIL: '\\lceil';
+R_CEIL: '\\rceil';
+UL_CORNER: '\\ulcorner';
+UR_CORNER: '\\urcorner';
+
 L_LEFT: '\\left';
 R_RIGHT: '\\right';
 ML_LEFT: '\\mleft';
 MR_RIGHT: '\\mright';
-
-BAR: '|';
-L_FLOOR: '\\lfloor' | '⌊';
-R_FLOOR: '\\rfloor' | '⌋';
-L_CEIL: '\\lceil' | '⌈';
-R_CEIL: '\\rceil'| '⌉';
 
 //functions
 FUNC_LIM:  '\\lim';
@@ -317,34 +333,56 @@ comp_nofunc:
 
 group:
     L_PAREN expr R_PAREN
-    | L_BRACKET expr R_BRACKET
+    | L_GROUP expr R_GROUP
     | L_BRACE expr R_BRACE
+    | L_BRACE_VISUAL expr R_BRACE_VISUAL
+    | L_BRACE_CMD expr R_BRACE_CMD
+    | L_BRACKET expr R_BRACKET
+    | L_BRACK expr R_BRACK
     | L_LEFT L_PAREN expr R_RIGHT R_PAREN
-    | L_LEFT L_BRACKET expr R_RIGHT R_BRACKET
+    | L_LEFT L_GROUP expr R_RIGHT R_GROUP
     | L_LEFT L_BRACE expr R_RIGHT R_BRACE
     | L_LEFT L_BRACE_VISUAL expr R_RIGHT R_BRACE_VISUAL
+    | L_LEFT L_BRACE_CMD expr R_RIGHT R_BRACE_CMD
+    | L_LEFT L_BRACKET expr R_RIGHT R_BRACKET
+    | L_LEFT L_BRACK expr R_RIGHT R_BRACK
     | ML_LEFT L_PAREN expr MR_RIGHT R_PAREN
-    | ML_LEFT L_BRACKET expr MR_RIGHT R_BRACKET
+    | ML_LEFT L_GROUP expr MR_RIGHT R_GROUP
     | ML_LEFT L_BRACE expr MR_RIGHT R_BRACE
-    | ML_LEFT L_BRACE_VISUAL expr MR_RIGHT R_BRACE_VISUAL;
+    | ML_LEFT L_BRACE_VISUAL expr MR_RIGHT R_BRACE_VISUAL
+    | ML_LEFT L_BRACE_CMD expr MR_RIGHT R_BRACE_CMD
+    | ML_LEFT L_BRACKET expr MR_RIGHT R_BRACKET
+    | ML_LEFT L_BRACK expr MR_RIGHT R_BRACK;
 
 
 abs_group:
     BAR expr BAR
+    | L_VERT expr R_VERT
+    | VERT expr VERT
     | L_LEFT BAR expr R_RIGHT BAR
-    | ML_LEFT BAR expr MR_RIGHT BAR;
+    | L_LEFT L_VERT expr R_RIGHT R_VERT
+    | L_LEFT VERT expr R_RIGHT VERT
+    | ML_LEFT BAR expr MR_RIGHT BAR
+    | ML_LEFT L_VERT expr MR_RIGHT R_VERT
+    | ML_LEFT VERT expr MR_RIGHT VERT;
 
 
 floor_group:
     L_FLOOR expr R_FLOOR
+    | LL_CORNER expr LR_CORNER
     | L_LEFT L_FLOOR expr R_RIGHT R_FLOOR
-    | ML_LEFT L_FLOOR expr MR_RIGHT R_FLOOR;
+    | L_LEFT LL_CORNER expr R_RIGHT LR_CORNER
+    | ML_LEFT L_FLOOR expr MR_RIGHT R_FLOOR
+    | ML_LEFT LL_CORNER expr MR_RIGHT LR_CORNER;
 
 
 ceil_group:
     L_CEIL expr R_CEIL
+    | UL_CORNER expr UR_CORNER
     | L_LEFT L_CEIL expr R_RIGHT R_CEIL
-    | ML_LEFT L_CEIL expr MR_RIGHT R_CEIL;
+    | L_LEFT UL_CORNER expr R_RIGHT UR_CORNER
+    | ML_LEFT L_CEIL expr MR_RIGHT R_CEIL
+    | ML_LEFT UL_CORNER expr MR_RIGHT UR_CORNER;
 
 
 //indicate an accent

@@ -139,8 +139,6 @@ class TestAllGood(object):
         ("||x||", _Abs(Abs(x))),
         ("|x||y|", _Abs(x) * _Abs(y)),
         ("||x||y||", _Abs(_Abs(x) * _Abs(y))),
-        ("⌊x⌋", floor(x)),
-        ("⌈y⌉", ceiling(y)),
         ("\\lfloor x\\rfloor", floor(x)),
         ("\\lceil y\\rceil", ceiling(y)),
         ("\\pi^{|xy|}", pi**_Abs(x * y)),

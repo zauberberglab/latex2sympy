@@ -162,7 +162,7 @@ fragment PERCENT_SIGN: '\\%';
 PERCENT_NUMBER: NUMBER PERCENT_SIGN;
 
 //Excludes some letters for use as e.g. constants in SYMBOL
-GREEK_LETTER:
+fragment GREEK_LETTER:
     '\\char"000391' | //Alpha
     '\\alpha' |
     '\\char"000392' | //Beta
@@ -216,6 +216,7 @@ GREEK_LETTER:
     '\\psi' |
     '\\Omega' |
     '\\omega';
+GREEK_CMD: GREEK_LETTER [ ]?;
 
 fragment PI: '\\pi';
 fragment INFTY_CMD: '\\infty';
@@ -224,7 +225,7 @@ fragment EMPTYSET: '\\emptyset';
 SYMBOL: PI | INFTY | EMPTYSET;
 
 fragment VARIABLE_CMD: '\\variable';
-fragment VARIABLE_SYMBOL: (GREEK_LETTER [ ]? | LETTER | DIGIT)+ (UNDERSCORE ((L_BRACE (GREEK_LETTER [ ]? | LETTER | DIGIT | COMMA)+ R_BRACE) | (GREEK_LETTER [ ]? | LETTER | DIGIT)))?;
+fragment VARIABLE_SYMBOL: (GREEK_CMD | LETTER | DIGIT)+ (UNDERSCORE ((L_BRACE (GREEK_CMD | LETTER | DIGIT | COMMA)+ R_BRACE) | (GREEK_CMD | LETTER | DIGIT)))?;
 VARIABLE: VARIABLE_CMD L_BRACE VARIABLE_SYMBOL R_BRACE PERCENT_SIGN?;
 
 //collection of accents
@@ -390,7 +391,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom_expr: (LETTER_NO_E | GREEK_LETTER | accent) supexpr? subexpr?;
+atom_expr: (LETTER_NO_E | GREEK_CMD | accent) (supexpr subexpr | subexpr supexpr | subexpr | supexpr)?;
 atom: atom_expr | SYMBOL | NUMBER | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
@@ -477,7 +478,7 @@ args: (expr ',' args) | expr;
 
 limit_sub:
     UNDERSCORE L_BRACE
-    (LETTER_NO_E | GREEK_LETTER)
+    (LETTER_NO_E | GREEK_CMD)
     LIM_APPROACH_SYM
     expr (CARET L_BRACE (ADD | SUB) R_BRACE)?
     R_BRACE;
@@ -488,7 +489,7 @@ func_single_arg_noparens: mp_nofunc;
 func_multi_arg: expr | (expr ',' func_multi_arg);
 func_multi_arg_noparens: mp_nofunc;
 
-subexpr: UNDERSCORE (atom | L_BRACE expr R_BRACE);
+subexpr: UNDERSCORE (atom | L_BRACE (expr | args) R_BRACE);
 supexpr: CARET (atom | L_BRACE expr R_BRACE);
 
 subeq: UNDERSCORE L_BRACE equality R_BRACE;

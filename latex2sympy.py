@@ -415,8 +415,8 @@ def convert_atom(atom):
             atom_text = atom_expr.LETTER_NO_E().getText()
             if atom_text == "I":
                 return sympy.I
-        elif atom_expr.GREEK_LETTER():
-            atom_text = atom_expr.GREEK_LETTER().getText()[1:]
+        elif atom_expr.GREEK_CMD():
+            atom_text = atom_expr.GREEK_CMD().getText()[1:].strip()
         elif atom_expr.accent():
             atom_accent = atom_expr.accent()
             # get name for accent
@@ -435,9 +435,11 @@ def convert_atom(atom):
             subexpr = atom_expr.subexpr()
             subscript = None
             if subexpr.expr():  # subscript is expr
-                subscript = convert_expr(subexpr.expr())
-            else:  # subscript is atom
-                subscript = convert_atom(subexpr.atom())
+                subscript = subexpr.expr().getText().strip()
+            elif subexpr.atom():  # subscript is atom
+                subscript = subexpr.atom().getText().strip()
+            elif subexpr.args():  # subscript is args
+                subscript = subexpr.args().getText().strip()
             subscript_inner_text = StrPrinter().doprint(subscript)
             if len(subscript_inner_text) > 1:
                 subscript_text = '_{' + subscript_inner_text + '}'
@@ -776,8 +778,8 @@ def handle_limit(func):
     sub = func.limit_sub()
     if sub.LETTER_NO_E():
         var = sympy.Symbol(sub.LETTER_NO_E().getText(), real=True)
-    elif sub.GREEK_LETTER():
-        var = sympy.Symbol(sub.GREEK_LETTER().getText()[1:], real=True)
+    elif sub.GREEK_CMD():
+        var = sympy.Symbol(sub.GREEK_CMD().getText()[1:].strip(), real=True)
     else:
         var = sympy.Symbol('x', real=True)
     if sub.SUB():

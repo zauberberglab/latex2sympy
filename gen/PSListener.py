@@ -266,6 +266,15 @@ class PSListener(ParseTreeListener):
     def exitAccent(self, ctx):
         pass
 
+    # Enter a parse tree produced by PSParser#atom_expr.
+
+    def enterAtom_expr(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#atom_expr.
+    def exitAtom_expr(self, ctx):
+        pass
+
     # Enter a parse tree produced by PSParser#atom.
 
     def enterAtom(self, ctx):

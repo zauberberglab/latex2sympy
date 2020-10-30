@@ -406,49 +406,60 @@ def convert_comp(comp):
 
 
 def convert_atom(atom):
-    if atom.LETTER_NO_E():
-        subscriptName = ''
-        s = atom.LETTER_NO_E().getText()
-        if s == "I":
-            return sympy.I
-        if atom.subexpr():
+    if atom.atom_expr():
+        atom_expr = atom.atom_expr()
+
+        # find the atom's text
+        atom_text = ''
+        if atom_expr.LETTER_NO_E():
+            atom_text = atom_expr.LETTER_NO_E().getText()
+            if atom_text == "I":
+                return sympy.I
+        elif atom_expr.GREEK_CMD():
+            atom_text = atom_expr.GREEK_CMD().getText()[1:].strip()
+        elif atom_expr.accent():
+            atom_accent = atom_expr.accent()
+            # get name for accent
+            name = atom_accent.start.text[1:]
+            # exception: check if bar or overline which are treated both as bar
+            if name in ["bar", "overline"]:
+                name = "bar"
+            # get the base (variable)
+            base = atom_accent.base.getText()
+            # set string to base+name
+            atom_text = base + name
+
+        # find atom's subscript, if any
+        subscript_text = ''
+        if atom_expr.subexpr():
+            subexpr = atom_expr.subexpr()
             subscript = None
-            if atom.subexpr().expr():           # subscript is expr
-                subscript = convert_expr(atom.subexpr().expr())
-            else:                               # subscript is atom
-                subscript = convert_atom(atom.subexpr().atom())
-            subscriptName = '_{' + StrPrinter().doprint(subscript) + '}'
-        return sympy.Symbol(atom.LETTER_NO_E().getText() + subscriptName, real=True)
-    elif atom.GREEK_LETTER():
-        s = atom.GREEK_LETTER().getText()[1:]
-        if atom.subexpr():
-            subscript = None
-            if atom.subexpr().expr():           # subscript is expr
-                subscript = convert_expr(atom.subexpr().expr())
-            else:                               # subscript is atom
-                subscript = convert_atom(atom.subexpr().atom())
-            subscriptName = StrPrinter().doprint(subscript)
-            s += '_{' + subscriptName + '}'
-        return sympy.Symbol(s, real=True)
-    elif atom.accent():
-        # get name for accent
-        name = atom.accent().start.text[1:]
-        # exception: check if bar or overline which are treated both as bar
-        if name in ["bar", "overline"]:
-            name = "bar"
-        # get the base (variable)
-        base = atom.accent().base.getText()
-        # set string to base+name
-        s = base + name
-        if atom.subexpr():
-            subscript = None
-            if atom.subexpr().expr():           # subscript is expr
-                subscript = convert_expr(atom.subexpr().expr())
-            else:                               # subscript is atom
-                subscript = convert_atom(atom.subexpr().atom())
-            subscriptName = StrPrinter().doprint(subscript)
-            s += '_{' + subscriptName + '}'
-        return sympy.Symbol(s, real=True)
+            if subexpr.expr():  # subscript is expr
+                subscript = subexpr.expr().getText().strip()
+            elif subexpr.atom():  # subscript is atom
+                subscript = subexpr.atom().getText().strip()
+            elif subexpr.args():  # subscript is args
+                subscript = subexpr.args().getText().strip()
+            subscript_inner_text = StrPrinter().doprint(subscript)
+            if len(subscript_inner_text) > 1:
+                subscript_text = '_{' + subscript_inner_text + '}'
+            else:
+                subscript_text = '_' + subscript_inner_text
+
+        # construct the symbol using the text and optional subscript
+        atom_symbol = sympy.Symbol(atom_text + subscript_text, real=True)
+
+        # find the atom's superscript, and return as a Pow if found
+        if atom_expr.supexpr():
+            supexpr = atom_expr.supexpr()
+            func_pow = None
+            if supexpr.expr():
+                func_pow = convert_expr(supexpr.expr())
+            else:
+                func_pow = convert_atom(supexpr.atom())
+            return sympy.Pow(atom_symbol, func_pow, evaluate=False)
+
+        return atom_symbol
     elif atom.SYMBOL():
         s = atom.SYMBOL().getText().replace("\\$", "").replace("\\%", "")
         if s == "\\infty":
@@ -682,29 +693,6 @@ def convert_func(func):
 
         return expr
 
-    # elif func.LETTER_NO_E() or func.SYMBOL():
-    #     print('LETTER_NO_E or symbol')
-    #     if func.LETTER_NO_E():
-    #         fname = func.LETTER_NO_E().getText()
-    #     elif func.SYMBOL():
-    #         fname = func.SYMBOL().getText()[1:]
-    #     fname = str(fname) # can't be unicode
-    #     if func.subexpr():
-    #         subscript = None
-    #         if func.subexpr().expr():                   # subscript is expr
-    #             subscript = convert_expr(func.subexpr().expr())
-    #         else:                                       # subscript is atom
-    #             subscript = convert_atom(func.subexpr().atom())
-    #         subscriptName = StrPrinter().doprint(subscript)
-    #         fname += '_{' + subscriptName + '}'
-    #     input_args = func.args()
-    #     output_args = []
-    #     while input_args.args():                        # handle multiple arguments to function
-    #         output_args.append(convert_expr(input_args.expr()))
-    #         input_args = input_args.args()
-    #     output_args.append(convert_expr(input_args.expr()))
-    #     return sympy.Function(fname)(*output_args)
-
     elif func.FUNC_INT():
         return handle_integral(func)
     elif func.FUNC_SQRT():
@@ -790,8 +778,8 @@ def handle_limit(func):
     sub = func.limit_sub()
     if sub.LETTER_NO_E():
         var = sympy.Symbol(sub.LETTER_NO_E().getText(), real=True)
-    elif sub.GREEK_LETTER():
-        var = sympy.Symbol(sub.GREEK_LETTER().getText()[1:], real=True)
+    elif sub.GREEK_CMD():
+        var = sympy.Symbol(sub.GREEK_CMD().getText()[1:].strip(), real=True)
     else:
         var = sympy.Symbol('x', real=True)
     if sub.SUB():

@@ -850,3 +850,9 @@ def get_differential_var_str(text):
     if text[0] == "\\":
         text = text[1:]
     return text
+
+
+if __name__ == '__main__':
+    latex = "\\frac{a^{2} \\left(3 \\pi - 4 \\sin{\\left(\\pi \\right)} + \\frac{\\sin{\\left(2 \\pi \\right)}}{2}\\right)}{2}"
+    math = process_sympy(latex)
+    print("latex: %s to math: %s" % (latex, math))

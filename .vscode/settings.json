@@ -13,5 +13,22 @@
 		"tests"
 	],
 	"python.linting.enabled": true,
-	"python.linting.pycodestyleEnabled": true
+    "python.linting.pycodestyleEnabled": true,
+    "cSpell.words": [
+        "PAREN",
+        "arcosh",
+        "arsinh",
+        "artanh",
+        "binom",
+        "delim",
+        "doprint",
+        "nofunc",
+        "noparens",
+        "nsimplify",
+        "subeq",
+        "subexpr",
+        "supexpr",
+        "syms",
+        "xbar"
+    ]
 }

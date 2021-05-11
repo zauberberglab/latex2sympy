@@ -117,9 +117,12 @@ CMD_OPERATORNAME: '\\operatorname';
 MATRIX_TYPE_MATRIX: 'matrix';
 MATRIX_TYPE_PMATRIX: 'pmatrix';
 MATRIX_TYPE_BMATRIX: 'bmatrix';
+MATRIX_TYPE_DET: 'vmatrix';
 MATRIX_TYPES: MATRIX_TYPE_MATRIX | MATRIX_TYPE_PMATRIX | MATRIX_TYPE_BMATRIX;
 CMD_MATRIX_START: '\\begin' L_BRACE MATRIX_TYPES R_BRACE;
 CMD_MATRIX_END: '\\end' L_BRACE MATRIX_TYPES R_BRACE;
+CMD_DET_START: '\\begin' L_BRACE MATRIX_TYPE_DET R_BRACE;
+CMD_DET_END: '\\end' L_BRACE MATRIX_TYPE_DET R_BRACE;
 MATRIX_DEL_COL: '&';
 MATRIX_DEL_ROW: '\\\\';
 
@@ -151,9 +154,9 @@ E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
 EQUAL: '=';
 LT: '<';
-LTE: '\\leq' | '\\le';
+LTE: '\\leq' | '\\le' | '\\leqslant';
 GT: '>';
-GTE: '\\geq' | '\\ge';
+GTE: '\\geq' | '\\ge' | '\\geqslant';
 UNEQUAL: '!=' | '\\ne' | '\\neq';
 
 BANG: '!';
@@ -239,6 +242,11 @@ matrix:
     matrix_row (MATRIX_DEL_ROW matrix_row)*
     CMD_MATRIX_END;
 
+det:
+    CMD_DET_START
+    matrix_row (MATRIX_DEL_ROW matrix_row)*
+    CMD_DET_END;
+
 matrix_row:
     expr (MATRIX_DEL_COL expr)*;
 
@@ -320,7 +328,8 @@ comp:
     | atom
     | frac
     | binom
-    | matrix;
+    | matrix
+    | det;
 
 comp_nofunc:
     group
@@ -330,7 +339,8 @@ comp_nofunc:
     | atom
     | frac
     | binom
-    | matrix;
+    | matrix
+    | det;
 
 group:
     L_PAREN expr R_PAREN

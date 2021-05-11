@@ -1,7 +1,7 @@
 import sympy
-import antlr4
+from sympy import latex, simplify
+from antlr4 import InputStream, CommonTokenStream
 from antlr4.error.ErrorListener import ErrorListener
-from sympy.core.operations import AssocOp
 
 try:
     from gen.PSParser import PSParser
@@ -18,10 +18,13 @@ from sympy.parsing.sympy_parser import parse_expr
 
 import hashlib
 
+variances = {}
+var = {}
+
 VARIABLE_VALUES = {}
 
 
-def process_sympy(sympy, variable_values={}):
+def latex2sympy(sympy, variable_values={}):
 
     # variable values
     global VARIABLE_VALUES
@@ -34,12 +37,12 @@ def process_sympy(sympy, variable_values={}):
     matherror = MathErrorListener(sympy)
 
     # stream input
-    stream = antlr4.InputStream(sympy)
+    stream = InputStream(sympy)
     lex = PSLexer(stream)
     lex.removeErrorListeners()
     lex.addErrorListener(matherror)
 
-    tokens = antlr4.CommonTokenStream(lex)
+    tokens = CommonTokenStream(lex)
     parser = PSParser(tokens)
 
     # remove default console error listener
@@ -110,7 +113,9 @@ def convert_relation(rel):
     elif rel.GTE():
         return sympy.GreaterThan(lh, rh, evaluate=False)
     elif rel.EQUAL():
-        return sympy.Eq(lh, rh, evaluate=False)
+        variances[lh] = rh
+        var[str(lh)] = rh
+        return rh
     elif rel.UNEQUAL():
         return sympy.Ne(lh, rh, evaluate=False)
 
@@ -401,6 +406,8 @@ def convert_comp(comp):
         return convert_binom(comp.binom())
     elif comp.matrix():
         return convert_matrix(comp.matrix())
+    elif comp.det():
+        return convert_matrix(comp.det()).det()
     elif comp.func():
         return convert_func(comp.func())
 
@@ -571,9 +578,9 @@ def convert_frac(frac):
 
         expr_top = None
         if diff_op and upper_text.startswith('d'):
-            expr_top = process_sympy(upper_text[1:])
+            expr_top = latex2sympy(upper_text[1:])
         elif partial_op and frac.upper.start.text == '\\partial':
-            expr_top = process_sympy(upper_text[len('\\partial'):])
+            expr_top = latex2sympy(upper_text[len('\\partial'):])
         if expr_top:
             return sympy.Derivative(expr_top, wrt)
 
@@ -667,7 +674,7 @@ def convert_func(func):
         else:
             args = func.func_multi_arg_noparens().split(",")
 
-        args = list(map(lambda arg: process_sympy(arg, VARIABLE_VALUES), args))
+        args = list(map(lambda arg: latex2sympy(arg, VARIABLE_VALUES), args))
         name = func.func_normal_multi_arg().start.text[1:]
 
         if name == "operatorname":
@@ -851,8 +858,23 @@ def get_differential_var_str(text):
         text = text[1:]
     return text
 
+def tex2sym(tex):
+    
+    pass
+
+def tex2cal(tex):
+    return latex(simplify(latex2sympy(tex).subs(variances).doit()))
 
 if __name__ == '__main__':
-    latex = "\\frac{a^{2} \\left(3 \\pi - 4 \\sin{\\left(\\pi \\right)} + \\frac{\\sin{\\left(2 \\pi \\right)}}{2}\\right)}{2}"
-    math = process_sympy(latex)
-    print("latex: %s to math: %s" % (latex, math))
+    # tex = r"y = \frac{1}{2}x + 1"
+    # math = latex2sympy(tex)
+    # print("latex:", tex)
+    # print("math:", math.xreplace(variances))
+    # print("cal:", tex2cal(tex))
+    # print("variances:", variances)
+    tex = r"\begin{vmatrix}x&1&1\\0&x&1\\0&0&x\end{vmatrix}"
+    math = latex2sympy(tex)
+    print("latex:", tex)
+    print("math:", math.subs(variances))
+    print("math:", math.subs(variances).doit())
+    print("cal:", tex2cal(tex))

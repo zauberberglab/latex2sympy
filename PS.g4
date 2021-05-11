@@ -126,7 +126,9 @@ CMD_DET_END: '\\end' L_BRACE MATRIX_TYPE_DET R_BRACE;
 MATRIX_DEL_COL: '&';
 MATRIX_DEL_ROW: '\\\\';
 
-MATRIX_XRIGHTARROW: '\\xrightarrow';
+MATRIX_XRIGHTARROW: '\\xrightarrow' | '\\xRightarrow';
+TRANSFORM_EXCHANGE: '<->' | '<=>' | '\\leftrightarrow' | '\\Leftrightarrow';
+ROW_OR_COL: 'r' | 'c';
 
 //accents such as overline and hat
 ACCENT_OVERLINE:  '\\overline';
@@ -242,16 +244,19 @@ math: relation | relation_list;
 
 transpose: '^T' | '\'';
 
-// elementary_transform_target: 'r' | 'c';
-
-// elementary_transform: group elementary_transform_target UNDERSCORE;
+transform_atom: ROW_OR_COL UNDERSCORE (NUMBER | L_BRACE NUMBER R_BRACE);
+transform_scale: (expr | group) transform_atom;
+transform_swap: transform_atom TRANSFORM_EXCHANGE transform_atom;
+transform_assignment: transform_atom transform_scale;
+elementary_transform: transform_scale | transform_swap | transform_assignment;
+elementary_transforms: elementary_transform (COMMA elementary_transform)*;
 
 matrix:
     CMD_MATRIX_START
-    matrix_row (MATRIX_DEL_ROW matrix_row)*
+    matrix_row (MATRIX_DEL_ROW matrix_row)* MATRIX_DEL_ROW?
     CMD_MATRIX_END
-    transpose?;
-    // MATRIX_XRIGHTARROW ()? L_BRACE R_BRACE;
+    transpose?
+    (MATRIX_XRIGHTARROW (L_BRACKET elementary_transforms R_BRACKET)? L_BRACE elementary_transforms R_BRACE)?;
 
 det:
     CMD_DET_START

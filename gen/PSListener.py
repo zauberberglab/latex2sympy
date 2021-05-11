@@ -31,6 +31,60 @@ class PSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PSParser#transform_atom.
+    def enterTransform_atom(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#transform_atom.
+    def exitTransform_atom(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by PSParser#transform_scale.
+    def enterTransform_scale(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#transform_scale.
+    def exitTransform_scale(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by PSParser#transform_swap.
+    def enterTransform_swap(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#transform_swap.
+    def exitTransform_swap(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by PSParser#transform_assignment.
+    def enterTransform_assignment(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#transform_assignment.
+    def exitTransform_assignment(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by PSParser#elementary_transform.
+    def enterElementary_transform(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#elementary_transform.
+    def exitElementary_transform(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by PSParser#elementary_transforms.
+    def enterElementary_transforms(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#elementary_transforms.
+    def exitElementary_transforms(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by PSParser#matrix.
     def enterMatrix(self, ctx):
         pass

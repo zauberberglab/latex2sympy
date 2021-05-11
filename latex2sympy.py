@@ -127,13 +127,57 @@ def convert_expr(expr):
     if expr.additive():
         return convert_add(expr.additive())
 
+def convert_elementary_transform(matrix, transform):
+    if transform.transform_scale():
+        transform_scale = transform.transform_scale()
+        transform_atom = transform_scale.transform_atom()
+        expr = None
+        num = int(transform_atom.NUMBER().getText()) - 1
+        if transform_scale.expr():
+            expr = transform_scale.expr()
+        else:
+            expr = transform_scale.group().expr()
+        if transform_atom.ROW_OR_COL().getText() == 'r':
+            matrix = matrix.elementary_row_op(op='n->kn', row=num, k=convert_expr(expr))
+        else:
+            matrix = matrix.elementary_col_op(op='n->kn', col=num, k=convert_expr(expr))
+    elif transform.transform_swap():
+        first_atom = transform.transform_swap().transform_atom()[0]
+        second_atom = transform.transform_swap().transform_atom()[1]
+        first_num = int(first_atom.NUMBER().getText()) - 1
+        second_num = int(second_atom.NUMBER().getText()) - 1
+        if first_atom.ROW_OR_COL().getText() != second_atom.ROW_OR_COL().getText():
+            raise Exception('Row and col don\'s match')
+        elif first_atom.ROW_OR_COL().getText() == 'r':
+            matrix = matrix.elementary_row_op(op='n<->m', row1=first_num, row2=second_num)
+        else:
+            matrix = matrix.elementary_col_op(op='n<->m', col1=first_num, col2=second_num)
+    elif transform.transform_assignment():
+        first_atom = transform.transform_assignment().transform_atom()
+        second_atom = transform.transform_assignment().transform_scale().transform_atom()
+        if transform.transform_assignment().transform_scale().expr():
+            expr = transform.transform_assignment().transform_scale().expr()
+        else:
+            expr = transform.transform_assignment().transform_scale().group().expr()
+        first_num = int(first_atom.NUMBER().getText()) - 1
+        second_num = int(second_atom.NUMBER().getText()) - 1
+        if first_atom.ROW_OR_COL().getText() != second_atom.ROW_OR_COL().getText():
+            raise Exception('Row and col don\'s match')
+        elif first_atom.ROW_OR_COL().getText() == 'r':
+            matrix = matrix.elementary_row_op(op='n->n+km', k=convert_expr(expr), row1=first_num, row2=second_num)
+        else:
+            matrix = matrix.elementary_col_op(op='n->n+km', k=convert_expr(expr), col1=first_num, col2=second_num)
+
+    return matrix
+
 
 def convert_matrix(matrix):
-
     # build matrix
     row = matrix.matrix_row()
     tmp = []
     rows = 0
+    mat = None
+
     for r in row:
         tmp.append([])
         for expr in r.expr():
@@ -141,11 +185,24 @@ def convert_matrix(matrix):
         rows = rows + 1
 
     if matrix.transpose():
-        return sympy.Matrix(tmp).transpose()
-        # return the transposed matrix
+        mat = sympy.Matrix(tmp).transpose()
     else:
-        return sympy.Matrix(tmp)
-        # return the matrix
+        mat = sympy.Matrix(tmp)
+
+    transforms_list = matrix.elementary_transforms()
+    if matrix.MATRIX_XRIGHTARROW():
+        if len(transforms_list) == 1:
+            for transform in transforms_list[0].elementary_transform():
+                mat = convert_elementary_transform(mat, transform)
+        elif len(transforms_list) == 2:
+            # firstly transform top of xrightarrow 
+            for transform in transforms_list[1].elementary_transform():
+                mat = convert_elementary_transform(mat, transform)
+            # firstly transform bottom of xrightarrow 
+            for transform in transforms_list[0].elementary_transform():
+                mat = convert_elementary_transform(mat, transform)
+
+    return mat
 
 
 def add_flat(lh, rh):
@@ -877,13 +934,7 @@ if __name__ == '__main__':
     # print("math:", math.xreplace(variances))
     # print("cal:", tex2cal(tex))
     # print("variances:", variances)
-    tex = r"A=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}"
-    math = latex2sympy(tex)
-    print("latex:", tex)
-    print("math:", math.subs(variances))
-    print("math:", math.subs(variances).doit())
-    print("cal:", tex2cal(tex))
-    tex = r"A==\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}"
+    tex = r"\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}\xrightarrow[r_1\leftrightarrow r_2, xc_{1}]{2r_1, c_2-xc_1}"
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", math.subs(variances))

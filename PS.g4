@@ -126,6 +126,8 @@ CMD_DET_END: '\\end' L_BRACE MATRIX_TYPE_DET R_BRACE;
 MATRIX_DEL_COL: '&';
 MATRIX_DEL_ROW: '\\\\';
 
+MATRIX_XRIGHTARROW: '\\xrightarrow';
+
 //accents such as overline and hat
 ACCENT_OVERLINE:  '\\overline';
 ACCENT_BAR:  '\\bar';
@@ -152,12 +154,13 @@ NUMBER:
 
 E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
-EQUAL: '=';
+ASSIGNMENT: '=';
+EQUAL: '==' | '\\equiv';
 LT: '<';
 LTE: '\\leq' | '\\le' | '\\leqslant';
 GT: '>';
 GTE: '\\geq' | '\\ge' | '\\geqslant';
-UNEQUAL: '!=' | '\\ne' | '\\neq';
+UNEQUAL: '!=' | '!==' | '\\ne' | '\\neq' | '\\not\\equiv';
 
 BANG: '!';
 
@@ -237,21 +240,30 @@ accent_symbol:
 
 math: relation | relation_list;
 
+transpose: '^T' | '\'';
+
+// elementary_transform_target: 'r' | 'c';
+
+// elementary_transform: group elementary_transform_target UNDERSCORE;
+
 matrix:
     CMD_MATRIX_START
     matrix_row (MATRIX_DEL_ROW matrix_row)*
-    CMD_MATRIX_END;
+    CMD_MATRIX_END
+    transpose?;
+    // MATRIX_XRIGHTARROW ()? L_BRACE R_BRACE;
 
 det:
     CMD_DET_START
     matrix_row (MATRIX_DEL_ROW matrix_row)*
-    CMD_DET_END;
+    CMD_DET_END
+    transpose?;
 
 matrix_row:
     expr (MATRIX_DEL_COL expr)*;
 
 relation:
-    relation (EQUAL | LT | LTE | GT | GTE | UNEQUAL) relation
+    relation (ASSIGNMENT | EQUAL | LT | LTE | GT | GTE | UNEQUAL) relation
     | expr;
 
 relation_list:
@@ -269,7 +281,7 @@ relation_list_content:
     | relation SEMICOLON relation (SEMICOLON relation)*;
 
 equality:
-    expr EQUAL expr;
+    expr (EQUAL | ASSIGNMENT) expr;
 
 expr: additive;
 

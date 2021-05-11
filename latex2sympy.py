@@ -113,6 +113,9 @@ def convert_relation(rel):
     elif rel.GTE():
         return sympy.GreaterThan(lh, rh, evaluate=False)
     elif rel.EQUAL():
+        return sympy.Eq(lh, rh, evaluate=False)
+    elif rel.ASSIGNMENT():
+        # !Use Global variances
         variances[lh] = rh
         var[str(lh)] = rh
         return rh
@@ -137,8 +140,12 @@ def convert_matrix(matrix):
             tmp[rows].append(convert_expr(expr))
         rows = rows + 1
 
-    # return the matrix
-    return sympy.Matrix(tmp)
+    if matrix.transpose():
+        return sympy.Matrix(tmp).transpose()
+        # return the transposed matrix
+    else:
+        return sympy.Matrix(tmp)
+        # return the matrix
 
 
 def add_flat(lh, rh):
@@ -407,7 +414,8 @@ def convert_comp(comp):
     elif comp.matrix():
         return convert_matrix(comp.matrix())
     elif comp.det():
-        return convert_matrix(comp.det()).det()
+        # !Use Global variances
+        return convert_matrix(comp.det()).subs(variances).det()
     elif comp.func():
         return convert_func(comp.func())
 
@@ -858,11 +866,8 @@ def get_differential_var_str(text):
         text = text[1:]
     return text
 
-def tex2sym(tex):
-    
-    pass
-
 def tex2cal(tex):
+    # !Use Global variances
     return latex(simplify(latex2sympy(tex).subs(variances).doit()))
 
 if __name__ == '__main__':
@@ -872,7 +877,13 @@ if __name__ == '__main__':
     # print("math:", math.xreplace(variances))
     # print("cal:", tex2cal(tex))
     # print("variances:", variances)
-    tex = r"\begin{vmatrix}x&1&1\\0&x&1\\0&0&x\end{vmatrix}"
+    tex = r"A=\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}"
+    math = latex2sympy(tex)
+    print("latex:", tex)
+    print("math:", math.subs(variances))
+    print("math:", math.subs(variances).doit())
+    print("cal:", tex2cal(tex))
+    tex = r"A==\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}"
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", math.subs(variances))

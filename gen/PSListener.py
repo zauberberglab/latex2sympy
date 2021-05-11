@@ -22,6 +22,15 @@ class PSListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PSParser#transpose.
+    def enterTranspose(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#transpose.
+    def exitTranspose(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by PSParser#matrix.
     def enterMatrix(self, ctx):
         pass

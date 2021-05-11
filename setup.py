@@ -1,27 +1,32 @@
 from setuptools import setup, find_packages
+from codecs import open
+from os import path
+here = path.abspath(path.dirname(__file__))
+
 
 setup(
     name="latex2sympy2",
-    version="1.5.0",
-    description='Convert latex to sympy with ANTLR and support Matrix, Linear Algebra and CAS function.',
-    packages=find_packages(exclude=('tests')),
-    py_modules=['asciimath_printer', 'latex2sympy2'],
-    install_requires=[
-        'sympy==1.4',
-        'antlr4-python3-runtime>=4.7.2'
-    ],
+    version="1.5.6",
+    description='Convert latex to sympy with ANTLR and support Matrix, Linear Algebra and CAS functions.',
+    long_description=open(path.join(here, "description.txt"), encoding='utf-8').read(),
     # The project's main homepage.
-    url='opconty - Overview',
+    url='https://github.com/OrangeX4/latex2sympy',
     # Author details
-    author='gaolijun',
-    author_email='gao.gzhou@gmail.com',
+    author='OrangeX4',
+    author_email='318483724@qq.com',
     # Choose your license
     license='MIT',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'Topic :: System :: Logging',
+        'Intended Audience :: Education',
+        'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
+        'Topic :: Education',
+        'Topic :: Scientific/Engineering :: Mathematics',
+        'Topic :: Software Development :: Compilers',
+        'Topic :: Text Processing :: Markup :: LaTeX',
+        'Topic :: Text Processing :: Markup :: Markdown',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
@@ -30,6 +35,10 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    py_modules=["nicelogger"],
-    install_requires=['colorama']
+    packages=find_packages(exclude=('tests')),
+    py_modules=['asciimath_printer', 'latex2sympy2'],
+    install_requires=[
+        'sympy>=1.4',
+        'antlr4-python3-runtime==4.7.2'
+    ],
 )

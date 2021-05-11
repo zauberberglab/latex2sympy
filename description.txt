@@ -1,14 +1,12 @@
-![icon.png](./icon.png)
+latex2sympy2: https://github.com/OrangeX4/latex2sympy
 
-# [latex2sympy2](https://github.com/OrangeX4/latex2sympy)
-
-## About
+About
 
 `latex2sympy2` parses **LaTeX math expressions** and converts it into the equivalent **SymPy form**. The latex2sympy2 is adapted from [augustt198/latex2sympy](https://github.com/augustt198/latex2sympy) and [purdue-tlt / latex2sympy](https://github.com/purdue-tlt/latex2sympy).
 
 [ANTLR](http://www.antlr.org/) is used to generate the parser.
 
-## Features
+Features
 
 * **Arithmetic:** Add (+), Sub (-), Dot Mul (·), Cross Mul (×), Frac (/), Power (^), Abs (|x|), Sqrt (√), etc...
 * **Alphabet:** a - z, A - Z, α - ω, Subscript (x_1), Accent Bar(ā), etc...
@@ -19,7 +17,7 @@
 
 **NOTICE:** It will do some irreversible calculations when converting determinants, transposed matrixes and elementary transformations...
 
-## Installation
+Installation
 
 ```
 pip install latex2sympy2
@@ -27,9 +25,9 @@ pip install latex2sympy2
 
 **Requirements:** `sympy` and `antlr4-python3-runtime` packages.
 
-## Usage
+Usage
 
-### Basic
+ Basic
 
 In Python:
 
@@ -44,7 +42,7 @@ latex2latex(tex)
 # => "2 x + 1"
 ```
 
-### Examples
+ Examples
 
 |LaTeX|Converted SymPy|Calculated Latex|
 |-----|-----|---------------|
@@ -56,9 +54,9 @@ latex2latex(tex)
 
 If you want to read the math formula, you can click [GitNotes](https://notes.orangex4.cool/?git=github&github=OrangeX4/latex2sympy).
 
-### Matrix
+ Matrix
 
-#### Determinant
+Determinant
 
 ``` python
 from latex2sympy2 import latex2sympy
@@ -68,7 +66,7 @@ latex2sympy(tex)
 # => "x^{3}"
 ```
 
-#### Transpose
+Transpose
 
 ``` python
 from latex2sympy2 import latex2sympy
@@ -79,7 +77,7 @@ latex2sympy(tex)
 # => "Matrix([[1, 4, 7], [2, 5, 8], [3, 6, 9]])"
 ```
 
-#### Elementary Transformation
+Elementary Transformation
 
 ``` python
 from latex2sympy2 import latex2sympy
@@ -117,7 +115,7 @@ latex2sympy(tex)
 # => "Matrix([[2, 4, 6], [12, 15, 18], [28, 32, 36]])"
 ```
 
-### Variances
+ Variances
 
 ``` python
 from latex2sympy2 import latex2sympy, variances, var, set_variances
@@ -144,7 +142,7 @@ latex2sympy(r"x + y")
 ```
 
 
-## Contributing
+Contributing
 
 If you want to add a new grammar, you can fork the code from [OrangeX4/latex2sympy](https://github.com/OrangeX4/latex2sympy).
 

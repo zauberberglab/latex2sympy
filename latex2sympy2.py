@@ -243,9 +243,9 @@ def mat_add_flat(lh, rh):
             args = args + list(rh.args)
         else:
             args += [rh]
-        return sympy.MatAdd(*args, evaluate=False)
+        return sympy.MatAdd(*[arg.doit() for arg in args], evaluate=False)
     else:
-        return sympy.MatAdd(lh, rh, evaluate=False)
+        return sympy.MatAdd(lh.doit(), rh.doit(), evaluate=False)
 
 
 def mul_flat(lh, rh):
@@ -275,9 +275,9 @@ def mat_mul_flat(lh, rh):
             args = args + list(rh.args)
         else:
             args += [rh]
-        return sympy.MatMul(*args, evaluate=False)
+        return sympy.MatMul(*[arg.doit() for arg in args], evaluate=False)
     else:
-        return sympy.MatMul(lh, rh, evaluate=False)
+        return sympy.MatMul(lh.doit(), rh.doit(), evaluate=False)
 
 
 def convert_add(add):
@@ -939,22 +939,23 @@ def latex2latex(tex):
     return latex(simplify(latex2sympy(tex).subs(variances).doit()))
 
 if __name__ == '__main__':
-    # tex = r"y = \frac{1}{2}x + 1"
-    # math = latex2sympy(tex)
-    # print("latex:", tex)
-    # print("math:", math.xreplace(variances))
-    # print("cal:", tex2cal(tex))
+    tex = r"\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}^{-1}+\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}^{-1}\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}"
+    math = latex2sympy(tex)
+    print("latex:", tex)
+    print("math:", math.subs(variances))
+    print("math_type:", type(math))
+    print("cal:", latex2latex(tex))
     # print("variances:", variances)
     # tex = r"\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}\xrightarrow[r_1\leftrightarrow r_2, xc_{1}]{2r_1, c_2-xc_1}"
-    math = latex2sympy("x = 1")
-    math = latex2sympy("x + y")
-    # print("latex:", tex)
-    print("math:", math.subs(variances))
-    print("math:", math.subs(variances).doit())
-    # print("cal:", latex2latex(tex))
-    print('variances:', variances)
-    print(var['x'])
-    set_variances({})
-    print('variances:', variances)
-    math = latex2sympy("x + y")
-    print("math:", math.subs(variances))
+    # math = latex2sympy("x = 1")
+    # math = latex2sympy("x + y")
+    # # print("latex:", tex)
+    # print("math:", math.subs(variances))
+    # print("math:", math.subs(variances).doit())
+    # # print("cal:", latex2latex(tex))
+    # print('variances:', variances)
+    # print(var['x'])
+    # set_variances({})
+    # print('variances:', variances)
+    # math = latex2sympy("x + y")
+    # print("math:", math.subs(variances))

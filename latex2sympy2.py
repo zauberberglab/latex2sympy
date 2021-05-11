@@ -23,8 +23,19 @@ var = {}
 
 VARIABLE_VALUES = {}
 
+def set_variances(vars):
+    global variances
+    variances = vars
+    global var
+    var = {}
+    for variance in vars:
+        var[str(variance)] = vars[variance]
 
-def latex2sympy(sympy, variable_values={}):
+def latex2sympy(sympy: str, variable_values={}):
+    # Remove \n and \t
+    # sympy = sympy.replace('\n', '', -1).replace('\t', '', -1)
+    # Translate Derivative
+    sympy = sympy.replace(r'\mathrm{d}', 'd', -1).replace(r'{\rm d}', 'd', -1)
 
     # variable values
     global VARIABLE_VALUES
@@ -189,8 +200,8 @@ def convert_matrix(matrix):
     else:
         mat = sympy.Matrix(tmp)
 
-    transforms_list = matrix.elementary_transforms()
-    if matrix.MATRIX_XRIGHTARROW():
+    if hasattr(matrix, 'MATRIX_XRIGHTARROW') and matrix.MATRIX_XRIGHTARROW():
+        transforms_list = matrix.elementary_transforms()
         if len(transforms_list) == 1:
             for transform in transforms_list[0].elementary_transform():
                 mat = convert_elementary_transform(mat, transform)
@@ -923,7 +934,7 @@ def get_differential_var_str(text):
         text = text[1:]
     return text
 
-def tex2cal(tex):
+def latex2latex(tex):
     # !Use Global variances
     return latex(simplify(latex2sympy(tex).subs(variances).doit()))
 
@@ -934,9 +945,16 @@ if __name__ == '__main__':
     # print("math:", math.xreplace(variances))
     # print("cal:", tex2cal(tex))
     # print("variances:", variances)
-    tex = r"\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}\xrightarrow[r_1\leftrightarrow r_2, xc_{1}]{2r_1, c_2-xc_1}"
-    math = latex2sympy(tex)
-    print("latex:", tex)
+    # tex = r"\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}\xrightarrow[r_1\leftrightarrow r_2, xc_{1}]{2r_1, c_2-xc_1}"
+    math = latex2sympy("x = 1")
+    math = latex2sympy("x + y")
+    # print("latex:", tex)
     print("math:", math.subs(variances))
     print("math:", math.subs(variances).doit())
-    print("cal:", tex2cal(tex))
+    # print("cal:", latex2latex(tex))
+    print('variances:', variances)
+    print(var['x'])
+    set_variances({})
+    print('variances:', variances)
+    math = latex2sympy("x + y")
+    print("math:", math.subs(variances))

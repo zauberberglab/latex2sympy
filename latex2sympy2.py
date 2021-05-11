@@ -936,7 +936,7 @@ def get_differential_var_str(text):
 
 def latex2latex(tex):
     # !Use Global variances
-    return latex(simplify(latex2sympy(tex).subs(variances).doit()))
+    return latex(simplify(latex2sympy(tex).subs(variances).doit().doit()))
 
 if __name__ == '__main__':
     tex = r"\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}^{-1}+\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}^{-1}\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}"

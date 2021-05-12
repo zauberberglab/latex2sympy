@@ -260,7 +260,7 @@ matrix:
 
 det:
     CMD_DET_START
-    matrix_row (MATRIX_DEL_ROW matrix_row)*
+    matrix_row (MATRIX_DEL_ROW matrix_row)* MATRIX_DEL_ROW?
     CMD_DET_END
     transpose?;
 

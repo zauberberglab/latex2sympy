@@ -939,7 +939,7 @@ def latex2latex(tex):
     return latex(simplify(latex2sympy(tex).subs(variances).doit().doit()))
 
 if __name__ == '__main__':
-    tex = r"\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}^{-1}+\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}^{-1}\begin{pmatrix}1&1&1\\0&1&1\\0&0&1\end{pmatrix}"
+    tex = r"\begin{vmatrix}1&1&1\\0&1&1\\0&0&1\\\end{vmatrix}"
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", math.subs(variances))

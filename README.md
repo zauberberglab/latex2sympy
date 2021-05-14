@@ -143,6 +143,14 @@ latex2sympy(r"x + y")
 # => "x + y"
 ```
 
+### Complex Number Support
+
+``` python
+from latex2sympy2 import set_real
+
+set_real(False)
+```
+
 
 ## Contributing
 

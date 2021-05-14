@@ -277,7 +277,14 @@ def mat_mul_flat(lh, rh):
             args += [rh]
         return sympy.MatMul(*[arg.doit() for arg in args], evaluate=False)
     else:
-        return sympy.MatMul(lh.doit(), rh.doit(), evaluate=False)
+        if hasattr(lh, 'doit') and hasattr(rh, 'doit'):  
+            return sympy.MatMul(lh.doit(), rh.doit(), evaluate=False)
+        elif hasattr(lh, 'doit') and not hasattr(rh, 'doit'):
+            return sympy.MatMul(lh.doit(), rh, evaluate=False)
+        elif not hasattr(lh, 'doit') and hasattr(rh, 'doit'):
+            return sympy.MatMul(lh, rh.doit(), evaluate=False)
+        else:
+            return sympy.MatMul(lh, rh, evaluate=False)
 
 
 def convert_add(add):
@@ -939,7 +946,7 @@ def latex2latex(tex):
     return latex(simplify(latex2sympy(tex).subs(variances).doit().doit()))
 
 if __name__ == '__main__':
-    tex = r"\begin{vmatrix}1&1&1\\0&1&1\\0&0&1\\\end{vmatrix}"
+    tex = r"E=\lambda\begin{bmatrix}1 &0 &0 \\0 &1 &0 \\0 &0 &1 \\\end{bmatrix}-\begin{bmatrix}5 &6 &-3 \\	-1 &0 &1 \\	1 &2 &-1 \\\end{bmatrix}"
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", math.subs(variances))

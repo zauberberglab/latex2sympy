@@ -18,7 +18,7 @@ from sympy.parsing.sympy_parser import parse_expr
 
 import hashlib
 
-is_real = True
+is_real = None
 
 variances = {}
 var = {}

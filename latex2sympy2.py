@@ -975,18 +975,26 @@ def latex2latex(tex):
 
     # Replace r with another symbol
     replaced = ""
-    newTex = ""
+    newTex = "" # New TeX expression
+    command = "" # Record the command
     for expr in replacement:
         if tex.find(expr) == -1:
             replaced = expr
             TexCmd = False # If it is a LaTeX command
             for ch in tex:
-                if ch == '\\':
-                    if TexCmd: TexCmd = False # Line break
-                    else: TexCmd = True # New command
+                if ch == '\\' and not TexCmd: # New command
+                    TexCmd = True
                     newTex += ch
+                    command = '\\' # Record the command
                 elif ch.isalnum() and TexCmd: # Still a command
                     newTex += ch
+                    command += ch
+                elif ch == '{' and TexCmd: # Exception: \begin{} ... \end{}
+                    if command == r'\begin' or command == r'\end':
+                        newTex += ch
+                        command += ch
+                    else: # Not an exception
+                        TexCmd = False
                 else: # Not a command
                     TexCmd = False
                     if ch == 'r': # Replace

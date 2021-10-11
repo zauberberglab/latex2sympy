@@ -991,12 +991,14 @@ def latex2latex(tex):
                     command += ch
                 elif ch == '{' and TexCmd: # Exception: \begin{} ... \end{}
                     if command == r'\begin' or command == r'\end':
-                        newTex += ch
                         command += ch
                     else: # Not an exception
                         TexCmd = False
+                        command = ""
+                    newTex += ch
                 else: # Not a command
                     TexCmd = False
+                    command = ""
                     if ch == 'r': # Replace
                         newTex += replaced + ' '
                     else:

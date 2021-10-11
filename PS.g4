@@ -245,7 +245,7 @@ math: relation | relation_list;
 transpose: '^T' | '\'';
 
 transform_atom: ROW_OR_COL UNDERSCORE (NUMBER | L_BRACE NUMBER R_BRACE);
-transform_scale: (expr | group) transform_atom;
+transform_scale: (expr | group | ADD | SUB) transform_atom;
 transform_swap: transform_atom TRANSFORM_EXCHANGE transform_atom;
 transform_assignment: transform_atom transform_scale;
 elementary_transform: transform_scale | transform_swap | transform_assignment;

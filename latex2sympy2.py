@@ -1,5 +1,6 @@
 import sympy
-from sympy import latex, simplify
+import re
+from sympy import simplify
 from antlr4 import InputStream, CommonTokenStream
 from antlr4.error.ErrorListener import ErrorListener
 
@@ -42,6 +43,12 @@ def latex2sympy(sympy: str, variable_values={}):
     # sympy = sympy.replace('\n', '', -1).replace('\t', '', -1)
     # Translate Derivative
     sympy = sympy.replace(r'\mathrm{d}', 'd', -1).replace(r'{\rm d}', 'd', -1)
+    # Translate Matrix
+    sympy = sympy.replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
+    # Translate Permutation
+    sympy = re.sub(r"\(([a-zA-Z0-9+\-*/\\ ]+?)\)_{([a-zA-Z0-9+\-*/\\ ]+?)}", r"\\frac{(\1)!}{((\1)-(\2))!}", sympy)
+    # Remove \displaystyle
+    sympy = sympy.replace(r'\displaystyle', ' ', -1)
 
     # variable values
     global VARIABLE_VALUES
@@ -148,16 +155,21 @@ def convert_elementary_transform(matrix, transform):
     if transform.transform_scale():
         transform_scale = transform.transform_scale()
         transform_atom = transform_scale.transform_atom()
-        expr = None
+        k = None
         num = int(transform_atom.NUMBER().getText()) - 1
         if transform_scale.expr():
-            expr = transform_scale.expr()
+            k = convert_expr(transform_scale.expr())
+        elif transform_scale.group():
+            k = convert_expr(transform_scale.group().expr())
+        elif transform_scale.SUB():
+            k = -1
         else:
-            expr = transform_scale.group().expr()
+            k = 1
         if transform_atom.ROW_OR_COL().getText() == 'r':
-            matrix = matrix.elementary_row_op(op='n->kn', row=num, k=convert_expr(expr))
+            matrix = matrix.elementary_row_op(op='n->kn', row=num, k=k)
         else:
-            matrix = matrix.elementary_col_op(op='n->kn', col=num, k=convert_expr(expr))
+            matrix = matrix.elementary_col_op(op='n->kn', col=num, k=k)
+
     elif transform.transform_swap():
         first_atom = transform.transform_swap().transform_atom()[0]
         second_atom = transform.transform_swap().transform_atom()[1]
@@ -169,21 +181,28 @@ def convert_elementary_transform(matrix, transform):
             matrix = matrix.elementary_row_op(op='n<->m', row1=first_num, row2=second_num)
         else:
             matrix = matrix.elementary_col_op(op='n<->m', col1=first_num, col2=second_num)
+
     elif transform.transform_assignment():
         first_atom = transform.transform_assignment().transform_atom()
         second_atom = transform.transform_assignment().transform_scale().transform_atom()
-        if transform.transform_assignment().transform_scale().expr():
-            expr = transform.transform_assignment().transform_scale().expr()
+        transform_scale = transform.transform_assignment().transform_scale()
+        k = None
+        if transform_scale.expr():
+            k = convert_expr(transform_scale.expr())
+        elif transform_scale.group():
+            k = convert_expr(transform_scale.group().expr())
+        elif transform_scale.SUB():
+            k = -1
         else:
-            expr = transform.transform_assignment().transform_scale().group().expr()
+            k = 1
         first_num = int(first_atom.NUMBER().getText()) - 1
         second_num = int(second_atom.NUMBER().getText()) - 1
         if first_atom.ROW_OR_COL().getText() != second_atom.ROW_OR_COL().getText():
             raise Exception('Row and col don\'s match')
         elif first_atom.ROW_OR_COL().getText() == 'r':
-            matrix = matrix.elementary_row_op(op='n->n+km', k=convert_expr(expr), row1=first_num, row2=second_num)
+            matrix = matrix.elementary_row_op(op='n->n+km', k=k, row1=first_num, row2=second_num)
         else:
-            matrix = matrix.elementary_col_op(op='n->n+km', k=convert_expr(expr), col1=first_num, col2=second_num)
+            matrix = matrix.elementary_col_op(op='n->n+km', k=k, col1=first_num, col2=second_num)
 
     return matrix
 
@@ -947,14 +966,49 @@ def get_differential_var_str(text):
         text = text[1:]
     return text
 
+def latex(tex):
+    return sympy.latex(tex).replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
+
 def latex2latex(tex):
-    # !Use Global variances
-    return latex(simplify(latex2sympy(tex).subs(variances).doit().doit()))
+    # All supported Greek alphabets
+    replacement = [ r'\alpha', r'\beta', r'\gamma', r'\delta', r'\epsilon', r'\varepsilon', r'\zeta', r'\eta', r'\theta', r'\vartheta', r'\iota', r'\kappa', r'\lambda', r'\mu', r'\nu', r'\xi', r'\pi', r'\varpi', r'\rho', r'\varrho', r'\sigma', r'\varsigma', r'\tau', r'\upsilon', r'\phi', r'\varphi', r'\chi', r'\psi', r'\omega', r'\Gamma', r'\Delta', r'\Theta', r'\Lambda', r'\Xi', r'\Pi', r'\Sigma', r'\Upsilon', r'\Phi', r'\Psi', r'\Omega' ]
+
+    # Replace r with another symbol
+    replaced = ""
+    newTex = ""
+    for expr in replacement:
+        if tex.find(expr) == -1:
+            replaced = expr
+            TexCmd = False # If it is a LaTeX command
+            for ch in tex:
+                if ch == '\\':
+                    if TexCmd: TexCmd = False # Line break
+                    else: TexCmd = True # New command
+                    newTex += ch
+                elif ch.isalnum() and TexCmd: # Still a command
+                    newTex += ch
+                else: # Not a command
+                    TexCmd = False
+                    if ch == 'r': # Replace
+                        newTex += replaced + ' '
+                    else:
+                        newTex += ch
+            break
+    if replaced == "": newTex = tex
+
+    # Evaluation
+    newTex = sympy.latex(simplify(latex2sympy(newTex).subs(variances).doit().doit())).replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
+
+    # Modify the result
+    if replaced == "":
+        return newTex
+    else:
+        return newTex.replace(replaced, 'r', -1)
 
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r"\int \cos xe^{-ikx}dx"
+    tex = r"(4)_{4}"
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", math.subs(variances))

@@ -9,7 +9,7 @@ cd $rel_path
 echo "creating venv..."
 if test -d .env
 then echo "venv exists"
-else python -m venv .env && echo "venv created"
+else python3 -m venv .env && echo "venv created"
 fi
 
 echo ''

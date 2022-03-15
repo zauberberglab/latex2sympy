@@ -1,21 +1,5 @@
 {
-    "cSpell.words": [
-        "PAREN",
-        "arcosh",
-        "arsinh",
-        "artanh",
-        "augustt",
-        "binom",
-        "delim",
-        "doprint",
-        "nofunc",
-        "noparens",
-        "nsimplify",
-        "subeq",
-        "subexpr",
-        "supexpr",
-        "syms",
-        "xbar",
-        "xreplace"
-    ]
+    "python.testing.pytestArgs": [],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

@@ -129,6 +129,11 @@ MATRIX_DEL_ROW: '\\\\';
 //accents such as overline and hat
 ACCENT_OVERLINE:  '\\overline';
 ACCENT_BAR:  '\\bar';
+ACCENT_DOT:  '\\dot';
+ACCENT_DDOT:  '\\ddot';
+ACCENT_VEC:  '\\vec';
+ACCENT_HAT:  '\\hat';
+ACCENT_TILDE:  '\\tilde';
 
 UNDERSCORE: '_';
 CARET: '^';
@@ -237,7 +242,7 @@ VARIABLE: VARIABLE_CMD L_BRACE VARIABLE_SYMBOL R_BRACE PERCENT_SIGN?;
 
 //collection of accents
 accent_symbol:
-    ACCENT_BAR | ACCENT_OVERLINE;
+    ACCENT_BAR | ACCENT_OVERLINE | ACCENT_DOT | ACCENT_DDOT | ACCENT_VEC | ACCENT_HAT | ACCENT_TILDE;
 
 math: relation | relation_list;
 

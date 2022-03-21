@@ -1,6 +1,6 @@
 import sympy
 import re
-from sympy import simplify, factor, expand
+from sympy import simplify, factor, expand, apart, expand_trig
 from antlr4 import InputStream, CommonTokenStream
 from antlr4.error.ErrorListener import ErrorListener
 
@@ -995,7 +995,7 @@ def latex2latex(tex):
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r'1/3'
+    tex = r'\vec{x}'
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", latex(math.evalf(subs=variances)))

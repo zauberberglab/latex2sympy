@@ -6,7 +6,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name="latex2sympy2",
-    version="1.6.14",
+    version="1.6.16",
     description='Convert latex to sympy with ANTLR and support Matrix, Linear Algebra and CAS functions.',
     long_description_content_type='text/markdown',
     long_description=open(path.join(here, "README.md"), encoding='utf-8').read(),

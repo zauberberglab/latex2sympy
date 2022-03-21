@@ -42,8 +42,6 @@ def set_variances(vars):
 
 
 def latex2sympy(sympy: str, variable_values={}):
-    # Remove \n and \t
-    # sympy = sympy.replace('\n', '', -1).replace('\t', '', -1)
     # Translate Derivative
     sympy = sympy.replace(r'\mathrm{d}', 'd', -1).replace(r'{\rm d}', 'd', -1)
     # Translate Matrix
@@ -52,6 +50,8 @@ def latex2sympy(sympy: str, variable_values={}):
     sympy = re.sub(r"\(([a-zA-Z0-9+\-*/\\ ]+?)\)_{([a-zA-Z0-9+\-*/\\ ]+?)}", r"\\frac{(\1)!}{((\1)-(\2))!}", sympy)
     # Remove \displaystyle
     sympy = sympy.replace(r'\displaystyle', ' ', -1)
+    # Remove \quad
+    sympy = sympy.replace(r'\quad', ' ', -1).replace(r'\qquad', ' ', -1).replace(r'~', ' ', -1).replace(r'\,', ' ', -1)
 
     # variable values
     global VARIABLE_VALUES
@@ -978,7 +978,12 @@ def get_differential_var_str(text):
 
 
 def latex(tex):
-    return sympy.latex(tex).replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
+    result = sympy.latex(tex)
+    result = result.replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
+    result = result.replace(r'\left', r'', -1).replace(r'\right', r'', -1)
+    result = result.replace(r' )', r')', -1)
+    result = result.replace(r'\log', r'\ln', -1)
+    return result
 
 
 def latex2latex(tex):
@@ -988,16 +993,9 @@ def latex2latex(tex):
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r'''
-    \begin{pmatrix}
-        1 & 2 & 3 \\ 
-        4 & 5 & 6 \\
-        7 & 8 & 9 \\ 
-    \end{pmatrix}
-    ^{T}
-    '''
+    tex = r'1/3'
     math = latex2sympy(tex)
     print("latex:", tex)
-    print("math:", math.subs(variances))
-    print("math_type:", type(math))
+    print("math:", latex(math.evalf(subs=variances)))
+    print("math_type:", type(math.evalf(subs=variances)))
     print("cal:", latex2latex(tex))

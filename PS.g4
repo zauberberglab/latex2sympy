@@ -126,10 +126,6 @@ CMD_DET_END: '\\end' L_BRACE MATRIX_TYPE_DET R_BRACE;
 MATRIX_DEL_COL: '&';
 MATRIX_DEL_ROW: '\\\\';
 
-MATRIX_XRIGHTARROW: '\\xrightarrow' | '\\xRightarrow';
-TRANSFORM_EXCHANGE: '<->' | '<=>' | '\\leftrightarrow' | '\\Leftrightarrow';
-ROW_OR_COL: 'r' | 'c';
-
 //accents such as overline and hat
 ACCENT_OVERLINE:  '\\overline';
 ACCENT_BAR:  '\\bar';
@@ -149,6 +145,9 @@ E_NOTATION_E: 'E';
 LETTER_NO_E: [a-df-zA-DF-Z]; // exclude e for exponential function and e notation
 fragment LETTER: [a-zA-Z];
 fragment DIGIT: [0-9];
+
+MATRIX_XRIGHTARROW: '\\xrightarrow' | '\\xRightarrow';
+TRANSFORM_EXCHANGE: '<->' | '<=>' | '\\leftrightarrow' | '\\Leftrightarrow';
 
 NUMBER:
     DIGIT+ (COMMA DIGIT DIGIT DIGIT)*
@@ -242,9 +241,9 @@ accent_symbol:
 
 math: relation | relation_list;
 
-transpose: '^T' | '\'';
+transpose: '^T' | '^{T}' |  '^{\\top}' | '\'';
 
-transform_atom: ROW_OR_COL UNDERSCORE (NUMBER | L_BRACE NUMBER R_BRACE);
+transform_atom: LETTER_NO_E UNDERSCORE (NUMBER | L_BRACE NUMBER R_BRACE);
 transform_scale: (expr | group | ADD | SUB) transform_atom;
 transform_swap: transform_atom TRANSFORM_EXCHANGE transform_atom;
 transform_assignment: transform_atom transform_scale;

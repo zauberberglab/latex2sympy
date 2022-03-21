@@ -1,4 +1,4 @@
-![icon.png](./icon.png)
+![Logo](https://gitee.com/orangex4/picgo/raw/master/images/icon.png)
 
 # [latex2sympy2](https://github.com/OrangeX4/latex2sympy)
 

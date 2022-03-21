@@ -26,9 +26,11 @@ var = {}
 
 VARIABLE_VALUES = {}
 
+
 def set_real(value):
     global is_real
     is_real = value
+
 
 def set_variances(vars):
     global variances
@@ -37,6 +39,7 @@ def set_variances(vars):
     var = {}
     for variance in vars:
         var[str(variance)] = vars[variance]
+
 
 def latex2sympy(sympy: str, variable_values={}):
     # Remove \n and \t
@@ -151,6 +154,7 @@ def convert_expr(expr):
     if expr.additive():
         return convert_add(expr.additive())
 
+
 def convert_elementary_transform(matrix, transform):
     if transform.transform_scale():
         transform_scale = transform.transform_scale()
@@ -165,22 +169,26 @@ def convert_elementary_transform(matrix, transform):
             k = -1
         else:
             k = 1
-        if transform_atom.ROW_OR_COL().getText() == 'r':
+        if transform_atom.LETTER_NO_E().getText() == 'r':
             matrix = matrix.elementary_row_op(op='n->kn', row=num, k=k)
-        else:
+        elif transform_atom.LETTER_NO_E().getText() == 'c':
             matrix = matrix.elementary_col_op(op='n->kn', col=num, k=k)
+        else:
+            raise Exception('Row and col don\'s match')
 
     elif transform.transform_swap():
         first_atom = transform.transform_swap().transform_atom()[0]
         second_atom = transform.transform_swap().transform_atom()[1]
         first_num = int(first_atom.NUMBER().getText()) - 1
         second_num = int(second_atom.NUMBER().getText()) - 1
-        if first_atom.ROW_OR_COL().getText() != second_atom.ROW_OR_COL().getText():
+        if first_atom.LETTER_NO_E().getText() != second_atom.LETTER_NO_E().getText():
             raise Exception('Row and col don\'s match')
-        elif first_atom.ROW_OR_COL().getText() == 'r':
+        elif first_atom.LETTER_NO_E().getText() == 'r':
             matrix = matrix.elementary_row_op(op='n<->m', row1=first_num, row2=second_num)
-        else:
+        elif first_atom.LETTER_NO_E().getText() == 'c':
             matrix = matrix.elementary_col_op(op='n<->m', col1=first_num, col2=second_num)
+        else:
+            raise Exception('Row and col don\'s match')
 
     elif transform.transform_assignment():
         first_atom = transform.transform_assignment().transform_atom()
@@ -197,12 +205,14 @@ def convert_elementary_transform(matrix, transform):
             k = 1
         first_num = int(first_atom.NUMBER().getText()) - 1
         second_num = int(second_atom.NUMBER().getText()) - 1
-        if first_atom.ROW_OR_COL().getText() != second_atom.ROW_OR_COL().getText():
+        if first_atom.LETTER_NO_E().getText() != second_atom.LETTER_NO_E().getText():
             raise Exception('Row and col don\'s match')
-        elif first_atom.ROW_OR_COL().getText() == 'r':
+        elif first_atom.LETTER_NO_E().getText() == 'r':
             matrix = matrix.elementary_row_op(op='n->n+km', k=k, row1=first_num, row2=second_num)
-        else:
+        elif first_atom.LETTER_NO_E().getText() == 'c':
             matrix = matrix.elementary_col_op(op='n->n+km', k=k, col1=first_num, col2=second_num)
+        else:
+            raise Exception('Row and col don\'s match')
 
     return matrix
 
@@ -231,10 +241,10 @@ def convert_matrix(matrix):
             for transform in transforms_list[0].elementary_transform():
                 mat = convert_elementary_transform(mat, transform)
         elif len(transforms_list) == 2:
-            # firstly transform top of xrightarrow 
+            # firstly transform top of xrightarrow
             for transform in transforms_list[1].elementary_transform():
                 mat = convert_elementary_transform(mat, transform)
-            # firstly transform bottom of xrightarrow 
+            # firstly transform bottom of xrightarrow
             for transform in transforms_list[0].elementary_transform():
                 mat = convert_elementary_transform(mat, transform)
 
@@ -302,7 +312,7 @@ def mat_mul_flat(lh, rh):
             args += [rh]
         return sympy.MatMul(*[arg.doit() for arg in args], evaluate=False)
     else:
-        if hasattr(lh, 'doit') and hasattr(rh, 'doit'):  
+        if hasattr(lh, 'doit') and hasattr(rh, 'doit'):
             return sympy.MatMul(lh.doit(), rh.doit(), evaluate=False)
         elif hasattr(lh, 'doit') and not hasattr(rh, 'doit'):
             return sympy.MatMul(lh.doit(), rh, evaluate=False)
@@ -966,75 +976,28 @@ def get_differential_var_str(text):
         text = text[1:]
     return text
 
+
 def latex(tex):
     return sympy.latex(tex).replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
 
+
 def latex2latex(tex):
-    # All supported Greek alphabets
-    replacement = [ r'\alpha', r'\beta', r'\gamma', r'\delta', r'\epsilon', r'\varepsilon', r'\zeta', r'\eta', r'\theta', r'\vartheta', r'\iota', r'\kappa', r'\lambda', r'\mu', r'\nu', r'\xi', r'\pi', r'\varpi', r'\rho', r'\varrho', r'\sigma', r'\varsigma', r'\tau', r'\upsilon', r'\phi', r'\varphi', r'\chi', r'\psi', r'\omega', r'\Gamma', r'\Delta', r'\Theta', r'\Lambda', r'\Xi', r'\Pi', r'\Sigma', r'\Upsilon', r'\Phi', r'\Psi', r'\Omega' ]
+    return latex(simplify(latex2sympy(tex).subs(variances).doit().doit()))
 
-    # Replace r with another symbol
-    replaced = ""
-    newTex = "" # New TeX expression
-    command = "" # Record the command
-    for expr in replacement:
-        if tex.find(expr) == -1:
-            replaced = expr
-            TexCmd = False # If it is a LaTeX command
-            for ch in tex:
-                if ch == '\\' and not TexCmd: # New command
-                    TexCmd = True
-                    newTex += ch
-                    command = '\\' # Record the command
-                elif ch.isalnum() and TexCmd: # Still a command
-                    newTex += ch
-                    command += ch
-                elif ch == '{' and TexCmd: # Exception: \begin{} ... \end{}
-                    if command == r'\begin' or command == r'\end':
-                        command += ch
-                    else: # Not an exception
-                        TexCmd = False
-                        command = ""
-                    newTex += ch
-                else: # Not a command
-                    TexCmd = False
-                    command = ""
-                    if ch == 'r': # Replace
-                        newTex += replaced + ' '
-                    else:
-                        newTex += ch
-            break
-    if replaced == "": newTex = tex
-
-    # Evaluation
-    newTex = sympy.latex(simplify(latex2sympy(newTex).subs(variances).doit().doit())).replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
-
-    # Modify the result
-    if replaced == "":
-        return newTex
-    else:
-        return newTex.replace(replaced, 'r', -1)
 
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r"(4)_{4}"
+    tex = r'''
+    \begin{pmatrix}
+        1 & 2 & 3 \\ 
+        4 & 5 & 6 \\
+        7 & 8 & 9 \\ 
+    \end{pmatrix}
+    ^{T}
+    '''
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", math.subs(variances))
     print("math_type:", type(math))
     print("cal:", latex2latex(tex))
-    # print("variances:", variances)
-    # tex = r"\begin{pmatrix}1&2&3\\4&5&6\\7&8&9\end{pmatrix}\xrightarrow[r_1\leftrightarrow r_2, xc_{1}]{2r_1, c_2-xc_1}"
-    # math = latex2sympy("x = 1")
-    # math = latex2sympy("x + y")
-    # # print("latex:", tex)
-    # print("math:", math.subs(variances))
-    # print("math:", math.subs(variances).doit())
-    # # print("cal:", latex2latex(tex))
-    # print('variances:', variances)
-    # print(var['x'])
-    # set_variances({})
-    # print('variances:', variances)
-    # math = latex2sympy("x + y")
-    # print("math:", math.subs(variances))

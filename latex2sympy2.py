@@ -1,6 +1,6 @@
 import sympy
 import re
-from sympy import simplify
+from sympy import simplify, factor, expand
 from antlr4 import InputStream, CommonTokenStream
 from antlr4.error.ErrorListener import ErrorListener
 
@@ -52,6 +52,8 @@ def latex2sympy(sympy: str, variable_values={}):
     sympy = sympy.replace(r'\displaystyle', ' ', -1)
     # Remove \quad
     sympy = sympy.replace(r'\quad', ' ', -1).replace(r'\qquad', ' ', -1).replace(r'~', ' ', -1).replace(r'\,', ' ', -1)
+    # Remove & $
+    sympy = sympy.replace(r'&', ' ', -1).replace(r'$', ' ', -1)
 
     # variable values
     global VARIABLE_VALUES

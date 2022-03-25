@@ -551,6 +551,10 @@ def convert_atom(atom):
             # exception: check if bar or overline which are treated both as bar
             if name in ["bar", "overline"]:
                 name = "bar"
+            if name in ["vec", "overrightarrow"]:
+                name = "vec"
+            if name in ["tilde", "widetilde"]:
+                name = "tilde"
             # get the base (variable)
             base = atom_accent.base.getText()
             # set string to base+name
@@ -995,7 +999,7 @@ def latex2latex(tex):
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r'\vec{x}'
+    tex = r'\dot{x}_1'
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", latex(math.evalf(subs=variances)))

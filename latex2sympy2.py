@@ -52,8 +52,8 @@ def latex2sympy(sympy: str, variable_values={}):
     sympy = sympy.replace(r'\displaystyle', ' ', -1)
     # Remove \quad
     sympy = sympy.replace(r'\quad', ' ', -1).replace(r'\qquad', ' ', -1).replace(r'~', ' ', -1).replace(r'\,', ' ', -1)
-    # Remove & $
-    sympy = sympy.replace(r'&', ' ', -1).replace(r'$', ' ', -1)
+    # Remove $
+    sympy = sympy.replace(r'$', ' ', -1)
 
     # variable values
     global VARIABLE_VALUES
@@ -999,7 +999,7 @@ def latex2latex(tex):
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r'\dot{x}_1'
+    tex = r'\begin{bmatrix} 1 & 2 & 3 \end{bmatrix}'
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", latex(math.evalf(subs=variances)))

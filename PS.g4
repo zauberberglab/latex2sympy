@@ -126,17 +126,6 @@ CMD_DET_END: '\\end' L_BRACE MATRIX_TYPE_DET R_BRACE;
 MATRIX_DEL_COL: '&';
 MATRIX_DEL_ROW: '\\\\';
 
-//accents such as overline and hat
-ACCENT_OVERLINE:  '\\overline';
-ACCENT_BAR:  '\\bar';
-ACCENT_DOT:  '\\dot';
-ACCENT_DDOT:  '\\ddot';
-ACCENT_HAT:  '\\hat';
-ACCENT_VEC:  '\\vec';
-ACCENT_OVERRIGHTARROW:  '\\overrightarrow';
-ACCENT_TILDE:  '\\tilde';
-ACCENT_WIDETILDE:  '\\widetilde';
-
 UNDERSCORE: '_';
 CARET: '^';
 COLON: ':';
@@ -230,21 +219,110 @@ fragment GREEK_LETTER:
     '\\psi' |
     '\\Omega' |
     '\\omega';
+
 GREEK_CMD: GREEK_LETTER [ ]?;
+
+fragment OTHER_SYMBOL:
+    '\\Bbbk'  |
+    '\\wp'  |
+    '\\nabla'  |
+    '\\bigstar'  |
+    '\\angle'  |
+    '\\nexists'  |
+    '\\diagdown'  |
+    '\\measuredangle'  |
+    '\\eth'  |
+    '\\emptyset'  |
+    '\\diagup'  |
+    '\\sphericalangle'  |
+    '\\clubsuit'  |
+    '\\varnothing'  |
+    '\\Diamond'  |
+    '\\complement'  |
+    '\\diamondsuit'  |
+    '\\imath'  |
+    '\\Finv'  |
+    '\\triangledown'  |
+    '\\heartsuit'  |
+    '\\jmath'  |
+    '\\Game'  |
+    '\\triangle'  |
+    '\\spadesuit'  |
+    '\\ell'  |
+    '\\hbar'  |
+    '\\vartriangle'  |
+    '\\hslash'  |
+    '\\blacklozenge'  |
+    '\\lozenge'  |
+    '\\blacksquare'  |
+    '\\mho'  |
+    '\\blacktriangle'  |
+    '\\sharp'  |
+    '\\prime'  |
+    '\\Im'  |
+    '\\flat'  |
+    '\\square'  |
+    '\\backprime'  |
+    '\\Re'  |
+    '\\natural'  |
+    '\\surd'  |
+    '\\circledS';
+OTHER_SYMBOL_CMD: OTHER_SYMBOL [ ]?;
 
 fragment PI: '\\pi';
 fragment INFTY_CMD: '\\infty';
+fragment PARTIAL_CMD: '\\partial';
 fragment INFTY: INFTY_CMD | DOLLAR_SIGN INFTY_CMD | INFTY_CMD PERCENT_SIGN;
 fragment EMPTYSET: '\\emptyset';
-SYMBOL: PI | INFTY | EMPTYSET;
+SYMBOL: PI | PARTIAL_CMD | INFTY | EMPTYSET;
 
 fragment VARIABLE_CMD: '\\variable';
-fragment VARIABLE_SYMBOL: (GREEK_CMD | LETTER | DIGIT)+ (UNDERSCORE ((L_BRACE (GREEK_CMD | LETTER | DIGIT | COMMA)+ R_BRACE) | (GREEK_CMD | LETTER | DIGIT)))?;
+fragment VARIABLE_SYMBOL: (GREEK_CMD | OTHER_SYMBOL_CMD | LETTER | DIGIT)+ (UNDERSCORE ((L_BRACE (GREEK_CMD | OTHER_SYMBOL_CMD | LETTER | DIGIT | COMMA)+ R_BRACE) | (GREEK_CMD | OTHER_SYMBOL_CMD | LETTER | DIGIT)))?;
 VARIABLE: VARIABLE_CMD L_BRACE VARIABLE_SYMBOL R_BRACE PERCENT_SIGN?;
 
 //collection of accents
 accent_symbol:
-    ACCENT_BAR | ACCENT_OVERLINE | ACCENT_DOT | ACCENT_DDOT | ACCENT_VEC | ACCENT_OVERRIGHTARROW | ACCENT_HAT | ACCENT_TILDE | ACCENT_WIDETILDE;
+    '\\acute'  |
+    '\\bar'  |
+    '\\overline'  |
+    '\\breve'  |
+    '\\check'  |
+    '\\widecheck'  |
+    '\\dot'  |
+    '\\ddot'  |
+    '\\grave'  |
+    '\\hat'  |
+    '\\tilde'  |
+    '\\widetilde'  |
+    '\\vec'  |
+    '\\overrightarrow'  |
+    '\\bm'  |
+    '\\boldsymbol'  |
+    '\\text'  |
+    '\\textit'  |
+    '\\mathbb'  |
+    '\\mathbin'  |
+    '\\mathbf'  |
+    '\\mathcal'  |
+    '\\mathclap'  |
+    '\\mathclose'  |
+    '\\mathellipsis'  |
+    '\\mathfrak'  |
+    '\\mathinner'  |
+    '\\mathit'  |
+    '\\mathnormal'  |
+    '\\mathop'  |
+    '\\mathopen'  |
+    '\\mathord'  |
+    '\\mathpunct'  |
+    '\\mathrel'  |
+    '\\mathring'  |
+    '\\mathrlap'  |
+    '\\mathrm'  |
+    '\\mathscr'  |
+    '\\mathsf'  |
+    '\\mathsterling'  |
+    '\\mathtt';
 
 math: relation | relation_list;
 
@@ -424,7 +502,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
-atom_expr: (LETTER_NO_E | GREEK_CMD | accent) (supexpr subexpr | subexpr supexpr | subexpr | supexpr)?;
+atom_expr: (LETTER_NO_E | GREEK_CMD | OTHER_SYMBOL_CMD | accent) (supexpr subexpr | subexpr supexpr | subexpr | supexpr)?;
 atom: atom_expr | SYMBOL | NUMBER | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
 
 mathit: CMD_MATHIT L_BRACE mathit_text R_BRACE;
@@ -511,7 +589,7 @@ args: (expr ',' args) | expr;
 
 limit_sub:
     UNDERSCORE L_BRACE
-    (LETTER_NO_E | GREEK_CMD)
+    (LETTER_NO_E | GREEK_CMD | OTHER_SYMBOL_CMD)
     LIM_APPROACH_SYM
     expr (CARET L_BRACE (ADD | SUB) R_BRACE)?
     R_BRACE;

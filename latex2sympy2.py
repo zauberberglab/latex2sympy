@@ -544,21 +544,24 @@ def convert_atom(atom):
                 return sympy.I
         elif atom_expr.GREEK_CMD():
             atom_text = atom_expr.GREEK_CMD().getText()[1:].strip()
+        elif atom_expr.OTHER_SYMBOL_CMD():
+            atom_text = atom_expr.OTHER_SYMBOL_CMD().getText().strip()
         elif atom_expr.accent():
             atom_accent = atom_expr.accent()
             # get name for accent
-            name = atom_accent.start.text[1:]
+            name = atom_accent.start.text
+            # name = atom_accent.start.text[1:]
             # exception: check if bar or overline which are treated both as bar
-            if name in ["bar", "overline"]:
-                name = "bar"
-            if name in ["vec", "overrightarrow"]:
-                name = "vec"
-            if name in ["tilde", "widetilde"]:
-                name = "tilde"
+            # if name in ["bar", "overline"]:
+            #     name = "bar"
+            # if name in ["vec", "overrightarrow"]:
+            #     name = "vec"
+            # if name in ["tilde", "widetilde"]:
+            #     name = "tilde"
             # get the base (variable)
             base = atom_accent.base.getText()
             # set string to base+name
-            atom_text = base + name
+            atom_text = name + '{' + base + '}'
 
         # find atom's subscript, if any
         subscript_text = ''
@@ -911,6 +914,8 @@ def handle_limit(func):
         var = sympy.Symbol(sub.LETTER_NO_E().getText(), real=is_real)
     elif sub.GREEK_CMD():
         var = sympy.Symbol(sub.GREEK_CMD().getText()[1:].strip(), real=is_real)
+    elif sub.OTHER_SYMBOL_CMD():
+        var = sympy.Symbol(sub.OTHER_SYMBOL_CMD().getText().strip(), real=is_real)
     else:
         var = sympy.Symbol('x', real=is_real)
     if sub.SUB():
@@ -999,7 +1004,7 @@ def latex2latex(tex):
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r'\begin{bmatrix} 1 & 2 & 3 \end{bmatrix}'
+    tex = r'\bm{x}_{ij}^{\top}+2\bm{x}_{ij}'
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", latex(math.evalf(subs=variances)))

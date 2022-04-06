@@ -151,6 +151,7 @@ NUMBER:
 
 E_NOTATION: NUMBER E_NOTATION_E (SUB | ADD)? DIGIT+;
 
+IN: '\\in';
 ASSIGNMENT: '=';
 EQUAL: '==' | '\\equiv';
 LT: '<';
@@ -339,20 +340,18 @@ matrix:
     CMD_MATRIX_START
     matrix_row (MATRIX_DEL_ROW matrix_row)* MATRIX_DEL_ROW?
     CMD_MATRIX_END
-    transpose?
     (MATRIX_XRIGHTARROW (L_BRACKET elementary_transforms R_BRACKET)? L_BRACE elementary_transforms R_BRACE)?;
 
 det:
     CMD_DET_START
     matrix_row (MATRIX_DEL_ROW matrix_row)* MATRIX_DEL_ROW?
-    CMD_DET_END
-    transpose?;
+    CMD_DET_END;
 
 matrix_row:
     expr (MATRIX_DEL_COL expr)*;
 
 relation:
-    relation (ASSIGNMENT | EQUAL | LT | LTE | GT | GTE | UNEQUAL) relation
+    relation (IN | ASSIGNMENT | EQUAL | LT | LTE | GT | GTE | UNEQUAL) relation
     | expr;
 
 relation_list:
@@ -397,7 +396,7 @@ unary_nofunc:
 
 postfix: exp postfix_op*;
 postfix_nofunc: exp_nofunc postfix_op*;
-postfix_op: BANG | eval_at;
+postfix_op: BANG | eval_at | transpose;
 
 eval_at:
     BAR (eval_at_sup | eval_at_sub | eval_at_sup eval_at_sub);

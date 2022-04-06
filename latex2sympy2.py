@@ -148,6 +148,21 @@ def convert_relation(rel):
         variances[lh] = rh
         var[str(lh)] = rh
         return rh
+    elif rel.IN():
+        # !Use Global variances
+        if hasattr(rh, 'is_Pow') and rh.is_Pow and hasattr(rh.exp, 'is_Mul'):
+            n = rh.exp.args[0]
+            m = rh.exp.args[1]
+            if n in variances:
+                n = variances[n]
+            if m in variances:
+                m = variances[m]
+            rh = sympy.MatrixSymbol(lh, n, m)
+            variances[lh] = rh
+            var[str(lh)] = rh
+        else:
+            raise Exception("Don't support this form of definition of matrix symbol.")
+        return lh
     elif rel.UNEQUAL():
         return sympy.Ne(lh, rh, evaluate=False)
 
@@ -232,10 +247,7 @@ def convert_matrix(matrix):
             tmp[rows].append(convert_expr(expr))
         rows = rows + 1
 
-    if matrix.transpose():
-        mat = sympy.Matrix(tmp).transpose()
-    else:
-        mat = sympy.Matrix(tmp)
+    mat = sympy.Matrix(tmp)
 
     if hasattr(matrix, 'MATRIX_XRIGHTARROW') and matrix.MATRIX_XRIGHTARROW():
         transforms_list = matrix.elementary_transforms()
@@ -482,6 +494,15 @@ def convert_postfix(postfix):
                 exp = at_b
             elif at_a is not None:
                 exp = at_a
+        elif op.transpose():
+            try:
+                exp = exp.T
+            except:
+                try:
+                    exp = sympy.transpose(exp)
+                except:
+                    pass
+                pass
 
     return exp
 
@@ -1004,7 +1025,8 @@ def latex2latex(tex):
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    tex = r'\bm{x}_{ij}^{\top}+2\bm{x}_{ij}'
+    latex2latex(r'X \in \mathbb{R}^{n \times m}')
+    tex = r"XX^{T}X"
     math = latex2sympy(tex)
     print("latex:", tex)
     print("math:", latex(math.evalf(subs=variances)))

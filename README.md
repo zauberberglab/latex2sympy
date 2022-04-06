@@ -125,6 +125,9 @@ from latex2sympy2 import latex2sympy, variances, var, set_variances
 # Assign x a value of 1
 latex2sympy(r"x = 1")
 
+# Assign x a matrix symbol with dimension of n x m
+latex2sympy(r"x \in \mathbb{R}^{n \times m}")
+
 # Calculate x + y
 latex2sympy(r"x + y")
 # => "y + 1"

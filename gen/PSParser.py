@@ -134,7 +134,7 @@ def serializedATN():
         buf.write(u"\5\b\5\2\u0091\13\3\2\2\2\u0092\u0093\5\b\5\2\u0093\u0094")
         buf.write(u"\7\u00a0\2\2\u0094\u0095\5\b\5\2\u0095\r\3\2\2\2\u0096")
         buf.write(u"\u0097\5\b\5\2\u0097\u0098\5\n\6\2\u0098\17\3\2\2\2\u0099")
-        buf.write(u"\u009d\5\n\6\2\u009a\u009d\5\f\7\2\u009b\u009d\5\16\b")
+        buf.write(u"\u009d\5\16\b\2\u009a\u009d\5\n\6\2\u009b\u009d\5\f\7")
         buf.write(u"\2\u009c\u0099\3\2\2\2\u009c\u009a\3\2\2\2\u009c\u009b")
         buf.write(u"\3\2\2\2\u009d\21\3\2\2\2\u009e\u00a3\5\20\t\2\u009f")
         buf.write(u"\u00a0\7\u0099\2\2\u00a0\u00a2\5\20\t\2\u00a1\u009f\3")
@@ -1228,14 +1228,14 @@ class PSParser (Parser):
             super(PSParser.Elementary_transformContext, self).__init__(parent, invokingState)
             self.parser = parser
 
+        def transform_assignment(self):
+            return self.getTypedRuleContext(PSParser.Transform_assignmentContext, 0)
+
         def transform_scale(self):
             return self.getTypedRuleContext(PSParser.Transform_scaleContext, 0)
 
         def transform_swap(self):
             return self.getTypedRuleContext(PSParser.Transform_swapContext, 0)
-
-        def transform_assignment(self):
-            return self.getTypedRuleContext(PSParser.Transform_assignmentContext, 0)
 
         def getRuleIndex(self):
             return PSParser.RULE_elementary_transform
@@ -1259,19 +1259,19 @@ class PSParser (Parser):
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 151
-                self.transform_scale()
+                self.transform_assignment()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 152
-                self.transform_swap()
+                self.transform_scale()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 153
-                self.transform_assignment()
+                self.transform_swap()
                 pass
 
         except RecognitionException as re:

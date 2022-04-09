@@ -333,7 +333,7 @@ transform_atom: LETTER_NO_E UNDERSCORE (NUMBER | L_BRACE NUMBER R_BRACE);
 transform_scale: (expr | group | ADD | SUB) transform_atom;
 transform_swap: transform_atom TRANSFORM_EXCHANGE transform_atom;
 transform_assignment: transform_atom transform_scale;
-elementary_transform: transform_scale | transform_swap | transform_assignment;
+elementary_transform: transform_assignment | transform_scale | transform_swap;
 elementary_transforms: elementary_transform (COMMA elementary_transform)*;
 
 matrix:

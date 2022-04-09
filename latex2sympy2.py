@@ -1025,10 +1025,10 @@ def latex2latex(tex):
 # Set image value
 latex2latex('i=I')
 if __name__ == '__main__':
-    latex2latex(r'X \in \mathbb{R}^{n \times m}')
-    tex = r"XX^{T}X"
-    math = latex2sympy(tex)
+    tex = r"\begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6\end{bmatrix}\xrightarrow{r_1 + 2r_2}"
+    math = latex2sympy(tex).subs(variances)
     print("latex:", tex)
-    print("math:", latex(math.evalf(subs=variances)))
-    print("math_type:", type(math.evalf(subs=variances)))
+    print("math:", latex(math.doit()))
+    print("math_type:", type(math.doit()))
+    print("shape:", (math.doit()).shape)
     print("cal:", latex2latex(tex))

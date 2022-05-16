@@ -6,6 +6,8 @@
 
 `latex2sympy2` parses **LaTeX math expressions** and converts it into the equivalent **SymPy form**. The latex2sympy2 is adapted from [augustt198/latex2sympy](https://github.com/augustt198/latex2sympy) and [purdue-tlt / latex2sympy](https://github.com/purdue-tlt/latex2sympy).
 
+This project is a part of a VS Code extension called [Latex Sympy Calculator](https://marketplace.visualstudio.com/items?itemName=OrangeX4.latex-sympy-calculator). It is designed for providing people writing in latex or markdown a ability to calculate something when writing math expression.
+
 [ANTLR](http://www.antlr.org/) is used to generate the parser.
 
 ## Features
@@ -57,6 +59,14 @@ latex2latex(tex)
 If you want to read the math formula, you can click [GitNotes](https://notes.orangex4.cool/?git=github&github=OrangeX4/latex2sympy).
 
 ### Matrix
+
+#### Identity matrix
+
+```
+tex = r"\bm{I}_3"
+latex2sympy(tex)
+# => "Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]])"
+```
 
 #### Determinant
 

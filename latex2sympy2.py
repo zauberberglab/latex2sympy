@@ -1,6 +1,6 @@
 import sympy
 import re
-from sympy import simplify, factor, expand, apart, expand_trig
+from sympy import matrix_symbols, simplify, factor, expand, apart, expand_trig
 from antlr4 import InputStream, CommonTokenStream
 from antlr4.error.ErrorListener import ErrorListener
 
@@ -603,6 +603,17 @@ def convert_atom(atom):
 
         # construct the symbol using the text and optional subscript
         atom_symbol = sympy.Symbol(atom_text + subscript_text, real=is_real)
+        # for matrix symbol
+        matrix_symbol = None
+        global var
+        if atom_text + subscript_text in var:
+            try:
+                rh = var[atom_text + subscript_text]
+                shape = sympy.shape(rh)
+                matrix_symbol = sympy.MatrixSymbol(atom_text + subscript_text, shape[0], shape[1])
+                variances[matrix_symbol] = variances[atom_symbol]
+            except:
+                pass
 
         # find the atom's superscript, and return as a Pow if found
         if atom_expr.supexpr():
@@ -614,7 +625,7 @@ def convert_atom(atom):
                 func_pow = convert_atom(supexpr.atom())
             return sympy.Pow(atom_symbol, func_pow, evaluate=False)
 
-        return atom_symbol
+        return atom_symbol if not matrix_symbol else matrix_symbol
     elif atom.SYMBOL():
         s = atom.SYMBOL().getText().replace("\\$", "").replace("\\%", "")
         if s == "\\infty":
@@ -1024,10 +1035,24 @@ def latex2latex(tex):
 
 # Set image value
 latex2latex('i=I')
+# set Identity(i)
+for i in range(1, 10):
+    lh = sympy.Symbol(r'\bm{I}_' + str(i), real=False)
+    lh_m = sympy.MatrixSymbol(r'\bm{I}_' + str(i), i, i)
+    rh = sympy.Identity(i).as_mutable()
+    variances[lh] = rh
+    variances[lh_m] = rh
+    var[str(lh)] = rh
+
 if __name__ == '__main__':
-    tex = r"\begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6\end{bmatrix}\xrightarrow{r_1 + 2r_2}"
-    math = latex2sympy(tex).subs(variances)
+    latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
+    latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
+    tex = r"\bm{I}_3"
+    math = latex2sympy(tex)
+    math = math.subs(variances)
     print("latex:", tex)
+    # print("var:", variances)
+    print("raw_math:", math)
     print("math:", latex(math.doit()))
     print("math_type:", type(math.doit()))
     print("shape:", (math.doit()).shape)

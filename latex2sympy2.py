@@ -21,6 +21,8 @@ import hashlib
 
 is_real = None
 
+frac_type = r'\frac'
+
 variances = {}
 var = {}
 
@@ -42,6 +44,16 @@ def set_variances(vars):
 
 
 def latex2sympy(sympy: str, variable_values={}):
+    # record frac
+    global frac_type
+    if sympy.find(r'\frac') != -1:
+        frac_type = r'\frac'
+    if sympy.find(r'\dfrac') != -1:
+        frac_type = r'\dfrac'
+    if sympy.find(r'\tfrac') != -1:
+        frac_type = r'\tfrac'
+    sympy = sympy.replace(r'\dfrac', r'\frac')
+    sympy = sympy.replace(r'\tfrac', r'\frac')
     # Translate Derivative
     sympy = sympy.replace(r'\mathrm{d}', 'd', -1).replace(r'{\rm d}', 'd', -1)
     # Translate Matrix
@@ -1021,7 +1033,9 @@ def get_differential_var_str(text):
 
 
 def latex(tex):
+    global frac_type
     result = sympy.latex(tex)
+    result = result.replace(r'\frac', frac_type, -1).replace(r'\dfrac', frac_type, -1).replace(r'\tfrac', frac_type, -1)
     result = result.replace(r'\left[\begin{matrix}', r'\begin{bmatrix}', -1).replace(r'\end{matrix}\right]', r'\end{bmatrix}', -1)
     result = result.replace(r'\left', r'', -1).replace(r'\right', r'', -1)
     result = result.replace(r' )', r')', -1)
@@ -1045,9 +1059,9 @@ for i in range(1, 10):
     var[str(lh)] = rh
 
 if __name__ == '__main__':
-    latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
-    latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
-    tex = r"\bm{I}_3"
+    # latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
+    # latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
+    tex = r"\dbinom{5}{3}"
     math = latex2sympy(tex)
     math = math.subs(variances)
     print("latex:", tex)
@@ -1055,5 +1069,5 @@ if __name__ == '__main__':
     print("raw_math:", math)
     print("math:", latex(math.doit()))
     print("math_type:", type(math.doit()))
-    print("shape:", (math.doit()).shape)
+    # print("shape:", (math.doit()).shape)
     print("cal:", latex2latex(tex))

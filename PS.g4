@@ -10,7 +10,7 @@ DOLLAR_SIGN: '\\$' -> skip;
 ADD: '+';
 SUB: '-';
 MUL: '*';
-DIV: '/';
+DIV: '/' | '\\over';
 
 L_PAREN: '(';
 R_PAREN: ')';
@@ -105,7 +105,7 @@ CMD_TIMES: '\\times';
 CMD_CDOT:  '\\cdot';
 CMD_DIV:   '\\div';
 CMD_FRAC:  '\\frac';
-CMD_BINOM: '\\binom';
+CMD_BINOM: '\\binom' | '\\tbinom' | '\\dbinom';
 CMD_CHOOSE: '\\choose';
 CMD_MOD: '\\mod';
 
@@ -516,11 +516,8 @@ frac:
 
 //a binomial expression
 binom:
-    (CMD_BINOM | CMD_CHOOSE) L_BRACE
-    upper=expr
-    R_BRACE L_BRACE
-    lower=expr
-    R_BRACE;
+    L_BRACE upper=expr CMD_CHOOSE lower=expr R_BRACE
+    | CMD_BINOM L_BRACE upper=expr R_BRACE L_BRACE lower=expr R_BRACE;
 
 func_normal_functions_single_arg:
     FUNC_LOG | FUNC_LN | FUNC_EXP

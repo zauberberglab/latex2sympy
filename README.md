@@ -58,6 +58,26 @@ latex2latex(tex)
 
 If you want to read the math formula, you can click [GitNotes](https://notes.orangex4.cool/?git=github&github=OrangeX4/latex2sympy).
 
+### Solve Equation
+
+``` latex
+# Before
+x + y = 1
+
+# After
+[ y = 1 - x, \  x = 1 - y]
+```
+
+### Eval At
+
+``` latex
+# Before
+(x+2)|_{x=y+1}
+
+# After
+y + 3
+```
+
 ### Matrix
 
 #### Identity matrix

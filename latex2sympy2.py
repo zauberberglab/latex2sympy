@@ -157,9 +157,25 @@ def convert_relation(rel):
         return sympy.Eq(lh, rh, evaluate=False)
     elif rel.ASSIGNMENT():
         # !Use Global variances
-        variances[lh] = rh
-        var[str(lh)] = rh
-        return rh
+        if lh.is_Symbol:
+            # set value
+            variances[lh] = rh
+            var[str(lh)] = rh
+            return rh
+        else:
+            # find the symbols in lh - rh
+            equation = lh - rh
+            syms = equation.atoms(sympy.Symbol)
+            if len(syms) > 0:
+                # Solve equation
+                result = []
+                for sym in syms:
+                    values = sympy.solve(equation, sym)
+                    for value in values:
+                        result.append(sympy.Eq(sym, value, evaluate=False))
+                return result
+            else:
+                return sympy.Eq(lh, rh, evaluate=False)
     elif rel.IN():
         # !Use Global variances
         if hasattr(rh, 'is_Pow') and rh.is_Pow and hasattr(rh.exp, 'is_Mul'):
@@ -1044,11 +1060,17 @@ def latex(tex):
 
 
 def latex2latex(tex):
-    return latex(simplify(latex2sympy(tex).subs(variances).doit().doit()))
+    result = latex2sympy(tex)
+    # if result is a list
+    if isinstance(result, list):
+        return latex(result)
+    else:
+        return latex(simplify(result.subs(variances).doit().doit()))
 
 
 # Set image value
 latex2latex('i=I')
+latex2latex('j=I')
 # set Identity(i)
 for i in range(1, 10):
     lh = sympy.Symbol(r'\bm{I}_' + str(i), real=False)
@@ -1061,7 +1083,8 @@ for i in range(1, 10):
 if __name__ == '__main__':
     # latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
     # latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
-    tex = r"\dbinom{5}{3}"
+    tex = r"(x+2)|_{x=y+1}"
+    # print("latex2latex:", latex2latex(tex))
     math = latex2sympy(tex)
     math = math.subs(variances)
     print("latex:", tex)

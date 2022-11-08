@@ -501,6 +501,7 @@ accent:
     accent_symbol
     L_BRACE base=expr R_BRACE;
 
+atom_expr_no_supexpr: (LETTER_NO_E | GREEK_CMD | OTHER_SYMBOL_CMD | accent) subexpr?;
 atom_expr: (LETTER_NO_E | GREEK_CMD | OTHER_SYMBOL_CMD | accent) (supexpr subexpr | subexpr supexpr | subexpr | supexpr)?;
 atom: atom_expr | SYMBOL | NUMBER | PERCENT_NUMBER | E_NOTATION | DIFFERENTIAL | mathit | VARIABLE;
 
@@ -560,12 +561,10 @@ func:
     (subexpr? supexpr? | supexpr? subexpr?)
     (L_LEFT? L_PAREN func_multi_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_multi_arg MR_RIGHT? R_PAREN | func_multi_arg_noparens)
 
-    //Do not do arbitrary functions but see as multiplications
-    /*| (LETTER_NO_E | SYMBOL) subexpr? // e.g. f(x)
-    L_PAREN args R_PAREN
-
-    | (LETTER_NO_E | SYMBOL) subexpr? // e.g. f(x)
-    L_LEFT L_PAREN args R_RIGHT R_PAREN*/
+    | atom_expr_no_supexpr supexpr?
+    (L_PAREN | L_BRACKET) func_common_args (R_PAREN | R_BRACKET)
+    | atom_expr_no_supexpr supexpr?
+    L_LEFT (L_PAREN | L_BRACKET) func_common_args R_RIGHT (R_PAREN | R_BRACKET)
 
     | FUNC_INT
     (subexpr supexpr | supexpr subexpr | (UNDERSCORE L_BRACE R_BRACE) (CARET L_BRACE R_BRACE) | (CARET L_BRACE R_BRACE) (UNDERSCORE L_BRACE R_BRACE) )?
@@ -582,6 +581,8 @@ func:
     | EXP_E supexpr?; //Exponential function e^x
 
 args: (expr ',' args) | expr;
+
+func_common_args: atom | (expr ',') | (expr ',' args);
 
 limit_sub:
     UNDERSCORE L_BRACE

@@ -886,7 +886,23 @@ def convert_func(func):
             expr = sympy.Pow(expr, func_pow, evaluate=False)
 
         return expr
-
+    elif func.atom_expr_no_supexpr():
+        # define a function
+        f = sympy.Function(func.atom_expr_no_supexpr().getText())
+        # args
+        args = func.func_common_args().getText().split(",")
+        if args[-1] == '':
+            args = args[:-1]
+        args = [latex2sympy(arg, VARIABLE_VALUES) for arg in args]
+        # supexpr
+        if func.supexpr():
+            if func.supexpr().expr():
+                expr = convert_expr(func.supexpr().expr())
+            else:
+                expr = convert_atom(func.supexpr().atom())
+            return sympy.Pow(f(*args), expr, evaluate=False)
+        else:
+            return f(*args)
     elif func.FUNC_INT():
         return handle_integral(func)
     elif func.FUNC_SQRT():
@@ -1083,7 +1099,8 @@ for i in range(1, 10):
 if __name__ == '__main__':
     # latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
     # latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
-    tex = r"(x+2)|_{x=y+1}"
+    # tex = r"(x+2)|_{x=y+1}"
+    tex = r"K(3x+x,)"
     # print("latex2latex:", latex2latex(tex))
     math = latex2sympy(tex)
     math = math.subs(variances)

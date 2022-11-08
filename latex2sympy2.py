@@ -1100,7 +1100,7 @@ if __name__ == '__main__':
     # latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
     # latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
     # tex = r"(x+2)|_{x=y+1}"
-    tex = r"K(3x+x,)"
+    tex = r"f{(x)}"
     # print("latex2latex:", latex2latex(tex))
     math = latex2sympy(tex)
     math = math.subs(variances)

@@ -562,9 +562,9 @@ func:
     (L_LEFT? L_PAREN func_multi_arg R_RIGHT? R_PAREN | ML_LEFT? L_PAREN func_multi_arg MR_RIGHT? R_PAREN | func_multi_arg_noparens)
 
     | atom_expr_no_supexpr supexpr?
-    (L_PAREN | L_BRACKET) func_common_args (R_PAREN | R_BRACKET)
+    L_LEFT? (L_PAREN | L_BRACKET) func_common_args (R_PAREN | R_BRACKET) R_RIGHT?
     | atom_expr_no_supexpr supexpr?
-    L_LEFT (L_PAREN | L_BRACKET) func_common_args R_RIGHT (R_PAREN | R_BRACKET)
+    L_BRACE L_LEFT? (L_PAREN | L_BRACKET) func_common_args (R_PAREN | R_BRACKET) R_RIGHT? R_BRACE
 
     | FUNC_INT
     (subexpr supexpr | supexpr subexpr | (UNDERSCORE L_BRACE R_BRACE) (CARET L_BRACE R_BRACE) | (CARET L_BRACE R_BRACE) (UNDERSCORE L_BRACE R_BRACE) )?

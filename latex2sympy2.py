@@ -564,6 +564,8 @@ def convert_exp(exp):
 def convert_comp(comp):
     if comp.group():
         return convert_expr(comp.group().expr())
+    elif comp.norm_group():
+        return convert_expr(comp.norm_group().expr()).norm()
     elif comp.abs_group():
         return sympy.Abs(convert_expr(comp.abs_group().expr()), evaluate=False)
     elif comp.floor_group():
@@ -832,6 +834,12 @@ def convert_func(func):
                 expr = arg.rref()[0]
             elif operatorname == 'nullspace':
                 expr = arg.nullspace()
+            elif operatorname == 'norm':
+                expr = arg.norm()
+            elif operatorname == 'cols':
+                expr = [arg.col(i) for i in range(arg.cols)]
+            elif operatorname == 'rows':
+                expr = [arg.row(i) for i in range(arg.rows)]
             elif operatorname in ['eig', 'eigen', 'diagonalize']:
                 expr = arg.diagonalize()
             elif operatorname in ['eigenvals', 'eigenvalues']:
@@ -902,6 +910,12 @@ def convert_func(func):
                 expr = sympy.Matrix.hstack(*args)
             elif operatorname == 'vstack':
                 expr = sympy.Matrix.vstack(*args)
+            elif operatorname in ['orth', 'ortho', 'orthogonal', 'orthogonalize']:
+                if len(args) == 1:
+                    arg = args[0]
+                    expr = sympy.matrices.GramSchmidt([arg.col(i) for i in range(arg.cols)], True)
+                else:
+                    expr = sympy.matrices.GramSchmidt(args, True)
         elif name in ["gcd", "lcm"]:
             expr = handle_gcd_lcm(name, args)
         elif name in ["max", "min"]:
@@ -1134,8 +1148,8 @@ if __name__ == '__main__':
     # latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
     # latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
     # tex = r"(x+2)|_{x=y+1}"
-    tex = r"\operatorname{zeros}(3)"
-    # tex = r"\operatorname{rank}(\begin{bmatrix}1 & 2 \\ 3 & 4\end{bmatrix})"
+    # tex = r"\operatorname{zeros}(3)"
+    tex = r"\operatorname{rows}(\begin{bmatrix}1 & 2 \\ 3 & 4\end{bmatrix})"
     # print("latex2latex:", latex2latex(tex))
     math = latex2sympy(tex)
     # math = math.subs(variances)

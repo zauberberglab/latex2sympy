@@ -302,6 +302,15 @@ class PSListener(ParseTreeListener):
     def exitGroup(self, ctx):
         pass
 
+    # Enter a parse tree produced by PSParser#norm_group.
+
+    def enterNorm_group(self, ctx):
+        pass
+
+    # Exit a parse tree produced by PSParser#norm_group.
+    def exitNorm_group(self, ctx):
+        pass
+
     # Enter a parse tree produced by PSParser#abs_group.
 
     def enterAbs_group(self, ctx):

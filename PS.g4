@@ -32,6 +32,8 @@ L_VERT: '\\lvert';
 R_VERT: '\\rvert';
 VERT: '\\vert';
 
+NORM: '\\|';
+
 L_FLOOR: '\\lfloor';
 R_FLOOR: '\\rfloor';
 LL_CORNER: '\\llcorner';
@@ -105,12 +107,16 @@ FUNC_DET: '\\det';
 FUNC_EYE_NAME: 'eye';
 FUNC_ZEROS_NAME: 'zeros';
 FUNC_ONES_NAME: 'ones';
+FUNC_COLS_NAME: 'cols';
+FUNC_ROWS_NAME: 'rows';
 FUNC_DIAG_NAME: 'diag';
+FUNC_NORM_NAME: 'norm';
 FUNC_RANK_NAME: 'rank';
 FUNC_TRACE_NAME: 'trace' | 'tr';
 FUNC_RREF_NAME: 'rref';
 FUNC_HSTACK_NAME: 'hstack';
 FUNC_VSTACK_NAME: 'vstack';
+FUNC_ORTHOGONALIZE_NAME: 'orth' | 'ortho' | 'orthogonal' | 'orthogonalize';
 FUNC_NULLSPACE_NAME: 'nullspace';
 FUNC_DIAGONALIZE_NAME: 'eig' | 'eigen' | 'diagonalize';
 FUNC_EIGENVALS_NAME: 'eigenvals' | 'eigenvalues';
@@ -438,6 +444,7 @@ exp_nofunc:
 
 comp:
     group
+    | norm_group
     | abs_group
     | floor_group
     | ceil_group
@@ -450,6 +457,7 @@ comp:
 
 comp_nofunc:
     group
+    | norm_group
     | abs_group
     | floor_group
     | ceil_group
@@ -481,6 +489,12 @@ group:
     | ML_LEFT L_BRACE_CMD expr MR_RIGHT R_BRACE_CMD
     | ML_LEFT L_BRACKET expr MR_RIGHT R_BRACKET
     | ML_LEFT L_BRACK expr MR_RIGHT R_BRACK;
+
+
+norm_group:
+    NORM expr NORM
+    | L_LEFT NORM expr R_RIGHT NORM
+    | ML_LEFT NORM expr MR_RIGHT NORM;
 
 
 abs_group:
@@ -555,11 +569,11 @@ func_operator_names_single_arg:
     FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME
     | FUNC_ARCSINH_NAME | FUNC_ARCCOSH_NAME | FUNC_ARCTANH_NAME
     | FUNC_FLOOR_NAME | FUNC_CEIL_NAME | FUNC_EYE_NAME | FUNC_RANK_NAME | FUNC_TRACE_NAME
-    | FUNC_RREF_NAME | FUNC_NULLSPACE_NAME | FUNC_DIAGONALIZE_NAME
-    | FUNC_EIGENVALS_NAME | FUNC_EIGENVECTORS_NAME | FUNC_SVD_NAME;
+    | FUNC_RREF_NAME | FUNC_NULLSPACE_NAME | FUNC_DIAGONALIZE_NAME | FUNC_NORM_NAME
+    | FUNC_EIGENVALS_NAME | FUNC_EIGENVECTORS_NAME | FUNC_SVD_NAME | FUNC_COLS_NAME | FUNC_ROWS_NAME;
 
 func_operator_names_multi_arg:
-    FUNC_GCD_NAME | FUNC_LCM_NAME | FUNC_ZEROS_NAME
+    FUNC_GCD_NAME | FUNC_LCM_NAME | FUNC_ZEROS_NAME | FUNC_ORTHOGONALIZE_NAME
     | FUNC_ONES_NAME | FUNC_DIAG_NAME | FUNC_HSTACK_NAME | FUNC_VSTACK_NAME;
 
 func_normal_single_arg:

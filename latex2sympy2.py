@@ -54,6 +54,8 @@ def latex2sympy(sympy: str, variable_values={}):
         frac_type = r'\tfrac'
     sympy = sympy.replace(r'\dfrac', r'\frac')
     sympy = sympy.replace(r'\tfrac', r'\frac')
+    # Translate Transpose
+    sympy = sympy.replace(r'\mathrm{T}', 'T', -1)
     # Translate Derivative
     sympy = sympy.replace(r'\mathrm{d}', 'd', -1).replace(r'{\rm d}', 'd', -1)
     # Translate Matrix
@@ -472,6 +474,8 @@ def convert_postfix_list(arr, i=0):
                 return mat_mul_flat(res, rh)
             else:
                 return mul_flat(res, rh)
+    elif isinstance(res, tuple) or isinstance(res, list) or isinstance(res, dict):
+        return res
     else:  # must be derivative
         wrt = res[0]
         if i == len(arr) - 1:
@@ -818,6 +822,24 @@ def convert_func(func):
                 expr = handle_floor(arg)
             elif operatorname == "ceil":
                 expr = handle_ceil(arg)
+            elif operatorname == 'eye':
+                expr = sympy.eye(arg)
+            elif operatorname == 'rank':
+                expr = sympy.Integer(arg.rank())
+            elif operatorname in ['trace', 'tr']:
+                expr = arg.trace()
+            elif operatorname == 'rref':
+                expr = arg.rref()[0]
+            elif operatorname == 'nullspace':
+                expr = arg.nullspace()
+            elif operatorname in ['eigen', 'diagonalize']:
+                expr = arg.diagonalize()
+            elif operatorname in ['eigenvals', 'eigenvalues']:
+                expr = arg.eigenvals()
+            elif operatorname in ['eigenvects', 'eigenvectors']:
+                expr = arg.eigenvects()
+            elif operatorname in ['svd', 'SVD']:
+                expr = arg.singular_value_decomposition()
         elif name in ["log", "ln"]:
             if func.subexpr():
                 if func.subexpr().atom():
@@ -835,6 +857,8 @@ def convert_func(func):
             expr = handle_floor(arg)
         elif name == "ceil":
             expr = handle_ceil(arg)
+        elif name == 'det':
+            expr = arg.det()
 
         func_pow = None
         should_pow = True
@@ -868,6 +892,16 @@ def convert_func(func):
             operatorname = func.func_normal_multi_arg().func_operator_name.getText()
             if operatorname in ["gcd", "lcm"]:
                 expr = handle_gcd_lcm(operatorname, args)
+            elif operatorname == 'zeros':
+                expr = sympy.zeros(*args)
+            elif operatorname == 'ones':
+                expr = sympy.ones(*args)
+            elif operatorname == 'diag':
+                expr = sympy.diag(*args)
+            elif operatorname == 'hstack':
+                expr = sympy.Matrix.hstack(*args)
+            elif operatorname == 'vstack':
+                expr = sympy.Matrix.vstack(*args)
         elif name in ["gcd", "lcm"]:
             expr = handle_gcd_lcm(name, args)
         elif name in ["max", "min"]:
@@ -1077,8 +1111,8 @@ def latex(tex):
 
 def latex2latex(tex):
     result = latex2sympy(tex)
-    # if result is a list
-    if isinstance(result, list):
+    # if result is a list or tuple or dict
+    if isinstance(result, list) or isinstance(result, tuple) or isinstance(result, dict):
         return latex(result)
     else:
         return latex(simplify(result.subs(variances).doit().doit()))
@@ -1100,14 +1134,15 @@ if __name__ == '__main__':
     # latex2latex(r'A_1=\begin{bmatrix}1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8\end{bmatrix}')
     # latex2latex(r'b_1=\begin{bmatrix}1 \\ 2 \\ 3 \\ 4\end{bmatrix}')
     # tex = r"(x+2)|_{x=y+1}"
-    tex = r"f{(x)}"
+    tex = r"\operatorname{zeros}(3)"
+    # tex = r"\operatorname{rank}(\begin{bmatrix}1 & 2 \\ 3 & 4\end{bmatrix})"
     # print("latex2latex:", latex2latex(tex))
     math = latex2sympy(tex)
-    math = math.subs(variances)
+    # math = math.subs(variances)
     print("latex:", tex)
     # print("var:", variances)
     print("raw_math:", math)
-    print("math:", latex(math.doit()))
-    print("math_type:", type(math.doit()))
+    # print("math:", latex(math.doit()))
+    # print("math_type:", type(math.doit()))
     # print("shape:", (math.doit()).shape)
     print("cal:", latex2latex(tex))

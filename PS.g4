@@ -100,6 +100,23 @@ FUNC_CEIL: '\\ceil';
 FUNC_MAX: '\\max';
 FUNC_MIN: '\\min';
 
+FUNC_DET: '\\det';
+
+FUNC_EYE_NAME: 'eye';
+FUNC_ZEROS_NAME: 'zeros';
+FUNC_ONES_NAME: 'ones';
+FUNC_DIAG_NAME: 'diag';
+FUNC_RANK_NAME: 'rank';
+FUNC_TRACE_NAME: 'trace' | 'tr';
+FUNC_RREF_NAME: 'rref';
+FUNC_HSTACK_NAME: 'hstack';
+FUNC_VSTACK_NAME: 'vstack';
+FUNC_NULLSPACE_NAME: 'nullspace';
+FUNC_DIAGONALIZE_NAME: 'eigen' | 'diagonalize';
+FUNC_EIGENVALS_NAME: 'eigenvals' | 'eigenvalues';
+FUNC_EIGENVECTORS_NAME: 'eigenvects' | 'eigenvectors';
+FUNC_SVD_NAME: 'svd' | 'SVD';
+
 //commands
 CMD_TIMES: '\\times';
 CMD_CDOT:  '\\cdot';
@@ -529,7 +546,7 @@ func_normal_functions_single_arg:
     | FUNC_SINH | FUNC_COSH | FUNC_TANH
     | FUNC_ARSINH | FUNC_ARCOSH | FUNC_ARTANH
     | FUNC_ARCSINH | FUNC_ARCCOSH | FUNC_ARCTANH
-    | FUNC_FLOOR | FUNC_CEIL;
+    | FUNC_FLOOR | FUNC_CEIL | FUNC_DET;
 
 func_normal_functions_multi_arg:
     FUNC_GCD | FUNC_LCM | FUNC_MAX | FUNC_MIN;
@@ -537,10 +554,13 @@ func_normal_functions_multi_arg:
 func_operator_names_single_arg:
     FUNC_ARSINH_NAME | FUNC_ARCOSH_NAME | FUNC_ARTANH_NAME
     | FUNC_ARCSINH_NAME | FUNC_ARCCOSH_NAME | FUNC_ARCTANH_NAME
-    | FUNC_FLOOR_NAME | FUNC_CEIL_NAME;
+    | FUNC_FLOOR_NAME | FUNC_CEIL_NAME | FUNC_EYE_NAME | FUNC_RANK_NAME | FUNC_TRACE_NAME
+    | FUNC_RREF_NAME | FUNC_NULLSPACE_NAME | FUNC_DIAGONALIZE_NAME
+    | FUNC_EIGENVALS_NAME | FUNC_EIGENVECTORS_NAME | FUNC_SVD_NAME;
 
 func_operator_names_multi_arg:
-    FUNC_GCD_NAME | FUNC_LCM_NAME;
+    FUNC_GCD_NAME | FUNC_LCM_NAME | FUNC_ZEROS_NAME
+    | FUNC_ONES_NAME | FUNC_DIAG_NAME | FUNC_HSTACK_NAME | FUNC_VSTACK_NAME;
 
 func_normal_single_arg:
     (func_normal_functions_single_arg)

@@ -9,7 +9,7 @@ import sys
 def serializedATN():
     with StringIO() as buf:
         buf.write(u"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3")
-        buf.write(u"\u00b0\u0402\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6")
+        buf.write(u"\u00bf\u0402\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6")
         buf.write(u"\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4")
         buf.write(u"\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t")
         buf.write(u"\22\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27")
@@ -105,67 +105,68 @@ def serializedATN():
         buf.write(u"\u03ee\n<\3=\3=\3=\3=\3=\3=\5=\u03f6\n=\3>\3>\3>\3>\3")
         buf.write(u">\3?\3?\3?\3?\3?\3?\2\b\32$&(:<@\2\4\6\b\n\f\16\20\22")
         buf.write(u"\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNP")
-        buf.write(u"RTVXZ\\^`bdfhjlnprtvxz|\2\21\4\2\3*\u0088\u0088\3\2+")
-        buf.write(u".\3\2\u00a3\u00aa\3\2\u00a4\u00a5\3\2\61\62\6\2\63\64")
-        buf.write(u"\u0081\u0083\u0087\u0087\u0097\u0097\3\2\u009c\u009e")
-        buf.write(u"\4\2Xo}~\4\2{|\177\u0080\4\2puxy\3\2vw\4\2\65\65??\4")
-        buf.write(u"\2\66\66@@\3\2VW\4\2\u009e\u009e\u00ad\u00ae\2\u0475")
-        buf.write(u"\2~\3\2\2\2\4\u0082\3\2\2\2\6\u0084\3\2\2\2\b\u0086\3")
-        buf.write(u"\2\2\2\n\u0092\3\2\2\2\f\u0096\3\2\2\2\16\u009a\3\2\2")
-        buf.write(u"\2\20\u00a0\3\2\2\2\22\u00a2\3\2\2\2\24\u00aa\3\2\2\2")
-        buf.write(u"\26\u00c4\3\2\2\2\30\u00d2\3\2\2\2\32\u00da\3\2\2\2\34")
-        buf.write(u"\u010a\3\2\2\2\36\u0120\3\2\2\2 \u0122\3\2\2\2\"\u0126")
-        buf.write(u"\3\2\2\2$\u0128\3\2\2\2&\u0133\3\2\2\2(\u013e\3\2\2\2")
-        buf.write(u"*\u0150\3\2\2\2,\u015b\3\2\2\2.\u015d\3\2\2\2\60\u0164")
-        buf.write(u"\3\2\2\2\62\u016e\3\2\2\2\64\u0170\3\2\2\2\66\u0178\3")
-        buf.write(u"\2\2\28\u0180\3\2\2\2:\u0188\3\2\2\2<\u019c\3\2\2\2>")
-        buf.write(u"\u01ba\3\2\2\2@\u01c5\3\2\2\2B\u0237\3\2\2\2D\u0269\3")
-        buf.write(u"\2\2\2F\u028b\3\2\2\2H\u02ad\3\2\2\2J\u02af\3\2\2\2L")
-        buf.write(u"\u02b8\3\2\2\2N\u02c1\3\2\2\2P\u02d5\3\2\2\2R\u02d7\3")
-        buf.write(u"\2\2\2T\u02dd\3\2\2\2V\u02e1\3\2\2\2X\u02f7\3\2\2\2Z")
-        buf.write(u"\u02f9\3\2\2\2\\\u02fb\3\2\2\2^\u02fd\3\2\2\2`\u02ff")
-        buf.write(u"\3\2\2\2b\u0307\3\2\2\2d\u030f\3\2\2\2f\u03b7\3\2\2\2")
-        buf.write(u"h\u03be\3\2\2\2j\u03c8\3\2\2\2l\u03ca\3\2\2\2n\u03d7")
-        buf.write(u"\3\2\2\2p\u03d9\3\2\2\2r\u03e0\3\2\2\2t\u03e2\3\2\2\2")
-        buf.write(u"v\u03e4\3\2\2\2x\u03ef\3\2\2\2z\u03f7\3\2\2\2|\u03fc")
-        buf.write(u"\3\2\2\2~\177\t\2\2\2\177\3\3\2\2\2\u0080\u0083\5\32")
-        buf.write(u"\16\2\u0081\u0083\5\34\17\2\u0082\u0080\3\2\2\2\u0082")
-        buf.write(u"\u0081\3\2\2\2\u0083\5\3\2\2\2\u0084\u0085\t\3\2\2\u0085")
-        buf.write(u"\7\3\2\2\2\u0086\u0087\7\u009e\2\2\u0087\u008c\7\u0095")
-        buf.write(u"\2\2\u0088\u008d\7\u00a1\2\2\u0089\u008a\79\2\2\u008a")
-        buf.write(u"\u008b\7\u00a1\2\2\u008b\u008d\7:\2\2\u008c\u0088\3\2")
-        buf.write(u"\2\2\u008c\u0089\3\2\2\2\u008d\t\3\2\2\2\u008e\u0093")
+        buf.write(u"RTVXZ\\^`bdfhjlnprtvxz|\2\21\4\2\3*\u0097\u0097\3\2+")
+        buf.write(u".\3\2\u00b2\u00b9\3\2\u00b3\u00b4\3\2\61\62\6\2\63\64")
+        buf.write(u"\u0090\u0092\u0096\u0096\u00a6\u00a6\3\2\u00ab\u00ad")
+        buf.write(u"\5\2Xo}~\u0081\u0081\4\2{|\177\u0080\7\2puxy\u0082\u0082")
+        buf.write(u"\u0086\u0088\u008b\u008f\5\2vw\u0083\u0085\u0089\u008a")
+        buf.write(u"\4\2\65\65??\4\2\66\66@@\3\2VW\4\2\u00ad\u00ad\u00bc")
+        buf.write(u"\u00bd\2\u0475\2~\3\2\2\2\4\u0082\3\2\2\2\6\u0084\3\2")
+        buf.write(u"\2\2\b\u0086\3\2\2\2\n\u0092\3\2\2\2\f\u0096\3\2\2\2")
+        buf.write(u"\16\u009a\3\2\2\2\20\u00a0\3\2\2\2\22\u00a2\3\2\2\2\24")
+        buf.write(u"\u00aa\3\2\2\2\26\u00c4\3\2\2\2\30\u00d2\3\2\2\2\32\u00da")
+        buf.write(u"\3\2\2\2\34\u010a\3\2\2\2\36\u0120\3\2\2\2 \u0122\3\2")
+        buf.write(u"\2\2\"\u0126\3\2\2\2$\u0128\3\2\2\2&\u0133\3\2\2\2(\u013e")
+        buf.write(u"\3\2\2\2*\u0150\3\2\2\2,\u015b\3\2\2\2.\u015d\3\2\2\2")
+        buf.write(u"\60\u0164\3\2\2\2\62\u016e\3\2\2\2\64\u0170\3\2\2\2\66")
+        buf.write(u"\u0178\3\2\2\28\u0180\3\2\2\2:\u0188\3\2\2\2<\u019c\3")
+        buf.write(u"\2\2\2>\u01ba\3\2\2\2@\u01c5\3\2\2\2B\u0237\3\2\2\2D")
+        buf.write(u"\u0269\3\2\2\2F\u028b\3\2\2\2H\u02ad\3\2\2\2J\u02af\3")
+        buf.write(u"\2\2\2L\u02b8\3\2\2\2N\u02c1\3\2\2\2P\u02d5\3\2\2\2R")
+        buf.write(u"\u02d7\3\2\2\2T\u02dd\3\2\2\2V\u02e1\3\2\2\2X\u02f7\3")
+        buf.write(u"\2\2\2Z\u02f9\3\2\2\2\\\u02fb\3\2\2\2^\u02fd\3\2\2\2")
+        buf.write(u"`\u02ff\3\2\2\2b\u0307\3\2\2\2d\u030f\3\2\2\2f\u03b7")
+        buf.write(u"\3\2\2\2h\u03be\3\2\2\2j\u03c8\3\2\2\2l\u03ca\3\2\2\2")
+        buf.write(u"n\u03d7\3\2\2\2p\u03d9\3\2\2\2r\u03e0\3\2\2\2t\u03e2")
+        buf.write(u"\3\2\2\2v\u03e4\3\2\2\2x\u03ef\3\2\2\2z\u03f7\3\2\2\2")
+        buf.write(u"|\u03fc\3\2\2\2~\177\t\2\2\2\177\3\3\2\2\2\u0080\u0083")
+        buf.write(u"\5\32\16\2\u0081\u0083\5\34\17\2\u0082\u0080\3\2\2\2")
+        buf.write(u"\u0082\u0081\3\2\2\2\u0083\5\3\2\2\2\u0084\u0085\t\3")
+        buf.write(u"\2\2\u0085\7\3\2\2\2\u0086\u0087\7\u00ad\2\2\u0087\u008c")
+        buf.write(u"\7\u00a4\2\2\u0088\u008d\7\u00b0\2\2\u0089\u008a\79\2")
+        buf.write(u"\2\u008a\u008b\7\u00b0\2\2\u008b\u008d\7:\2\2\u008c\u0088")
+        buf.write(u"\3\2\2\2\u008c\u0089\3\2\2\2\u008d\t\3\2\2\2\u008e\u0093")
         buf.write(u"\5\"\22\2\u008f\u0093\5B\"\2\u0090\u0093\7\61\2\2\u0091")
         buf.write(u"\u0093\7\62\2\2\u0092\u008e\3\2\2\2\u0092\u008f\3\2\2")
         buf.write(u"\2\u0092\u0090\3\2\2\2\u0092\u0091\3\2\2\2\u0093\u0094")
         buf.write(u"\3\2\2\2\u0094\u0095\5\b\5\2\u0095\13\3\2\2\2\u0096\u0097")
-        buf.write(u"\5\b\5\2\u0097\u0098\7\u00a0\2\2\u0098\u0099\5\b\5\2")
+        buf.write(u"\5\b\5\2\u0097\u0098\7\u00af\2\2\u0098\u0099\5\b\5\2")
         buf.write(u"\u0099\r\3\2\2\2\u009a\u009b\5\b\5\2\u009b\u009c\5\n")
         buf.write(u"\6\2\u009c\17\3\2\2\2\u009d\u00a1\5\16\b\2\u009e\u00a1")
         buf.write(u"\5\n\6\2\u009f\u00a1\5\f\7\2\u00a0\u009d\3\2\2\2\u00a0")
         buf.write(u"\u009e\3\2\2\2\u00a0\u009f\3\2\2\2\u00a1\21\3\2\2\2\u00a2")
-        buf.write(u"\u00a7\5\20\t\2\u00a3\u00a4\7\u0099\2\2\u00a4\u00a6\5")
+        buf.write(u"\u00a7\5\20\t\2\u00a3\u00a4\7\u00a8\2\2\u00a4\u00a6\5")
         buf.write(u"\20\t\2\u00a5\u00a3\3\2\2\2\u00a6\u00a9\3\2\2\2\u00a7")
         buf.write(u"\u00a5\3\2\2\2\u00a7\u00a8\3\2\2\2\u00a8\23\3\2\2\2\u00a9")
-        buf.write(u"\u00a7\3\2\2\2\u00aa\u00ab\7\u008f\2\2\u00ab\u00b0\5")
-        buf.write(u"\30\r\2\u00ac\u00ad\7\u0094\2\2\u00ad\u00af\5\30\r\2")
+        buf.write(u"\u00a7\3\2\2\2\u00aa\u00ab\7\u009e\2\2\u00ab\u00b0\5")
+        buf.write(u"\30\r\2\u00ac\u00ad\7\u00a3\2\2\u00ad\u00af\5\30\r\2")
         buf.write(u"\u00ae\u00ac\3\2\2\2\u00af\u00b2\3\2\2\2\u00b0\u00ae")
         buf.write(u"\3\2\2\2\u00b0\u00b1\3\2\2\2\u00b1\u00b4\3\2\2\2\u00b2")
-        buf.write(u"\u00b0\3\2\2\2\u00b3\u00b5\7\u0094\2\2\u00b4\u00b3\3")
+        buf.write(u"\u00b0\3\2\2\2\u00b3\u00b5\7\u00a3\2\2\u00b4\u00b3\3")
         buf.write(u"\2\2\2\u00b4\u00b5\3\2\2\2\u00b5\u00b6\3\2\2\2\u00b6")
-        buf.write(u"\u00c2\7\u0090\2\2\u00b7\u00bc\7\u009f\2\2\u00b8\u00b9")
+        buf.write(u"\u00c2\7\u009f\2\2\u00b7\u00bc\7\u00ae\2\2\u00b8\u00b9")
         buf.write(u"\7?\2\2\u00b9\u00ba\5\22\n\2\u00ba\u00bb\7@\2\2\u00bb")
         buf.write(u"\u00bd\3\2\2\2\u00bc\u00b8\3\2\2\2\u00bc\u00bd\3\2\2")
         buf.write(u"\2\u00bd\u00be\3\2\2\2\u00be\u00bf\79\2\2\u00bf\u00c0")
         buf.write(u"\5\22\n\2\u00c0\u00c1\7:\2\2\u00c1\u00c3\3\2\2\2\u00c2")
         buf.write(u"\u00b7\3\2\2\2\u00c2\u00c3\3\2\2\2\u00c3\25\3\2\2\2\u00c4")
-        buf.write(u"\u00c5\7\u0091\2\2\u00c5\u00ca\5\30\r\2\u00c6\u00c7\7")
-        buf.write(u"\u0094\2\2\u00c7\u00c9\5\30\r\2\u00c8\u00c6\3\2\2\2\u00c9")
+        buf.write(u"\u00c5\7\u00a0\2\2\u00c5\u00ca\5\30\r\2\u00c6\u00c7\7")
+        buf.write(u"\u00a3\2\2\u00c7\u00c9\5\30\r\2\u00c8\u00c6\3\2\2\2\u00c9")
         buf.write(u"\u00cc\3\2\2\2\u00ca\u00c8\3\2\2\2\u00ca\u00cb\3\2\2")
         buf.write(u"\2\u00cb\u00ce\3\2\2\2\u00cc\u00ca\3\2\2\2\u00cd\u00cf")
-        buf.write(u"\7\u0094\2\2\u00ce\u00cd\3\2\2\2\u00ce\u00cf\3\2\2\2")
-        buf.write(u"\u00cf\u00d0\3\2\2\2\u00d0\u00d1\7\u0092\2\2\u00d1\27")
-        buf.write(u"\3\2\2\2\u00d2\u00d7\5\"\22\2\u00d3\u00d4\7\u0093\2\2")
+        buf.write(u"\7\u00a3\2\2\u00ce\u00cd\3\2\2\2\u00ce\u00cf\3\2\2\2")
+        buf.write(u"\u00cf\u00d0\3\2\2\2\u00d0\u00d1\7\u00a1\2\2\u00d1\27")
+        buf.write(u"\3\2\2\2\u00d2\u00d7\5\"\22\2\u00d3\u00d4\7\u00a2\2\2")
         buf.write(u"\u00d4\u00d6\5\"\22\2\u00d5\u00d3\3\2\2\2\u00d6\u00d9")
         buf.write(u"\3\2\2\2\u00d7\u00d5\3\2\2\2\u00d7\u00d8\3\2\2\2\u00d8")
         buf.write(u"\31\3\2\2\2\u00d9\u00d7\3\2\2\2\u00da\u00db\b\16\1\2")
@@ -191,12 +192,12 @@ def serializedATN():
         buf.write(u"\3\2\2\2\u010a\u00ee\3\2\2\2\u010a\u00f2\3\2\2\2\u010a")
         buf.write(u"\u00f8\3\2\2\2\u010a\u00fe\3\2\2\2\u010a\u0104\3\2\2")
         buf.write(u"\2\u010b\35\3\2\2\2\u010c\u010d\5\32\16\2\u010d\u010e")
-        buf.write(u"\7\u0099\2\2\u010e\u0113\5\32\16\2\u010f\u0110\7\u0099")
+        buf.write(u"\7\u00a8\2\2\u010e\u0113\5\32\16\2\u010f\u0110\7\u00a8")
         buf.write(u"\2\2\u0110\u0112\5\32\16\2\u0111\u010f\3\2\2\2\u0112")
         buf.write(u"\u0115\3\2\2\2\u0113\u0111\3\2\2\2\u0113\u0114\3\2\2")
         buf.write(u"\2\u0114\u0121\3\2\2\2\u0115\u0113\3\2\2\2\u0116\u0117")
-        buf.write(u"\5\32\16\2\u0117\u0118\7\u0098\2\2\u0118\u011d\5\32\16")
-        buf.write(u"\2\u0119\u011a\7\u0098\2\2\u011a\u011c\5\32\16\2\u011b")
+        buf.write(u"\5\32\16\2\u0117\u0118\7\u00a7\2\2\u0118\u011d\5\32\16")
+        buf.write(u"\2\u0119\u011a\7\u00a7\2\2\u011a\u011c\5\32\16\2\u011b")
         buf.write(u"\u0119\3\2\2\2\u011c\u011f\3\2\2\2\u011d\u011b\3\2\2")
         buf.write(u"\2\u011d\u011e\3\2\2\2\u011e\u0121\3\2\2\2\u011f\u011d")
         buf.write(u"\3\2\2\2\u0120\u010c\3\2\2\2\u0120\u0116\3\2\2\2\u0121")
@@ -230,21 +231,21 @@ def serializedATN():
         buf.write(u"\3\2\2\2\u0164\u0168\5<\37\2\u0165\u0167\5\62\32\2\u0166")
         buf.write(u"\u0165\3\2\2\2\u0167\u016a\3\2\2\2\u0168\u0166\3\2\2")
         buf.write(u"\2\u0168\u0169\3\2\2\2\u0169\61\3\2\2\2\u016a\u0168\3")
-        buf.write(u"\2\2\2\u016b\u016f\7\u00ab\2\2\u016c\u016f\5\64\33\2")
+        buf.write(u"\2\2\2\u016b\u016f\7\u00ba\2\2\u016c\u016f\5\64\33\2")
         buf.write(u"\u016d\u016f\5\6\4\2\u016e\u016b\3\2\2\2\u016e\u016c")
         buf.write(u"\3\2\2\2\u016e\u016d\3\2\2\2\u016f\63\3\2\2\2\u0170\u0176")
         buf.write(u"\7C\2\2\u0171\u0177\58\35\2\u0172\u0177\5\66\34\2\u0173")
         buf.write(u"\u0174\58\35\2\u0174\u0175\5\66\34\2\u0175\u0177\3\2")
         buf.write(u"\2\2\u0176\u0171\3\2\2\2\u0176\u0172\3\2\2\2\u0176\u0173")
-        buf.write(u"\3\2\2\2\u0177\65\3\2\2\2\u0178\u0179\7\u0095\2\2\u0179")
+        buf.write(u"\3\2\2\2\u0177\65\3\2\2\2\u0178\u0179\7\u00a4\2\2\u0179")
         buf.write(u"\u017c\79\2\2\u017a\u017d\5\"\22\2\u017b\u017d\5 \21")
         buf.write(u"\2\u017c\u017a\3\2\2\2\u017c\u017b\3\2\2\2\u017d\u017e")
         buf.write(u"\3\2\2\2\u017e\u017f\7:\2\2\u017f\67\3\2\2\2\u0180\u0181")
-        buf.write(u"\7\u0096\2\2\u0181\u0184\79\2\2\u0182\u0185\5\"\22\2")
+        buf.write(u"\7\u00a5\2\2\u0181\u0184\79\2\2\u0182\u0185\5\"\22\2")
         buf.write(u"\u0183\u0185\5 \21\2\u0184\u0182\3\2\2\2\u0184\u0183")
         buf.write(u"\3\2\2\2\u0185\u0186\3\2\2\2\u0186\u0187\7:\2\2\u0187")
         buf.write(u"9\3\2\2\2\u0188\u0189\b\36\1\2\u0189\u018a\5> \2\u018a")
-        buf.write(u"\u0199\3\2\2\2\u018b\u018c\f\4\2\2\u018c\u0192\7\u0096")
+        buf.write(u"\u0199\3\2\2\2\u018b\u018c\f\4\2\2\u018c\u0192\7\u00a5")
         buf.write(u"\2\2\u018d\u0193\5P)\2\u018e\u018f\79\2\2\u018f\u0190")
         buf.write(u"\5\"\22\2\u0190\u0191\7:\2\2\u0191\u0193\3\2\2\2\u0192")
         buf.write(u"\u018d\3\2\2\2\u0192\u018e\3\2\2\2\u0193\u0195\3\2\2")
@@ -253,7 +254,7 @@ def serializedATN():
         buf.write(u"\u019b\3\2\2\2\u0199\u0197\3\2\2\2\u0199\u019a\3\2\2")
         buf.write(u"\2\u019a;\3\2\2\2\u019b\u0199\3\2\2\2\u019c\u019d\b\37")
         buf.write(u"\1\2\u019d\u019e\5@!\2\u019e\u01ad\3\2\2\2\u019f\u01a0")
-        buf.write(u"\f\4\2\2\u01a0\u01a6\7\u0096\2\2\u01a1\u01a7\5P)\2\u01a2")
+        buf.write(u"\f\4\2\2\u01a0\u01a6\7\u00a5\2\2\u01a1\u01a7\5P)\2\u01a2")
         buf.write(u"\u01a3\79\2\2\u01a3\u01a4\5\"\22\2\u01a4\u01a5\7:\2\2")
         buf.write(u"\u01a5\u01a7\3\2\2\2\u01a6\u01a1\3\2\2\2\u01a6\u01a2")
         buf.write(u"\3\2\2\2\u01a7\u01a9\3\2\2\2\u01a8\u01aa\5v<\2\u01a9")
@@ -375,13 +376,13 @@ def serializedATN():
         buf.write(u"\u0295\3\2\2\2\u02ad\u029b\3\2\2\2\u02ad\u02a1\3\2\2")
         buf.write(u"\2\u02ad\u02a7\3\2\2\2\u02aeI\3\2\2\2\u02af\u02b0\5\2")
         buf.write(u"\2\2\u02b0\u02b1\79\2\2\u02b1\u02b2\5\"\22\2\u02b2\u02b3")
-        buf.write(u"\7:\2\2\u02b3K\3\2\2\2\u02b4\u02b9\7\u009e\2\2\u02b5")
-        buf.write(u"\u02b9\7\u00ad\2\2\u02b6\u02b9\7\u00ae\2\2\u02b7\u02b9")
+        buf.write(u"\7:\2\2\u02b3K\3\2\2\2\u02b4\u02b9\7\u00ad\2\2\u02b5")
+        buf.write(u"\u02b9\7\u00bc\2\2\u02b6\u02b9\7\u00bd\2\2\u02b7\u02b9")
         buf.write(u"\5J&\2\u02b8\u02b4\3\2\2\2\u02b8\u02b5\3\2\2\2\u02b8")
         buf.write(u"\u02b6\3\2\2\2\u02b8\u02b7\3\2\2\2\u02b9\u02bb\3\2\2")
         buf.write(u"\2\u02ba\u02bc\5v<\2\u02bb\u02ba\3\2\2\2\u02bb\u02bc")
-        buf.write(u"\3\2\2\2\u02bcM\3\2\2\2\u02bd\u02c2\7\u009e\2\2\u02be")
-        buf.write(u"\u02c2\7\u00ad\2\2\u02bf\u02c2\7\u00ae\2\2\u02c0\u02c2")
+        buf.write(u"\3\2\2\2\u02bcM\3\2\2\2\u02bd\u02c2\7\u00ad\2\2\u02be")
+        buf.write(u"\u02c2\7\u00bc\2\2\u02bf\u02c2\7\u00bd\2\2\u02c0\u02c2")
         buf.write(u"\5J&\2\u02c1\u02bd\3\2\2\2\u02c1\u02be\3\2\2\2\u02c1")
         buf.write(u"\u02bf\3\2\2\2\u02c1\u02c0\3\2\2\2\u02c2\u02cb\3\2\2")
         buf.write(u"\2\u02c3\u02c4\5x=\2\u02c4\u02c5\5v<\2\u02c5\u02cc\3")
@@ -389,33 +390,33 @@ def serializedATN():
         buf.write(u"\3\2\2\2\u02c9\u02cc\5v<\2\u02ca\u02cc\5x=\2\u02cb\u02c3")
         buf.write(u"\3\2\2\2\u02cb\u02c6\3\2\2\2\u02cb\u02c9\3\2\2\2\u02cb")
         buf.write(u"\u02ca\3\2\2\2\u02cb\u02cc\3\2\2\2\u02ccO\3\2\2\2\u02cd")
-        buf.write(u"\u02d6\5N(\2\u02ce\u02d6\7\u00af\2\2\u02cf\u02d6\7\u00a1")
-        buf.write(u"\2\2\u02d0\u02d6\7\u00ac\2\2\u02d1\u02d6\7\u00a2\2\2")
-        buf.write(u"\u02d2\u02d6\7\u009b\2\2\u02d3\u02d6\5R*\2\u02d4\u02d6")
-        buf.write(u"\7\u00b0\2\2\u02d5\u02cd\3\2\2\2\u02d5\u02ce\3\2\2\2")
+        buf.write(u"\u02d6\5N(\2\u02ce\u02d6\7\u00be\2\2\u02cf\u02d6\7\u00b0")
+        buf.write(u"\2\2\u02d0\u02d6\7\u00bb\2\2\u02d1\u02d6\7\u00b1\2\2")
+        buf.write(u"\u02d2\u02d6\7\u00aa\2\2\u02d3\u02d6\5R*\2\u02d4\u02d6")
+        buf.write(u"\7\u00bf\2\2\u02d5\u02cd\3\2\2\2\u02d5\u02ce\3\2\2\2")
         buf.write(u"\u02d5\u02cf\3\2\2\2\u02d5\u02d0\3\2\2\2\u02d5\u02d1")
         buf.write(u"\3\2\2\2\u02d5\u02d2\3\2\2\2\u02d5\u02d3\3\2\2\2\u02d5")
-        buf.write(u"\u02d4\3\2\2\2\u02d6Q\3\2\2\2\u02d7\u02d8\7\u0088\2\2")
+        buf.write(u"\u02d4\3\2\2\2\u02d6Q\3\2\2\2\u02d7\u02d8\7\u0097\2\2")
         buf.write(u"\u02d8\u02d9\79\2\2\u02d9\u02da\5T+\2\u02da\u02db\7:")
         buf.write(u"\2\2\u02dbS\3\2\2\2\u02dc\u02de\t\b\2\2\u02dd\u02dc\3")
         buf.write(u"\2\2\2\u02de\u02df\3\2\2\2\u02df\u02dd\3\2\2\2\u02df")
-        buf.write(u"\u02e0\3\2\2\2\u02e0U\3\2\2\2\u02e1\u02e2\7\u0084\2\2")
+        buf.write(u"\u02e0\3\2\2\2\u02e0U\3\2\2\2\u02e1\u02e2\7\u0093\2\2")
         buf.write(u"\u02e2\u02e3\79\2\2\u02e3\u02e4\5\"\22\2\u02e4\u02e5")
         buf.write(u"\7:\2\2\u02e5\u02e6\79\2\2\u02e6\u02e7\5\"\22\2\u02e7")
         buf.write(u"\u02e8\7:\2\2\u02e8W\3\2\2\2\u02e9\u02ea\79\2\2\u02ea")
-        buf.write(u"\u02eb\5\"\22\2\u02eb\u02ec\7\u0086\2\2\u02ec\u02ed\5")
+        buf.write(u"\u02eb\5\"\22\2\u02eb\u02ec\7\u0095\2\2\u02ec\u02ed\5")
         buf.write(u"\"\22\2\u02ed\u02ee\7:\2\2\u02ee\u02f8\3\2\2\2\u02ef")
-        buf.write(u"\u02f0\7\u0085\2\2\u02f0\u02f1\79\2\2\u02f1\u02f2\5\"")
+        buf.write(u"\u02f0\7\u0094\2\2\u02f0\u02f1\79\2\2\u02f1\u02f2\5\"")
         buf.write(u"\22\2\u02f2\u02f3\7:\2\2\u02f3\u02f4\79\2\2\u02f4\u02f5")
         buf.write(u"\5\"\22\2\u02f5\u02f6\7:\2\2\u02f6\u02f8\3\2\2\2\u02f7")
         buf.write(u"\u02e9\3\2\2\2\u02f7\u02ef\3\2\2\2\u02f8Y\3\2\2\2\u02f9")
         buf.write(u"\u02fa\t\t\2\2\u02fa[\3\2\2\2\u02fb\u02fc\t\n\2\2\u02fc")
         buf.write(u"]\3\2\2\2\u02fd\u02fe\t\13\2\2\u02fe_\3\2\2\2\u02ff\u0300")
         buf.write(u"\t\f\2\2\u0300a\3\2\2\2\u0301\u0308\5Z.\2\u0302\u0303")
-        buf.write(u"\7\u0089\2\2\u0303\u0304\79\2\2\u0304\u0305\5^\60\2\u0305")
+        buf.write(u"\7\u0098\2\2\u0303\u0304\79\2\2\u0304\u0305\5^\60\2\u0305")
         buf.write(u"\u0306\7:\2\2\u0306\u0308\3\2\2\2\u0307\u0301\3\2\2\2")
         buf.write(u"\u0307\u0302\3\2\2\2\u0308c\3\2\2\2\u0309\u0310\5\\/")
-        buf.write(u"\2\u030a\u030b\7\u0089\2\2\u030b\u030c\79\2\2\u030c\u030d")
+        buf.write(u"\2\u030a\u030b\7\u0098\2\2\u030b\u030c\79\2\2\u030c\u030d")
         buf.write(u"\5`\61\2\u030d\u030e\7:\2\2\u030e\u0310\3\2\2\2\u030f")
         buf.write(u"\u0309\3\2\2\2\u030f\u030a\3\2\2\2\u0310e\3\2\2\2\u0311")
         buf.write(u"\u031e\5b\62\2\u0312\u0314\5v<\2\u0313\u0312\3\2\2\2")
@@ -470,16 +471,16 @@ def serializedATN():
         buf.write(u"\7:\2\2\u0379\u03b8\3\2\2\2\u037a\u038f\7U\2\2\u037b")
         buf.write(u"\u037c\5v<\2\u037c\u037d\5x=\2\u037d\u0390\3\2\2\2\u037e")
         buf.write(u"\u037f\5x=\2\u037f\u0380\5v<\2\u0380\u0390\3\2\2\2\u0381")
-        buf.write(u"\u0382\7\u0095\2\2\u0382\u0383\79\2\2\u0383\u0384\7:")
-        buf.write(u"\2\2\u0384\u0385\3\2\2\2\u0385\u0386\7\u0096\2\2\u0386")
-        buf.write(u"\u0387\79\2\2\u0387\u0390\7:\2\2\u0388\u0389\7\u0096")
+        buf.write(u"\u0382\7\u00a4\2\2\u0382\u0383\79\2\2\u0383\u0384\7:")
+        buf.write(u"\2\2\u0384\u0385\3\2\2\2\u0385\u0386\7\u00a5\2\2\u0386")
+        buf.write(u"\u0387\79\2\2\u0387\u0390\7:\2\2\u0388\u0389\7\u00a5")
         buf.write(u"\2\2\u0389\u038a\79\2\2\u038a\u038b\7:\2\2\u038b\u038c")
-        buf.write(u"\3\2\2\2\u038c\u038d\7\u0095\2\2\u038d\u038e\79\2\2\u038e")
+        buf.write(u"\3\2\2\2\u038c\u038d\7\u00a4\2\2\u038d\u038e\79\2\2\u038e")
         buf.write(u"\u0390\7:\2\2\u038f\u037b\3\2\2\2\u038f\u037e\3\2\2\2")
         buf.write(u"\u038f\u0381\3\2\2\2\u038f\u0388\3\2\2\2\u038f\u0390")
         buf.write(u"\3\2\2\2\u0390\u0397\3\2\2\2\u0391\u0393\5$\23\2\u0392")
         buf.write(u"\u0391\3\2\2\2\u0392\u0393\3\2\2\2\u0393\u0394\3\2\2")
-        buf.write(u"\2\u0394\u0398\7\u009b\2\2\u0395\u0398\5V,\2\u0396\u0398")
+        buf.write(u"\2\u0394\u0398\7\u00aa\2\2\u0395\u0398\5V,\2\u0396\u0398")
         buf.write(u"\5$\23\2\u0397\u0392\3\2\2\2\u0397\u0395\3\2\2\2\u0397")
         buf.write(u"\u0396\3\2\2\2\u0398\u03b8\3\2\2\2\u0399\u039e\7z\2\2")
         buf.write(u"\u039a\u039b\7?\2\2\u039b\u039c\5\"\22\2\u039c\u039d")
@@ -492,40 +493,40 @@ def serializedATN():
         buf.write(u"\u03ab\u03a8\3\2\2\2\u03ac\u03ad\3\2\2\2\u03ad\u03ae")
         buf.write(u"\5&\24\2\u03ae\u03b8\3\2\2\2\u03af\u03b0\7S\2\2\u03b0")
         buf.write(u"\u03b1\5l\67\2\u03b1\u03b2\5&\24\2\u03b2\u03b8\3\2\2")
-        buf.write(u"\2\u03b3\u03b5\7\u009c\2\2\u03b4\u03b6\5x=\2\u03b5\u03b4")
+        buf.write(u"\2\u03b3\u03b5\7\u00ab\2\2\u03b4\u03b6\5x=\2\u03b5\u03b4")
         buf.write(u"\3\2\2\2\u03b5\u03b6\3\2\2\2\u03b6\u03b8\3\2\2\2\u03b7")
         buf.write(u"\u0311\3\2\2\2\u03b7\u0337\3\2\2\2\u03b7\u035d\3\2\2")
         buf.write(u"\2\u03b7\u036a\3\2\2\2\u03b7\u037a\3\2\2\2\u03b7\u0399")
         buf.write(u"\3\2\2\2\u03b7\u03a4\3\2\2\2\u03b7\u03af\3\2\2\2\u03b7")
         buf.write(u"\u03b3\3\2\2\2\u03b8g\3\2\2\2\u03b9\u03ba\5\"\22\2\u03ba")
-        buf.write(u"\u03bb\7\u0099\2\2\u03bb\u03bc\5h\65\2\u03bc\u03bf\3")
+        buf.write(u"\u03bb\7\u00a8\2\2\u03bb\u03bc\5h\65\2\u03bc\u03bf\3")
         buf.write(u"\2\2\2\u03bd\u03bf\5\"\22\2\u03be\u03b9\3\2\2\2\u03be")
         buf.write(u"\u03bd\3\2\2\2\u03bfi\3\2\2\2\u03c0\u03c9\5P)\2\u03c1")
-        buf.write(u"\u03c2\5\"\22\2\u03c2\u03c3\7\u0099\2\2\u03c3\u03c9\3")
-        buf.write(u"\2\2\2\u03c4\u03c5\5\"\22\2\u03c5\u03c6\7\u0099\2\2\u03c6")
+        buf.write(u"\u03c2\5\"\22\2\u03c2\u03c3\7\u00a8\2\2\u03c3\u03c9\3")
+        buf.write(u"\2\2\2\u03c4\u03c5\5\"\22\2\u03c5\u03c6\7\u00a8\2\2\u03c6")
         buf.write(u"\u03c7\5h\65\2\u03c7\u03c9\3\2\2\2\u03c8\u03c0\3\2\2")
         buf.write(u"\2\u03c8\u03c1\3\2\2\2\u03c8\u03c4\3\2\2\2\u03c9k\3\2")
-        buf.write(u"\2\2\u03ca\u03cb\7\u0095\2\2\u03cb\u03cc\79\2\2\u03cc")
+        buf.write(u"\2\2\u03ca\u03cb\7\u00a4\2\2\u03cb\u03cc\79\2\2\u03cc")
         buf.write(u"\u03cd\t\20\2\2\u03cd\u03ce\7T\2\2\u03ce\u03d3\5\"\22")
-        buf.write(u"\2\u03cf\u03d0\7\u0096\2\2\u03d0\u03d1\79\2\2\u03d1\u03d2")
+        buf.write(u"\2\u03cf\u03d0\7\u00a5\2\2\u03d0\u03d1\79\2\2\u03d1\u03d2")
         buf.write(u"\t\6\2\2\u03d2\u03d4\7:\2\2\u03d3\u03cf\3\2\2\2\u03d3")
         buf.write(u"\u03d4\3\2\2\2\u03d4\u03d5\3\2\2\2\u03d5\u03d6\7:\2\2")
         buf.write(u"\u03d6m\3\2\2\2\u03d7\u03d8\5\"\22\2\u03d8o\3\2\2\2\u03d9")
         buf.write(u"\u03da\5(\25\2\u03daq\3\2\2\2\u03db\u03e1\5\"\22\2\u03dc")
-        buf.write(u"\u03dd\5\"\22\2\u03dd\u03de\7\u0099\2\2\u03de\u03df\5")
+        buf.write(u"\u03dd\5\"\22\2\u03dd\u03de\7\u00a8\2\2\u03de\u03df\5")
         buf.write(u"r:\2\u03df\u03e1\3\2\2\2\u03e0\u03db\3\2\2\2\u03e0\u03dc")
         buf.write(u"\3\2\2\2\u03e1s\3\2\2\2\u03e2\u03e3\5(\25\2\u03e3u\3")
-        buf.write(u"\2\2\2\u03e4\u03ed\7\u0095\2\2\u03e5\u03ee\5P)\2\u03e6")
+        buf.write(u"\2\2\2\u03e4\u03ed\7\u00a4\2\2\u03e5\u03ee\5P)\2\u03e6")
         buf.write(u"\u03e9\79\2\2\u03e7\u03ea\5\"\22\2\u03e8\u03ea\5h\65")
         buf.write(u"\2\u03e9\u03e7\3\2\2\2\u03e9\u03e8\3\2\2\2\u03ea\u03eb")
         buf.write(u"\3\2\2\2\u03eb\u03ec\7:\2\2\u03ec\u03ee\3\2\2\2\u03ed")
         buf.write(u"\u03e5\3\2\2\2\u03ed\u03e6\3\2\2\2\u03eew\3\2\2\2\u03ef")
-        buf.write(u"\u03f5\7\u0096\2\2\u03f0\u03f6\5P)\2\u03f1\u03f2\79\2")
+        buf.write(u"\u03f5\7\u00a5\2\2\u03f0\u03f6\5P)\2\u03f1\u03f2\79\2")
         buf.write(u"\2\u03f2\u03f3\5\"\22\2\u03f3\u03f4\7:\2\2\u03f4\u03f6")
         buf.write(u"\3\2\2\2\u03f5\u03f0\3\2\2\2\u03f5\u03f1\3\2\2\2\u03f6")
-        buf.write(u"y\3\2\2\2\u03f7\u03f8\7\u0095\2\2\u03f8\u03f9\79\2\2")
+        buf.write(u"y\3\2\2\2\u03f7\u03f8\7\u00a4\2\2\u03f8\u03f9\79\2\2")
         buf.write(u"\u03f9\u03fa\5 \21\2\u03fa\u03fb\7:\2\2\u03fb{\3\2\2")
-        buf.write(u"\2\u03fc\u03fd\7\u0095\2\2\u03fd\u03fe\79\2\2\u03fe\u03ff")
+        buf.write(u"\2\u03fc\u03fd\7\u00a4\2\2\u03fd\u03fe\79\2\2\u03fe\u03ff")
         buf.write(u"\5 \21\2\u03ff\u0400\7:\2\2\u0400}\3\2\2\2]\u0082\u008c")
         buf.write(u"\u0092\u00a0\u00a7\u00b0\u00b4\u00bc\u00c2\u00ca\u00ce")
         buf.write(u"\u00d7\u00e2\u010a\u0113\u011d\u0120\u0130\u013b\u0146")
@@ -580,14 +581,17 @@ class PSParser (Parser):
                     u"'arcosh'", u"'arccosh'", u"'artanh'", u"'arctanh'",
                     u"'gcd'", u"'lcm'", u"'floor'", u"'ceil'", u"'\\sqrt'",
                     u"'\\gcd'", u"'\\lcm'", u"'\\floor'", u"'\\ceil'",
-                    u"'\\max'", u"'\\min'", u"'\\times'", u"'\\cdot'",
-                    u"'\\div'", u"'\\frac'", u"<INVALID>", u"'\\choose'",
-                    u"'\\mod'", u"'\\mathit'", u"'\\operatorname'", u"'matrix'",
-                    u"'pmatrix'", u"'bmatrix'", u"'vmatrix'", u"<INVALID>",
+                    u"'\\max'", u"'\\min'", u"'\\det'", u"'eye'", u"'zeros'",
+                    u"'ones'", u"'diag'", u"'rank'", u"<INVALID>", u"'rref'",
+                    u"'hstack'", u"'vstack'", u"'nullspace'", u"<INVALID>",
+                    u"<INVALID>", u"<INVALID>", u"<INVALID>", u"'\\times'",
+                    u"'\\cdot'", u"'\\div'", u"'\\frac'", u"<INVALID>",
+                    u"'\\choose'", u"'\\mod'", u"'\\mathit'", u"'\\operatorname'",
+                    u"'matrix'", u"'pmatrix'", u"'bmatrix'", u"'vmatrix'",
                     u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>",
-                    u"'&'", u"'\\\\'", u"'_'", u"'^'", u"':'", u"';'",
-                    u"','", u"'.'", u"<INVALID>", u"<INVALID>", u"'E'",
-                    u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>",
+                    u"<INVALID>", u"'&'", u"'\\\\'", u"'_'", u"'^'", u"':'",
+                    u"';'", u"','", u"'.'", u"<INVALID>", u"<INVALID>",
+                    u"'E'", u"<INVALID>", u"<INVALID>", u"<INVALID>", u"<INVALID>",
                     u"<INVALID>", u"'\\in'", u"'='", u"<INVALID>", u"'<'",
                     u"<INVALID>", u"'>'", u"<INVALID>", u"<INVALID>", u"'!'"]
 
@@ -623,19 +627,24 @@ class PSParser (Parser):
                      u"FUNC_ARCTANH_NAME", u"FUNC_GCD_NAME", u"FUNC_LCM_NAME",
                      u"FUNC_FLOOR_NAME", u"FUNC_CEIL_NAME", u"FUNC_SQRT",
                      u"FUNC_GCD", u"FUNC_LCM", u"FUNC_FLOOR", u"FUNC_CEIL",
-                     u"FUNC_MAX", u"FUNC_MIN", u"CMD_TIMES", u"CMD_CDOT",
-                     u"CMD_DIV", u"CMD_FRAC", u"CMD_BINOM", u"CMD_CHOOSE",
-                     u"CMD_MOD", u"CMD_MATHIT", u"CMD_OPERATORNAME", u"MATRIX_TYPE_MATRIX",
-                     u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX", u"MATRIX_TYPE_DET",
-                     u"MATRIX_TYPES", u"CMD_MATRIX_START", u"CMD_MATRIX_END",
-                     u"CMD_DET_START", u"CMD_DET_END", u"MATRIX_DEL_COL",
-                     u"MATRIX_DEL_ROW", u"UNDERSCORE", u"CARET", u"COLON",
-                     u"SEMICOLON", u"COMMA", u"PERIOD", u"DIFFERENTIAL",
-                     u"EXP_E", u"E_NOTATION_E", u"LETTER_NO_E", u"MATRIX_XRIGHTARROW",
-                     u"TRANSFORM_EXCHANGE", u"NUMBER", u"E_NOTATION", u"IN",
-                     u"ASSIGNMENT", u"EQUAL", u"LT", u"LTE", u"GT", u"GTE",
-                     u"UNEQUAL", u"BANG", u"PERCENT_NUMBER", u"GREEK_CMD",
-                     u"OTHER_SYMBOL_CMD", u"SYMBOL", u"VARIABLE"]
+                     u"FUNC_MAX", u"FUNC_MIN", u"FUNC_DET", u"FUNC_EYE_NAME",
+                     u"FUNC_ZEROS_NAME", u"FUNC_ONES_NAME", u"FUNC_DIAG_NAME",
+                     u"FUNC_RANK_NAME", u"FUNC_TRACE_NAME", u"FUNC_RREF_NAME",
+                     u"FUNC_HSTACK_NAME", u"FUNC_VSTACK_NAME", u"FUNC_NULLSPACE_NAME",
+                     u"FUNC_DIAGONALIZE_NAME", u"FUNC_EIGENVALS_NAME",
+                     u"FUNC_EIGENVECTORS_NAME", u"FUNC_SVD_NAME", u"CMD_TIMES",
+                     u"CMD_CDOT", u"CMD_DIV", u"CMD_FRAC", u"CMD_BINOM",
+                     u"CMD_CHOOSE", u"CMD_MOD", u"CMD_MATHIT", u"CMD_OPERATORNAME",
+                     u"MATRIX_TYPE_MATRIX", u"MATRIX_TYPE_PMATRIX", u"MATRIX_TYPE_BMATRIX",
+                     u"MATRIX_TYPE_DET", u"MATRIX_TYPES", u"CMD_MATRIX_START",
+                     u"CMD_MATRIX_END", u"CMD_DET_START", u"CMD_DET_END",
+                     u"MATRIX_DEL_COL", u"MATRIX_DEL_ROW", u"UNDERSCORE",
+                     u"CARET", u"COLON", u"SEMICOLON", u"COMMA", u"PERIOD",
+                     u"DIFFERENTIAL", u"EXP_E", u"E_NOTATION_E", u"LETTER_NO_E",
+                     u"MATRIX_XRIGHTARROW", u"TRANSFORM_EXCHANGE", u"NUMBER",
+                     u"E_NOTATION", u"IN", u"ASSIGNMENT", u"EQUAL", u"LT",
+                     u"LTE", u"GT", u"GTE", u"UNEQUAL", u"BANG", u"PERCENT_NUMBER",
+                     u"GREEK_CMD", u"OTHER_SYMBOL_CMD", u"SYMBOL", u"VARIABLE"]
 
     RULE_accent_symbol = 0
     RULE_math = 1
@@ -845,54 +854,69 @@ class PSParser (Parser):
     FUNC_CEIL = 124
     FUNC_MAX = 125
     FUNC_MIN = 126
-    CMD_TIMES = 127
-    CMD_CDOT = 128
-    CMD_DIV = 129
-    CMD_FRAC = 130
-    CMD_BINOM = 131
-    CMD_CHOOSE = 132
-    CMD_MOD = 133
-    CMD_MATHIT = 134
-    CMD_OPERATORNAME = 135
-    MATRIX_TYPE_MATRIX = 136
-    MATRIX_TYPE_PMATRIX = 137
-    MATRIX_TYPE_BMATRIX = 138
-    MATRIX_TYPE_DET = 139
-    MATRIX_TYPES = 140
-    CMD_MATRIX_START = 141
-    CMD_MATRIX_END = 142
-    CMD_DET_START = 143
-    CMD_DET_END = 144
-    MATRIX_DEL_COL = 145
-    MATRIX_DEL_ROW = 146
-    UNDERSCORE = 147
-    CARET = 148
-    COLON = 149
-    SEMICOLON = 150
-    COMMA = 151
-    PERIOD = 152
-    DIFFERENTIAL = 153
-    EXP_E = 154
-    E_NOTATION_E = 155
-    LETTER_NO_E = 156
-    MATRIX_XRIGHTARROW = 157
-    TRANSFORM_EXCHANGE = 158
-    NUMBER = 159
-    E_NOTATION = 160
-    IN = 161
-    ASSIGNMENT = 162
-    EQUAL = 163
-    LT = 164
-    LTE = 165
-    GT = 166
-    GTE = 167
-    UNEQUAL = 168
-    BANG = 169
-    PERCENT_NUMBER = 170
-    GREEK_CMD = 171
-    OTHER_SYMBOL_CMD = 172
-    SYMBOL = 173
-    VARIABLE = 174
+    FUNC_DET = 127
+    FUNC_EYE_NAME = 128
+    FUNC_ZEROS_NAME = 129
+    FUNC_ONES_NAME = 130
+    FUNC_DIAG_NAME = 131
+    FUNC_RANK_NAME = 132
+    FUNC_TRACE_NAME = 133
+    FUNC_RREF_NAME = 134
+    FUNC_HSTACK_NAME = 135
+    FUNC_VSTACK_NAME = 136
+    FUNC_NULLSPACE_NAME = 137
+    FUNC_DIAGONALIZE_NAME = 138
+    FUNC_EIGENVALS_NAME = 139
+    FUNC_EIGENVECTORS_NAME = 140
+    FUNC_SVD_NAME = 141
+    CMD_TIMES = 142
+    CMD_CDOT = 143
+    CMD_DIV = 144
+    CMD_FRAC = 145
+    CMD_BINOM = 146
+    CMD_CHOOSE = 147
+    CMD_MOD = 148
+    CMD_MATHIT = 149
+    CMD_OPERATORNAME = 150
+    MATRIX_TYPE_MATRIX = 151
+    MATRIX_TYPE_PMATRIX = 152
+    MATRIX_TYPE_BMATRIX = 153
+    MATRIX_TYPE_DET = 154
+    MATRIX_TYPES = 155
+    CMD_MATRIX_START = 156
+    CMD_MATRIX_END = 157
+    CMD_DET_START = 158
+    CMD_DET_END = 159
+    MATRIX_DEL_COL = 160
+    MATRIX_DEL_ROW = 161
+    UNDERSCORE = 162
+    CARET = 163
+    COLON = 164
+    SEMICOLON = 165
+    COMMA = 166
+    PERIOD = 167
+    DIFFERENTIAL = 168
+    EXP_E = 169
+    E_NOTATION_E = 170
+    LETTER_NO_E = 171
+    MATRIX_XRIGHTARROW = 172
+    TRANSFORM_EXCHANGE = 173
+    NUMBER = 174
+    E_NOTATION = 175
+    IN = 176
+    ASSIGNMENT = 177
+    EQUAL = 178
+    LT = 179
+    LTE = 180
+    GT = 181
+    GTE = 182
+    UNEQUAL = 183
+    BANG = 184
+    PERCENT_NUMBER = 185
+    GREEK_CMD = 186
+    OTHER_SYMBOL_CMD = 187
+    SYMBOL = 188
+    VARIABLE = 189
 
     def __init__(self, input, output=sys.stdout):
         super(PSParser, self).__init__(input, output=output)
@@ -1710,7 +1734,7 @@ class PSParser (Parser):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 220
                     _la = self._input.LA(1)
-                    if not(((((_la - 161)) & ~0x3f) == 0 and ((1 << (_la - 161)) & ((1 << (PSParser.IN - 161)) | (1 << (PSParser.ASSIGNMENT - 161)) | (1 << (PSParser.EQUAL - 161)) | (1 << (PSParser.LT - 161)) | (1 << (PSParser.LTE - 161)) | (1 << (PSParser.GT - 161)) | (1 << (PSParser.GTE - 161)) | (1 << (PSParser.UNEQUAL - 161)))) != 0)):
+                    if not(((((_la - 176)) & ~0x3f) == 0 and ((1 << (_la - 176)) & ((1 << (PSParser.IN - 176)) | (1 << (PSParser.ASSIGNMENT - 176)) | (1 << (PSParser.EQUAL - 176)) | (1 << (PSParser.LT - 176)) | (1 << (PSParser.LTE - 176)) | (1 << (PSParser.GT - 176)) | (1 << (PSParser.GTE - 176)) | (1 << (PSParser.UNEQUAL - 176)))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -2230,7 +2254,7 @@ class PSParser (Parser):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 309
                     _la = self._input.LA(1)
-                    if not(_la == PSParser.MUL or _la == PSParser.DIV or ((((_la - 127)) & ~0x3f) == 0 and ((1 << (_la - 127)) & ((1 << (PSParser.CMD_TIMES - 127)) | (1 << (PSParser.CMD_CDOT - 127)) | (1 << (PSParser.CMD_DIV - 127)) | (1 << (PSParser.CMD_MOD - 127)) | (1 << (PSParser.COLON - 127)))) != 0)):
+                    if not(_la == PSParser.MUL or _la == PSParser.DIV or ((((_la - 142)) & ~0x3f) == 0 and ((1 << (_la - 142)) & ((1 << (PSParser.CMD_TIMES - 142)) | (1 << (PSParser.CMD_CDOT - 142)) | (1 << (PSParser.CMD_DIV - 142)) | (1 << (PSParser.CMD_MOD - 142)) | (1 << (PSParser.COLON - 142)))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -2325,7 +2349,7 @@ class PSParser (Parser):
                         raise FailedPredicateException(self, "self.precpred(self._ctx, 2)")
                     self.state = 320
                     _la = self._input.LA(1)
-                    if not(_la == PSParser.MUL or _la == PSParser.DIV or ((((_la - 127)) & ~0x3f) == 0 and ((1 << (_la - 127)) & ((1 << (PSParser.CMD_TIMES - 127)) | (1 << (PSParser.CMD_CDOT - 127)) | (1 << (PSParser.CMD_DIV - 127)) | (1 << (PSParser.CMD_MOD - 127)) | (1 << (PSParser.COLON - 127)))) != 0)):
+                    if not(_la == PSParser.MUL or _la == PSParser.DIV or ((((_la - 142)) & ~0x3f) == 0 and ((1 << (_la - 142)) & ((1 << (PSParser.CMD_TIMES - 142)) | (1 << (PSParser.CMD_CDOT - 142)) | (1 << (PSParser.CMD_DIV - 142)) | (1 << (PSParser.CMD_MOD - 142)) | (1 << (PSParser.COLON - 142)))) != 0)):
                         self._errHandler.recoverInline(self)
                     else:
                         self._errHandler.reportMatch(self)
@@ -2397,7 +2421,7 @@ class PSParser (Parser):
                 self.state = 328
                 self.unary()
                 pass
-            elif token in [PSParser.T__0, PSParser.T__1, PSParser.T__2, PSParser.T__3, PSParser.T__4, PSParser.T__5, PSParser.T__6, PSParser.T__7, PSParser.T__8, PSParser.T__9, PSParser.T__10, PSParser.T__11, PSParser.T__12, PSParser.T__13, PSParser.T__14, PSParser.T__15, PSParser.T__16, PSParser.T__17, PSParser.T__18, PSParser.T__19, PSParser.T__20, PSParser.T__21, PSParser.T__22, PSParser.T__23, PSParser.T__24, PSParser.T__25, PSParser.T__26, PSParser.T__27, PSParser.T__28, PSParser.T__29, PSParser.T__30, PSParser.T__31, PSParser.T__32, PSParser.T__33, PSParser.T__34, PSParser.T__35, PSParser.T__36, PSParser.T__37, PSParser.T__38, PSParser.T__39, PSParser.L_PAREN, PSParser.L_GROUP, PSParser.L_BRACE, PSParser.L_BRACE_VISUAL, PSParser.L_BRACE_CMD, PSParser.L_BRACKET, PSParser.L_BRACK, PSParser.BAR, PSParser.L_VERT, PSParser.VERT, PSParser.L_FLOOR, PSParser.LL_CORNER, PSParser.L_CEIL, PSParser.UL_CORNER, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.FUNC_GCD, PSParser.FUNC_LCM, PSParser.FUNC_FLOOR, PSParser.FUNC_CEIL, PSParser.FUNC_MAX, PSParser.FUNC_MIN, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.CMD_DET_START, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.PERCENT_NUMBER, PSParser.GREEK_CMD, PSParser.OTHER_SYMBOL_CMD, PSParser.SYMBOL, PSParser.VARIABLE]:
+            elif token in [PSParser.T__0, PSParser.T__1, PSParser.T__2, PSParser.T__3, PSParser.T__4, PSParser.T__5, PSParser.T__6, PSParser.T__7, PSParser.T__8, PSParser.T__9, PSParser.T__10, PSParser.T__11, PSParser.T__12, PSParser.T__13, PSParser.T__14, PSParser.T__15, PSParser.T__16, PSParser.T__17, PSParser.T__18, PSParser.T__19, PSParser.T__20, PSParser.T__21, PSParser.T__22, PSParser.T__23, PSParser.T__24, PSParser.T__25, PSParser.T__26, PSParser.T__27, PSParser.T__28, PSParser.T__29, PSParser.T__30, PSParser.T__31, PSParser.T__32, PSParser.T__33, PSParser.T__34, PSParser.T__35, PSParser.T__36, PSParser.T__37, PSParser.T__38, PSParser.T__39, PSParser.L_PAREN, PSParser.L_GROUP, PSParser.L_BRACE, PSParser.L_BRACE_VISUAL, PSParser.L_BRACE_CMD, PSParser.L_BRACKET, PSParser.L_BRACK, PSParser.BAR, PSParser.L_VERT, PSParser.VERT, PSParser.L_FLOOR, PSParser.LL_CORNER, PSParser.L_CEIL, PSParser.UL_CORNER, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.FUNC_GCD, PSParser.FUNC_LCM, PSParser.FUNC_FLOOR, PSParser.FUNC_CEIL, PSParser.FUNC_MAX, PSParser.FUNC_MIN, PSParser.FUNC_DET, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.CMD_DET_START, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.PERCENT_NUMBER, PSParser.GREEK_CMD, PSParser.OTHER_SYMBOL_CMD, PSParser.SYMBOL, PSParser.VARIABLE]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 330
                 self._errHandler.sync(self)
@@ -2481,7 +2505,7 @@ class PSParser (Parser):
                 self.state = 337
                 self.unary_nofunc()
                 pass
-            elif token in [PSParser.T__0, PSParser.T__1, PSParser.T__2, PSParser.T__3, PSParser.T__4, PSParser.T__5, PSParser.T__6, PSParser.T__7, PSParser.T__8, PSParser.T__9, PSParser.T__10, PSParser.T__11, PSParser.T__12, PSParser.T__13, PSParser.T__14, PSParser.T__15, PSParser.T__16, PSParser.T__17, PSParser.T__18, PSParser.T__19, PSParser.T__20, PSParser.T__21, PSParser.T__22, PSParser.T__23, PSParser.T__24, PSParser.T__25, PSParser.T__26, PSParser.T__27, PSParser.T__28, PSParser.T__29, PSParser.T__30, PSParser.T__31, PSParser.T__32, PSParser.T__33, PSParser.T__34, PSParser.T__35, PSParser.T__36, PSParser.T__37, PSParser.T__38, PSParser.T__39, PSParser.L_PAREN, PSParser.L_GROUP, PSParser.L_BRACE, PSParser.L_BRACE_VISUAL, PSParser.L_BRACE_CMD, PSParser.L_BRACKET, PSParser.L_BRACK, PSParser.BAR, PSParser.L_VERT, PSParser.VERT, PSParser.L_FLOOR, PSParser.LL_CORNER, PSParser.L_CEIL, PSParser.UL_CORNER, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.FUNC_GCD, PSParser.FUNC_LCM, PSParser.FUNC_FLOOR, PSParser.FUNC_CEIL, PSParser.FUNC_MAX, PSParser.FUNC_MIN, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.CMD_DET_START, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.PERCENT_NUMBER, PSParser.GREEK_CMD, PSParser.OTHER_SYMBOL_CMD, PSParser.SYMBOL, PSParser.VARIABLE]:
+            elif token in [PSParser.T__0, PSParser.T__1, PSParser.T__2, PSParser.T__3, PSParser.T__4, PSParser.T__5, PSParser.T__6, PSParser.T__7, PSParser.T__8, PSParser.T__9, PSParser.T__10, PSParser.T__11, PSParser.T__12, PSParser.T__13, PSParser.T__14, PSParser.T__15, PSParser.T__16, PSParser.T__17, PSParser.T__18, PSParser.T__19, PSParser.T__20, PSParser.T__21, PSParser.T__22, PSParser.T__23, PSParser.T__24, PSParser.T__25, PSParser.T__26, PSParser.T__27, PSParser.T__28, PSParser.T__29, PSParser.T__30, PSParser.T__31, PSParser.T__32, PSParser.T__33, PSParser.T__34, PSParser.T__35, PSParser.T__36, PSParser.T__37, PSParser.T__38, PSParser.T__39, PSParser.L_PAREN, PSParser.L_GROUP, PSParser.L_BRACE, PSParser.L_BRACE_VISUAL, PSParser.L_BRACE_CMD, PSParser.L_BRACKET, PSParser.L_BRACK, PSParser.BAR, PSParser.L_VERT, PSParser.VERT, PSParser.L_FLOOR, PSParser.LL_CORNER, PSParser.L_CEIL, PSParser.UL_CORNER, PSParser.L_LEFT, PSParser.ML_LEFT, PSParser.FUNC_LIM, PSParser.FUNC_INT, PSParser.FUNC_SUM, PSParser.FUNC_PROD, PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_SQRT, PSParser.FUNC_GCD, PSParser.FUNC_LCM, PSParser.FUNC_FLOOR, PSParser.FUNC_CEIL, PSParser.FUNC_MAX, PSParser.FUNC_MIN, PSParser.FUNC_DET, PSParser.CMD_FRAC, PSParser.CMD_BINOM, PSParser.CMD_MATHIT, PSParser.CMD_OPERATORNAME, PSParser.CMD_MATRIX_START, PSParser.CMD_DET_START, PSParser.DIFFERENTIAL, PSParser.EXP_E, PSParser.LETTER_NO_E, PSParser.NUMBER, PSParser.E_NOTATION, PSParser.PERCENT_NUMBER, PSParser.GREEK_CMD, PSParser.OTHER_SYMBOL_CMD, PSParser.SYMBOL, PSParser.VARIABLE]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 338
                 self.postfix()
@@ -4549,7 +4573,7 @@ class PSParser (Parser):
             while True:
                 self.state = 730
                 _la = self._input.LA(1)
-                if not(((((_la - 154)) & ~0x3f) == 0 and ((1 << (_la - 154)) & ((1 << (PSParser.EXP_E - 154)) | (1 << (PSParser.E_NOTATION_E - 154)) | (1 << (PSParser.LETTER_NO_E - 154)))) != 0)):
+                if not(((((_la - 169)) & ~0x3f) == 0 and ((1 << (_la - 169)) & ((1 << (PSParser.EXP_E - 169)) | (1 << (PSParser.E_NOTATION_E - 169)) | (1 << (PSParser.LETTER_NO_E - 169)))) != 0)):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
@@ -4557,7 +4581,7 @@ class PSParser (Parser):
                 self.state = 733
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (((((_la - 154)) & ~0x3f) == 0 and ((1 << (_la - 154)) & ((1 << (PSParser.EXP_E - 154)) | (1 << (PSParser.E_NOTATION_E - 154)) | (1 << (PSParser.LETTER_NO_E - 154)))) != 0)):
+                if not (((((_la - 169)) & ~0x3f) == 0 and ((1 << (_la - 169)) & ((1 << (PSParser.EXP_E - 169)) | (1 << (PSParser.E_NOTATION_E - 169)) | (1 << (PSParser.LETTER_NO_E - 169)))) != 0)):
                     break
 
         except RecognitionException as re:
@@ -4812,6 +4836,9 @@ class PSParser (Parser):
         def FUNC_CEIL(self):
             return self.getToken(PSParser.FUNC_CEIL, 0)
 
+        def FUNC_DET(self):
+            return self.getToken(PSParser.FUNC_DET, 0)
+
         def getRuleIndex(self):
             return PSParser.RULE_func_normal_functions_single_arg
 
@@ -4832,7 +4859,7 @@ class PSParser (Parser):
             self.enterOuterAlt(localctx, 1)
             self.state = 759
             _la = self._input.LA(1)
-            if not(((((_la - 86)) & ~0x3f) == 0 and ((1 << (_la - 86)) & ((1 << (PSParser.FUNC_LOG - 86)) | (1 << (PSParser.FUNC_LN - 86)) | (1 << (PSParser.FUNC_EXP - 86)) | (1 << (PSParser.FUNC_SIN - 86)) | (1 << (PSParser.FUNC_COS - 86)) | (1 << (PSParser.FUNC_TAN - 86)) | (1 << (PSParser.FUNC_CSC - 86)) | (1 << (PSParser.FUNC_SEC - 86)) | (1 << (PSParser.FUNC_COT - 86)) | (1 << (PSParser.FUNC_ARCSIN - 86)) | (1 << (PSParser.FUNC_ARCCOS - 86)) | (1 << (PSParser.FUNC_ARCTAN - 86)) | (1 << (PSParser.FUNC_ARCCSC - 86)) | (1 << (PSParser.FUNC_ARCSEC - 86)) | (1 << (PSParser.FUNC_ARCCOT - 86)) | (1 << (PSParser.FUNC_SINH - 86)) | (1 << (PSParser.FUNC_COSH - 86)) | (1 << (PSParser.FUNC_TANH - 86)) | (1 << (PSParser.FUNC_ARSINH - 86)) | (1 << (PSParser.FUNC_ARCOSH - 86)) | (1 << (PSParser.FUNC_ARTANH - 86)) | (1 << (PSParser.FUNC_ARCSINH - 86)) | (1 << (PSParser.FUNC_ARCCOSH - 86)) | (1 << (PSParser.FUNC_ARCTANH - 86)) | (1 << (PSParser.FUNC_FLOOR - 86)) | (1 << (PSParser.FUNC_CEIL - 86)))) != 0)):
+            if not(((((_la - 86)) & ~0x3f) == 0 and ((1 << (_la - 86)) & ((1 << (PSParser.FUNC_LOG - 86)) | (1 << (PSParser.FUNC_LN - 86)) | (1 << (PSParser.FUNC_EXP - 86)) | (1 << (PSParser.FUNC_SIN - 86)) | (1 << (PSParser.FUNC_COS - 86)) | (1 << (PSParser.FUNC_TAN - 86)) | (1 << (PSParser.FUNC_CSC - 86)) | (1 << (PSParser.FUNC_SEC - 86)) | (1 << (PSParser.FUNC_COT - 86)) | (1 << (PSParser.FUNC_ARCSIN - 86)) | (1 << (PSParser.FUNC_ARCCOS - 86)) | (1 << (PSParser.FUNC_ARCTAN - 86)) | (1 << (PSParser.FUNC_ARCCSC - 86)) | (1 << (PSParser.FUNC_ARCSEC - 86)) | (1 << (PSParser.FUNC_ARCCOT - 86)) | (1 << (PSParser.FUNC_SINH - 86)) | (1 << (PSParser.FUNC_COSH - 86)) | (1 << (PSParser.FUNC_TANH - 86)) | (1 << (PSParser.FUNC_ARSINH - 86)) | (1 << (PSParser.FUNC_ARCOSH - 86)) | (1 << (PSParser.FUNC_ARTANH - 86)) | (1 << (PSParser.FUNC_ARCSINH - 86)) | (1 << (PSParser.FUNC_ARCCOSH - 86)) | (1 << (PSParser.FUNC_ARCTANH - 86)) | (1 << (PSParser.FUNC_FLOOR - 86)) | (1 << (PSParser.FUNC_CEIL - 86)) | (1 << (PSParser.FUNC_DET - 86)))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -4926,6 +4953,33 @@ class PSParser (Parser):
         def FUNC_CEIL_NAME(self):
             return self.getToken(PSParser.FUNC_CEIL_NAME, 0)
 
+        def FUNC_EYE_NAME(self):
+            return self.getToken(PSParser.FUNC_EYE_NAME, 0)
+
+        def FUNC_RANK_NAME(self):
+            return self.getToken(PSParser.FUNC_RANK_NAME, 0)
+
+        def FUNC_TRACE_NAME(self):
+            return self.getToken(PSParser.FUNC_TRACE_NAME, 0)
+
+        def FUNC_RREF_NAME(self):
+            return self.getToken(PSParser.FUNC_RREF_NAME, 0)
+
+        def FUNC_NULLSPACE_NAME(self):
+            return self.getToken(PSParser.FUNC_NULLSPACE_NAME, 0)
+
+        def FUNC_DIAGONALIZE_NAME(self):
+            return self.getToken(PSParser.FUNC_DIAGONALIZE_NAME, 0)
+
+        def FUNC_EIGENVALS_NAME(self):
+            return self.getToken(PSParser.FUNC_EIGENVALS_NAME, 0)
+
+        def FUNC_EIGENVECTORS_NAME(self):
+            return self.getToken(PSParser.FUNC_EIGENVECTORS_NAME, 0)
+
+        def FUNC_SVD_NAME(self):
+            return self.getToken(PSParser.FUNC_SVD_NAME, 0)
+
         def getRuleIndex(self):
             return PSParser.RULE_func_operator_names_single_arg
 
@@ -4946,7 +5000,7 @@ class PSParser (Parser):
             self.enterOuterAlt(localctx, 1)
             self.state = 763
             _la = self._input.LA(1)
-            if not(((((_la - 110)) & ~0x3f) == 0 and ((1 << (_la - 110)) & ((1 << (PSParser.FUNC_ARSINH_NAME - 110)) | (1 << (PSParser.FUNC_ARCSINH_NAME - 110)) | (1 << (PSParser.FUNC_ARCOSH_NAME - 110)) | (1 << (PSParser.FUNC_ARCCOSH_NAME - 110)) | (1 << (PSParser.FUNC_ARTANH_NAME - 110)) | (1 << (PSParser.FUNC_ARCTANH_NAME - 110)) | (1 << (PSParser.FUNC_FLOOR_NAME - 110)) | (1 << (PSParser.FUNC_CEIL_NAME - 110)))) != 0)):
+            if not(((((_la - 110)) & ~0x3f) == 0 and ((1 << (_la - 110)) & ((1 << (PSParser.FUNC_ARSINH_NAME - 110)) | (1 << (PSParser.FUNC_ARCSINH_NAME - 110)) | (1 << (PSParser.FUNC_ARCOSH_NAME - 110)) | (1 << (PSParser.FUNC_ARCCOSH_NAME - 110)) | (1 << (PSParser.FUNC_ARTANH_NAME - 110)) | (1 << (PSParser.FUNC_ARCTANH_NAME - 110)) | (1 << (PSParser.FUNC_FLOOR_NAME - 110)) | (1 << (PSParser.FUNC_CEIL_NAME - 110)) | (1 << (PSParser.FUNC_EYE_NAME - 110)) | (1 << (PSParser.FUNC_RANK_NAME - 110)) | (1 << (PSParser.FUNC_TRACE_NAME - 110)) | (1 << (PSParser.FUNC_RREF_NAME - 110)) | (1 << (PSParser.FUNC_NULLSPACE_NAME - 110)) | (1 << (PSParser.FUNC_DIAGONALIZE_NAME - 110)) | (1 << (PSParser.FUNC_EIGENVALS_NAME - 110)) | (1 << (PSParser.FUNC_EIGENVECTORS_NAME - 110)) | (1 << (PSParser.FUNC_SVD_NAME - 110)))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -4971,6 +5025,21 @@ class PSParser (Parser):
         def FUNC_LCM_NAME(self):
             return self.getToken(PSParser.FUNC_LCM_NAME, 0)
 
+        def FUNC_ZEROS_NAME(self):
+            return self.getToken(PSParser.FUNC_ZEROS_NAME, 0)
+
+        def FUNC_ONES_NAME(self):
+            return self.getToken(PSParser.FUNC_ONES_NAME, 0)
+
+        def FUNC_DIAG_NAME(self):
+            return self.getToken(PSParser.FUNC_DIAG_NAME, 0)
+
+        def FUNC_HSTACK_NAME(self):
+            return self.getToken(PSParser.FUNC_HSTACK_NAME, 0)
+
+        def FUNC_VSTACK_NAME(self):
+            return self.getToken(PSParser.FUNC_VSTACK_NAME, 0)
+
         def getRuleIndex(self):
             return PSParser.RULE_func_operator_names_multi_arg
 
@@ -4991,7 +5060,7 @@ class PSParser (Parser):
             self.enterOuterAlt(localctx, 1)
             self.state = 765
             _la = self._input.LA(1)
-            if not(_la == PSParser.FUNC_GCD_NAME or _la == PSParser.FUNC_LCM_NAME):
+            if not(((((_la - 116)) & ~0x3f) == 0 and ((1 << (_la - 116)) & ((1 << (PSParser.FUNC_GCD_NAME - 116)) | (1 << (PSParser.FUNC_LCM_NAME - 116)) | (1 << (PSParser.FUNC_ZEROS_NAME - 116)) | (1 << (PSParser.FUNC_ONES_NAME - 116)) | (1 << (PSParser.FUNC_DIAG_NAME - 116)) | (1 << (PSParser.FUNC_HSTACK_NAME - 116)) | (1 << (PSParser.FUNC_VSTACK_NAME - 116)))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -5045,7 +5114,7 @@ class PSParser (Parser):
             self.state = 773
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_FLOOR, PSParser.FUNC_CEIL]:
+            if token in [PSParser.FUNC_LOG, PSParser.FUNC_LN, PSParser.FUNC_EXP, PSParser.FUNC_SIN, PSParser.FUNC_COS, PSParser.FUNC_TAN, PSParser.FUNC_CSC, PSParser.FUNC_SEC, PSParser.FUNC_COT, PSParser.FUNC_ARCSIN, PSParser.FUNC_ARCCOS, PSParser.FUNC_ARCTAN, PSParser.FUNC_ARCCSC, PSParser.FUNC_ARCSEC, PSParser.FUNC_ARCCOT, PSParser.FUNC_SINH, PSParser.FUNC_COSH, PSParser.FUNC_TANH, PSParser.FUNC_ARSINH, PSParser.FUNC_ARCOSH, PSParser.FUNC_ARTANH, PSParser.FUNC_ARCSINH, PSParser.FUNC_ARCCOSH, PSParser.FUNC_ARCTANH, PSParser.FUNC_FLOOR, PSParser.FUNC_CEIL, PSParser.FUNC_DET]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 767
                 self.func_normal_functions_single_arg()
@@ -5923,7 +5992,7 @@ class PSParser (Parser):
             self.match(PSParser.L_BRACE)
             self.state = 970
             _la = self._input.LA(1)
-            if not(((((_la - 156)) & ~0x3f) == 0 and ((1 << (_la - 156)) & ((1 << (PSParser.LETTER_NO_E - 156)) | (1 << (PSParser.GREEK_CMD - 156)) | (1 << (PSParser.OTHER_SYMBOL_CMD - 156)))) != 0)):
+            if not(((((_la - 171)) & ~0x3f) == 0 and ((1 << (_la - 171)) & ((1 << (PSParser.LETTER_NO_E - 171)) | (1 << (PSParser.GREEK_CMD - 171)) | (1 << (PSParser.OTHER_SYMBOL_CMD - 171)))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)

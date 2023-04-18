@@ -832,7 +832,7 @@ def convert_func(func):
                 expr = arg.rref()[0]
             elif operatorname == 'nullspace':
                 expr = arg.nullspace()
-            elif operatorname in ['eigen', 'diagonalize']:
+            elif operatorname in ['eig', 'eigen', 'diagonalize']:
                 expr = arg.diagonalize()
             elif operatorname in ['eigenvals', 'eigenvalues']:
                 expr = arg.eigenvals()

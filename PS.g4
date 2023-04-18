@@ -112,7 +112,7 @@ FUNC_RREF_NAME: 'rref';
 FUNC_HSTACK_NAME: 'hstack';
 FUNC_VSTACK_NAME: 'vstack';
 FUNC_NULLSPACE_NAME: 'nullspace';
-FUNC_DIAGONALIZE_NAME: 'eigen' | 'diagonalize';
+FUNC_DIAGONALIZE_NAME: 'eig' | 'eigen' | 'diagonalize';
 FUNC_EIGENVALS_NAME: 'eigenvals' | 'eigenvalues';
 FUNC_EIGENVECTORS_NAME: 'eigenvects' | 'eigenvectors';
 FUNC_SVD_NAME: 'svd' | 'SVD';

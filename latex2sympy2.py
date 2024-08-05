@@ -179,7 +179,7 @@ def convert_relation(rel):
                 result = []
                 for sym in syms:
                     global domain
-                    values = sympy.solve(equation, sym, domain = domain)
+                    values = sympy.solveset(equation, sym, domain = domain)
                     for value in values:
                         result.append(sympy.Eq(sym, value, evaluate=False))
                 return result

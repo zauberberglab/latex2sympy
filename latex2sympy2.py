@@ -19,7 +19,7 @@ from sympy.parsing.sympy_parser import parse_expr
 
 import hashlib
 
-is_real = None
+is_real = False
 
 frac_type = r'\frac'
 
@@ -29,9 +29,14 @@ var = {}
 VARIABLE_VALUES = {}
 
 
-def set_real(value):
+def set_real(value = True):
     global is_real
+    global domain
     is_real = value
+    if is_real:
+        domain = sympy.S.Reals
+    else:
+        domain = sympy.S.Complexes
 
 
 def set_variances(vars):
@@ -172,7 +177,8 @@ def convert_relation(rel):
                 # Solve equation
                 result = []
                 for sym in syms:
-                    values = sympy.solve(equation, sym)
+                    global domain
+                    values = sympy.solveset(equation, sym, domain = domain)
                     for value in values:
                         result.append(sympy.Eq(sym, value, evaluate=False))
                 return result
